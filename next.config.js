@@ -5,7 +5,6 @@ module.exports = withCSS(
         cssModules: true
     })
 );
-
 module.exports = {
     exportPathMap: function(){
         return {

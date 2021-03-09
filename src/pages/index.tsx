@@ -11,7 +11,18 @@ const index: React.FC = () => {
     const [password, setPassword] = useState<string>("");
 
     const login = () =>{
-
+        if (username == "" || password == "") {
+            return false;
+        }
+        axios
+            .get(process.env.NEXT_PUBLIC_API_SERVER + "/prelogin")
+            .then(res => {
+                setToken(res.data)
+                console.log(res.data);
+            })
+            .catch(() => {
+                console.log('error');
+            })
     }
 
     return (
