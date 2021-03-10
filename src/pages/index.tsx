@@ -14,15 +14,22 @@ const index: React.FC = () => {
         if (username == "" || password == "") {
             return false;
         }
-        axios
-            .get(process.env.NEXT_PUBLIC_API_SERVER + "/prelogin")
-            .then(res => {
-                setToken(res.data)
-                console.log(res.data);
-            })
-            .catch(() => {
-                console.log('error');
-            })
+        axios.get(process.env.NEXT_PUBLIC_API_SERVER + "/prelogin")
+                .then(res_prelogin => {
+                    
+                    axios.post(process.env.NEXT_PUBLIC_API_SERVER + "/login", {
+                        username: username,
+                        password: password,
+                        _csrf: res_prelogin.data
+                    }).then(res_login => {
+                        console.log(('login success'))
+                    }).catch(() => {
+                        console.log('login error');
+                    })
+
+                }).catch(() => {
+                    console.log('prelogin error');
+                });
     }
 
     return (
