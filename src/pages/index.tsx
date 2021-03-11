@@ -17,11 +17,13 @@ const index: React.FC = () => {
         axios.get(process.env.NEXT_PUBLIC_API_SERVER + "/prelogin")
                 .then(res_prelogin => {
                     
-                    axios.post(process.env.NEXT_PUBLIC_API_SERVER + "/login", {
-                        username: username,
-                        password: password,
-                        _csrf: res_prelogin.data
-                    }).then(res_login => {
+                    var params = new URLSearchParams();
+                    params.append('username', username);
+                    params.append('password', password);
+                    params.append('_csrf', res_prelogin.data);
+
+                    axios.post(process.env.NEXT_PUBLIC_API_SERVER + "/login")
+                    .then(res_login => {
                         console.log(('login success'))
                     }).catch(() => {
                         console.log('login error');
