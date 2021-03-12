@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import {Container, Button, Form} from 'react-bootstrap';
 import styles from '../styles/Index.module.css';
-import axios from "axios";
+import Axios from "axios";
 
 const index: React.FC = () => {
 
@@ -10,11 +10,13 @@ const index: React.FC = () => {
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
+    let client = Axios.create({ withCredentials: true });
+
     const login = () =>{
         if (username == "" || password == "") {
             return false;
         }
-        axios.get(process.env.NEXT_PUBLIC_API_SERVER + "/prelogin")
+        client.get(process.env.NEXT_PUBLIC_API_SERVER + "/prelogin")
                 .then(res_prelogin => {
                     
                     var params = new URLSearchParams();
@@ -22,9 +24,26 @@ const index: React.FC = () => {
                     params.append('password', password);
                     params.append('_csrf', res_prelogin.data);
 
-                    axios.post(process.env.NEXT_PUBLIC_API_SERVER + "/login")
+                    client.post(process.env.NEXT_PUBLIC_API_SERVER + "/login", params)
                     .then(res_login => {
-                        console.log(('login success'))
+                        console.log('login success')
+                        
+                        console.log(res_login.headers['set-cookie']);
+
+                        client.post(process.env.NEXT_PUBLIC_API_SERVER + "/task", {
+                            task: "test",
+                            priority: 1,
+                            status: 1,
+                            _csrf: res_prelogin.data
+                        }).then(
+                            res_task => {
+                                console.log('task success')
+                            }
+                        ).catch(() => {
+                            console.log('task error')
+                        })
+
+
                     }).catch(() => {
                         console.log('login error');
                     })
