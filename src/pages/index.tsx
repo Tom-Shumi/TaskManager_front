@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Router from 'next/router';
 import {Container, Button, Form} from 'react-bootstrap';
 import styles from '../styles/Index.module.css';
 import Axios from "axios";
 
 const index: React.FC = () => {
 
-    const [token, setToken] = useState<string>("");
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
@@ -16,41 +16,36 @@ const index: React.FC = () => {
         if (username == "" || password == "") {
             return false;
         }
+        get_prelogin_and_post_login();
+    }
+    const get_prelogin_and_post_login = () => {
         client.get(process.env.NEXT_PUBLIC_API_SERVER + "/prelogin")
-                .then(res_prelogin => {
-                    
-                    var params = new URLSearchParams();
-                    params.append('username', username);
-                    params.append('password', password);
-                    params.append('_csrf', res_prelogin.data);
+        .then(res_prelogin => {
+            console.log('prelogin success');
+            
+            var params = new URLSearchParams();
+            params.append('username', username);
+            params.append('password', password);
+            params.append('_csrf', res_prelogin.data);
 
-                    client.post(process.env.NEXT_PUBLIC_API_SERVER + "/login", params)
-                    .then(res_login => {
-                        console.log('login success')
-                        
-                        console.log(res_login.headers['set-cookie']);
+            post_login(params);
 
-                        client.post(process.env.NEXT_PUBLIC_API_SERVER + "/task", {
-                            task: "test",
-                            priority: 1,
-                            status: 1,
-                            _csrf: res_prelogin.data
-                        }).then(
-                            res_task => {
-                                console.log('task success')
-                            }
-                        ).catch(() => {
-                            console.log('task error')
-                        })
+        }).catch(() => {
+            console.log('prelogin error');
+        });
+    }
+    const post_login = (params: URLSearchParams) => {
+        client.post(process.env.NEXT_PUBLIC_API_SERVER + "/login", params)
+        .then(res_login => {
+            console.log('login success');
+            sessionStorage.clear();
+            sessionStorage.setItem('n', username);
 
+            Router.push('/Task');
 
-                    }).catch(() => {
-                        console.log('login error');
-                    })
-
-                }).catch(() => {
-                    console.log('prelogin error');
-                });
+        }).catch(() => {
+            console.log('login error');
+        })
     }
 
     return (
@@ -69,9 +64,6 @@ const index: React.FC = () => {
                 </Form>
             </Container>
             <hr />
-            <Link href="/Task">
-                <a>Go to TaskList ＞＞</a>
-            </Link>
         </div>
     )
 }
