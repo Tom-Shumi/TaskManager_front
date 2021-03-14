@@ -1,12 +1,16 @@
 import React from 'react';
 import TaskList from '../components/TaskList'
 import { Task } from './interface';
+import {getUsername} from './Authentication'
 
 interface TaskBoardProps {
 
 }
 
 const TaskBoard: React.FC<TaskBoardProps> = (props) => {
+
+    const username = getUsername();
+
     var taskList: Task[] = new Array(4);
     taskList.push({taskTitle: "test1" ,description: "aaa1" ,priority: 1});
     taskList.push({taskTitle: "test2" ,description: "aaa2" ,priority: 2});

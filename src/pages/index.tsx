@@ -31,7 +31,7 @@ const index: React.FC = () => {
             post_login(params);
 
         }).catch(() => {
-            console.log('prelogin error');
+            Router.push('/Error?401');
         });
     }
     const post_login = (params: URLSearchParams) => {
@@ -44,7 +44,7 @@ const index: React.FC = () => {
             Router.push('/Task');
 
         }).catch(() => {
-            console.log('login error');
+            Router.push('/Error?401');
         })
     }
 

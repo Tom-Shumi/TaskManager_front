@@ -3,10 +3,11 @@ import Link from 'next/link';
 import Layout from '../components/Layout';
 import TaskBoard from '../components/TaskBoard';
 import {authentication} from '../components/Authentication';
+import dynamic from "next/dynamic";
 
 
 const Task: React.FC = () => {
-    authentication(sessionStorage);
+    authentication();
     return (
         <Layout title="Task.">
             <TaskBoard />
@@ -17,4 +18,11 @@ const Task: React.FC = () => {
     )
 }
 
-export default Task;
+const DynamicTask = dynamic(
+    {
+      loader: async () => Task,
+    },
+    { ssr: false }
+  );
+  
+  export default DynamicTask;
