@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Link from 'next/link';
 import Router from 'next/router';
 import {Container, Button, Form} from 'react-bootstrap';
 import styles from '../styles/Index.module.css';

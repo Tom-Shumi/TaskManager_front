@@ -12,11 +12,13 @@ const Error: React.FC = () => {
     const [errorCd] = useState<String>(getErrorCd());
     let errorMsg: String;
     switch (errorCd) {
+        case "400":
+            errorMsg = "不正なリクエストです。"
         case "401":
             errorMsg = "認証に失敗しました。"
             break;
         default:
-            console.log("エラーが発生しました。");
+            errorMsg = "エラーが発生しました。"
             break;
     }
     return (
