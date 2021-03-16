@@ -2,7 +2,7 @@ import React from 'react';
 import TaskList from '../components/TaskList'
 import { Task } from './interface';
 import Router from 'next/router';
-import axios from "axios";
+import Axios from "axios";
 import { useState } from "react";
 
 interface TaskBoardProps {
@@ -10,9 +10,18 @@ interface TaskBoardProps {
 }
 
 const TaskBoard: React.FC<TaskBoardProps> = (props) => {
-    const [taskListNotStarted, setTaskListNotStarted] = useState<Task[]>(getTaskListNotStarted());
-    const [taskListInProgress, setTaskListInProgress] = useState<Task[]>(getTaskListInProgress());
-    const [taskListDone, setTaskListDone] = useState<Task[]>(getTaskListDone());
+    const [taskListNotStarted, setTaskListNotStarted] = useState<Task[]>(null);
+    const [taskListInProgress, setTaskListInProgress] = useState<Task[]>(null);
+    const [taskListDone, setTaskListDone] = useState<Task[]>(null);
+
+    let client = Axios.create({ withCredentials: true });
+
+    client.get(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK + "/2")
+        .then(response => {
+            createTaskList(response.data);
+        }).catch(() => {
+            Router.push('/Error?400');
+        }); 
 
     var taskList: Task[] = new Array(4);
     taskList.push({taskTitle: "test1" ,description: "aaa1" ,priority: 1});
@@ -21,28 +30,19 @@ const TaskBoard: React.FC<TaskBoardProps> = (props) => {
     taskList.push({taskTitle: "test4" ,description: "aaa4" ,priority: 2});
     return (
         <div className="">
-            <TaskList taskList={taskListNotStarted} status="1" />
+            {/* <TaskList taskList={taskListNotStarted} status="1" />
             <TaskList taskList={taskListInProgress} status="2" />
-            <TaskList taskList={taskListDone} status="3" />
+            <TaskList taskList={taskListDone} status="3" /> */}
         </div>
     )
 }
 
-function getTaskListNotStarted(): Task[]{
-    axios.get(process.env.NEXT_PUBLIC_API_TASK + "/1")
-        .then(response => {
-                
-        }).catch(() => {
-            Router.push('/Error?400');
-        }); 
-    return null;
-}
-
-function getTaskListInProgress(): Task[]{
-    return null;
-}
-
-function getTaskListDone(): Task[]{
+function createTaskList(responseData: any[]): Task[]{
+    let length: number = responseData.length;
+    for (var i = 0 ; i < length ; i++) {
+        console.log(responseData[i]);
+        console.log(responseData[i].id);
+    }
     return null;
 }
 
