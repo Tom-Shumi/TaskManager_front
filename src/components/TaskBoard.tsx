@@ -14,20 +14,17 @@ const TaskBoard: React.FC<TaskBoardProps> = (props) => {
     const [taskListInProgress, setTaskListInProgress] = useState<Task[]>(null);
     const [taskListDone, setTaskListDone] = useState<Task[]>(null);
 
+    var tempTaskList :Task[] = [];
+
     let client = Axios.create({ withCredentials: true });
 
-    client.get(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK + "/2")
+    client.get(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK + "/1")
         .then(response => {
-            createTaskList(response.data);
+            tempTaskList = createTaskList(response.data);
         }).catch(() => {
             Router.push('/Error?400');
         }); 
-
-    var taskList: Task[] = new Array(4);
-    taskList.push({taskTitle: "test1" ,description: "aaa1" ,priority: 1});
-    taskList.push({taskTitle: "test2" ,description: "aaa2" ,priority: 2});
-    taskList.push({taskTitle: "test3" ,description: "aaa3" ,priority: 3});
-    taskList.push({taskTitle: "test4" ,description: "aaa4" ,priority: 2});
+    console.log(taskListNotStarted);
     return (
         <div className="">
             {/* <TaskList taskList={taskListNotStarted} status="1" />
@@ -39,11 +36,12 @@ const TaskBoard: React.FC<TaskBoardProps> = (props) => {
 
 function createTaskList(responseData: any[]): Task[]{
     let length: number = responseData.length;
+    var taskList :Task[] = [];
     for (var i = 0 ; i < length ; i++) {
-        console.log(responseData[i]);
-        console.log(responseData[i].id);
+        let task = new Task(responseData[i]["task"], responseData[i]["description"], responseData[i]["priority"]);
+        taskList.push(task);
     }
-    return null;
+    return taskList;
 }
 
 export default TaskBoard;
