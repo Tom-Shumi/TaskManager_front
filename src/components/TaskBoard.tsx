@@ -13,25 +13,46 @@ const TaskBoard: React.FC<TaskBoardProps> = (props) => {
     const [taskListNotStarted, setTaskListNotStarted] = useState<Task[]>(null);
     const [taskListInProgress, setTaskListInProgress] = useState<Task[]>(null);
     const [taskListDone, setTaskListDone] = useState<Task[]>(null);
+    const [initFlg, setInitFlg] = useState<Boolean>(true);
 
-    var tempTaskList :Task[] = [];
+    const callGetTaskList = () => {
+        var res: Promise<Task[][]> = getTaskList();
+        res.then(ret => setTaskListNotStarted(ret[0]));
+        res.then(ret => setTaskListInProgress(ret[1]));
+        res.then(ret => setTaskListDone(ret[2]));
+    }
 
-    let client = Axios.create({ withCredentials: true });
+    if (initFlg) {
+        setInitFlg(false);
+        callGetTaskList();
+    }
 
-    client.get(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK + "/1")
-        .then(response => {
-            tempTaskList = createTaskList(response.data);
-        }).catch(() => {
-            Router.push('/Error?400');
-        }); 
-    console.log(taskListNotStarted);
     return (
         <div className="">
-            {/* <TaskList taskList={taskListNotStarted} status="1" />
+            <TaskList taskList={taskListNotStarted} status="1" />
             <TaskList taskList={taskListInProgress} status="2" />
-            <TaskList taskList={taskListDone} status="3" /> */}
+            <TaskList taskList={taskListDone} status="3" />
         </div>
     )
+}
+
+async function getTaskList(){
+    let client = Axios.create({ withCredentials: true });
+    var listNotStarted :Task[] = [];
+    var lisInProgress :Task[] = [];
+    var listDone :Task[] = [];
+    try {
+        const resNotStarted = await client.get(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK + "/1");
+        const resInProgress = await client.get(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK + "/2");
+        const resDone = await client.get(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK + "/3");
+
+        listNotStarted = createTaskList(resNotStarted.data);
+        lisInProgress = createTaskList(resInProgress.data);
+        listDone = createTaskList(resDone.data);
+    } catch(error){
+        Router.push('/Error?400');
+    }
+    return [listNotStarted, lisInProgress, listDone];
 }
 
 function createTaskList(responseData: any[]): Task[]{
