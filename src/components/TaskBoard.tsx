@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TaskList from '../components/TaskList'
 import { Task } from './interface';
 import Router from 'next/router';
 import Axios from "axios";
-import { useState } from "react";
+import styles from '../styles/TaskBoard.module.css';
 
 interface TaskBoardProps {
 
 }
 
 const TaskBoard: React.FC<TaskBoardProps> = (props) => {
-    const [taskListNotStarted, setTaskListNotStarted] = useState<Task[]>(null);
-    const [taskListInProgress, setTaskListInProgress] = useState<Task[]>(null);
-    const [taskListDone, setTaskListDone] = useState<Task[]>(null);
+    // 未対応のタスク
+    const [taskListNotStarted, setTaskListNotStarted] = useState<Task[]>([]);
+    // 対応中のタスク
+    const [taskListInProgress, setTaskListInProgress] = useState<Task[]>([]);
+    // 対応済みのタスク
+    const [taskListDone, setTaskListDone] = useState<Task[]>([]);
+    // 初期表示フラグ
     const [initFlg, setInitFlg] = useState<Boolean>(true);
 
     const callGetTaskList = () => {
@@ -28,7 +32,7 @@ const TaskBoard: React.FC<TaskBoardProps> = (props) => {
     }
 
     return (
-        <div className="">
+        <div className={styles.task_board}>
             <TaskList taskList={taskListNotStarted} status="1" />
             <TaskList taskList={taskListInProgress} status="2" />
             <TaskList taskList={taskListDone} status="3" />
@@ -36,6 +40,7 @@ const TaskBoard: React.FC<TaskBoardProps> = (props) => {
     )
 }
 
+// 各apiを呼び出しタスクリストを取得する
 async function getTaskList(){
     let client = Axios.create({ withCredentials: true });
     var listNotStarted :Task[] = [];
@@ -55,6 +60,7 @@ async function getTaskList(){
     return [listNotStarted, lisInProgress, listDone];
 }
 
+// apiレスポンスからタスクリストを生成する
 function createTaskList(responseData: any[]): Task[]{
     let length: number = responseData.length;
     var taskList :Task[] = [];

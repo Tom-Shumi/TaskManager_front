@@ -50,3 +50,7 @@ h1 {
     border-top: solid 5px rgb(127, 182, 255);
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
 }
+
+.button_md {
+    width: 120px;
+}

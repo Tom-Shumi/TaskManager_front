@@ -8,16 +8,18 @@ const index: React.FC = () => {
 
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-
+    // cookieを使用するaxios生成
     let client = Axios.create({ withCredentials: true });
 
-    const login = () =>{
+    // ログイン処理
+    const login = () => {
         if (username == "" || password == "") {
             return false;
         }
-        get_prelogin_and_post_login();
+        getPreloginAndPostLogin();
     }
-    const get_prelogin_and_post_login = () => {
+    // プレログインapi実行＆成功したらログイン関数呼び出し
+    const getPreloginAndPostLogin = () => {
         client.get(process.env.NEXT_PUBLIC_API_SERVER + "/prelogin")
         .then(res_prelogin => {
             console.log('prelogin success');
@@ -27,16 +29,18 @@ const index: React.FC = () => {
             params.append('password', password);
             params.append('_csrf', res_prelogin.data);
 
-            post_login(params);
+            postLogin(params);
 
         }).catch(() => {
             Router.push('/Error?401');
         });
     }
-    const post_login = (params: URLSearchParams) => {
+    // ログインapi実行
+    const postLogin = (params: URLSearchParams) => {
         client.post(process.env.NEXT_PUBLIC_API_SERVER + "/login", params)
-        .then(res_login => {
+        .then( _ => {
             console.log('login success');
+            // セッションにログイン情報保持
             sessionStorage.clear();
             sessionStorage.setItem('n', username);
 
