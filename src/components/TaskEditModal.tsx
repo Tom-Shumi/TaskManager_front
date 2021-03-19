@@ -1,9 +1,16 @@
 import React from 'react';
-import {Button} from 'react-bootstrap';
+import {Modal, Button, Form, Row, Col} from 'react-bootstrap';
 import Axios from "axios";
 import Router from 'next/router';
 
-const TaskEditModal: React.FC = () => {
+interface TaskEditModalProps {
+    show: () => void;
+    close: () => void;
+    title: string;
+}
+
+
+const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
 
     // cookieを使用するaxios生成
     let client = Axios.create({ withCredentials: true });
@@ -28,7 +35,29 @@ const TaskEditModal: React.FC = () => {
     }
 
     return (
-        <div>aa</div>
+        <Modal show={props.show} onHide={props.close} key='taskEditModal'>
+            <Modal.Header closeButton>
+                <Modal.Title>{props.title}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Form>
+                    <Row>
+                        <Col xs={4} className="modal_label">
+                            <strong>Task</strong>
+                        </Col>
+                        <Col xs={8} className="">
+                                <Form.Control type="text" className="" value="" />
+                        </Col>
+
+                    </Row>
+                </Form>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="dark" onClick={props.close} className="button_sm" >
+                    close
+                </Button>
+            </Modal.Footer>
+        </Modal>
     )
 }
 

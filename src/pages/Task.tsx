@@ -14,20 +14,28 @@ const Task: React.FC = () => {
 
     authentication();
 
-    const dispTaskCreateModal = () => {
+    const showTaskEditModal = () => {
         setTaskCreateModalDispFlg(true);
+    }
+
+    const CloseTaskEditModal = () => {
+        setTaskCreateModalDispFlg(false);
     }
 
     return (
         <Layout title="Task.">
-            <Button key="create" variant="primary" className="button_md" onClick={dispTaskCreateModal}>create task</Button>
+            <Button key="create" variant="primary" className="button_md" onClick={showTaskEditModal}>create task</Button>
             <TaskBoard />
             <br />
             <Link href="/">
                 <a>＜＜ Back to login page</a>
             </Link>
             {taskCreateModalDispFlg && 
-                   <TaskEditModal />
+                   <TaskEditModal 
+                    show = {showTaskEditModal}
+                    close = {CloseTaskEditModal}
+                    title = "Create task"
+                    />
             }
         </Layout>
     )

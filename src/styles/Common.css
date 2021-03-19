@@ -54,3 +54,7 @@ h1 {
 .button_md {
     width: 120px;
 }
+
+.button_sm {
+    width: 80px;
+}
