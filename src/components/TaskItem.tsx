@@ -25,14 +25,14 @@ function conversionPriority(priority: number){
     var className: string;
     switch(priority) {
         case 1:
-            str = 'low';
+            str = 'LOW';
             className = 'blue';
             break;
         case 2:
-            str = 'medium';
+            str = 'MEDIUM';
             break;
         case 3:
-            str = 'high';
+            str = 'HIGH';
             className = 'red';
             break;
     }

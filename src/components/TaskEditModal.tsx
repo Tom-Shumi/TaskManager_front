@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Modal, Button, Form, Row, Col} from 'react-bootstrap';
 import Axios from "axios";
 import Router from 'next/router';
@@ -11,7 +11,12 @@ interface TaskEditModalProps {
 
 
 const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
-
+    const [form, setForm] = useState({task: "", priority: "1", description: ""});
+　　
+    // form入力のハンドリング
+    const handleChange = (input) => {
+        return e => setForm({...form, [input]: e.target.value})
+    }
     // cookieを使用するaxios生成
     let client = Axios.create({ withCredentials: true });
 
@@ -45,17 +50,33 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
                         <Col xs={4} className="modal_label">
                             <strong>Task</strong>
                         </Col>
-                        <Col xs={8} className="">
-                                <Form.Control type="text" className="" value="" />
+                        <Col xs={8} className="modal_input">
+                                <Form.Control type="text" value={form.task} onChange={handleChange('task')} />
                         </Col>
-
+                        <hr />
+                        <Col xs={4} className="modal_label">
+                            <strong>Priority</strong>
+                        </Col>
+                        <Col xs={8} className="modal_input">
+                            <Form.Control as="select" value={form.priority} onChange={handleChange('priority')}>
+                                <option key="priority1" value="1">LOW</option>
+                                <option key="priority2" value="2">MEDIUM</option>
+                                <option key="priority3" value="3">HIGH</option>
+                            </Form.Control>
+                        </Col>
+                        <hr />
+                        <Col xs={4} className="modal_label">
+                            <strong>Description</strong>
+                        </Col>
+                        <Col xs={8} className="modal_input">
+                                <Form.Control as="textarea" rows={4} cols={40} value={form.description} onChange={handleChange('description')} />
+                        </Col>
                     </Row>
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="dark" onClick={props.close} className="button_sm" >
-                    close
-                </Button>
+               <Button variant="primary" onClick={props.close} className="button_sm" >create</Button>
+                <Button variant="dark" onClick={props.close} className="button_sm" >close</Button>
             </Modal.Footer>
         </Modal>
     )
