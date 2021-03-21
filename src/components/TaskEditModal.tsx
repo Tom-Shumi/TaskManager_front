@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import {Modal, Button, Form, Row, Col} from 'react-bootstrap';
 import Axios from "axios";
 import Router from 'next/router';
@@ -7,6 +7,7 @@ interface TaskEditModalProps {
     show: () => void;
     close: () => void;
     title: string;
+    setInitDispFlg: Dispatch<SetStateAction<Boolean>>
 }
 
 
@@ -21,19 +22,21 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
     let client = Axios.create({ withCredentials: true });
 
     const createTask = () => {
-
-        var params = new URLSearchParams();
-        params.append('task', '');
-        params.append('priority', '');
-        params.append('status', '');
-        params.append('description', '');
+        var params = {
+            task: form.task,
+            priority: form.priority,
+            status: '1',
+            description: form.description
+        }
+        
+        var jsonParams = JSON.stringify(params);
     
-        client.post(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK, params)
+        client.post(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK
+            , jsonParams
+            , {headers: {'content-type': 'application/json'}})
         .then( response => {
-
-
-            Router.push('/Task');
-
+            props.setInitDispFlg(true);
+            props.close();
         }).catch(() => {
             Router.push('/Error?400');
         })
@@ -75,7 +78,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-               <Button variant="primary" onClick={props.close} className="button_sm" >create</Button>
+               <Button variant="primary" onClick={createTask} className="button_sm" >create</Button>
                 <Button variant="dark" onClick={props.close} className="button_sm" >close</Button>
             </Modal.Footer>
         </Modal>

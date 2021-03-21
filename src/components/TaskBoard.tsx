@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import TaskList from '../components/TaskList'
 import { Task } from './interface';
 import Router from 'next/router';
@@ -6,7 +6,8 @@ import Axios from "axios";
 import styles from '../styles/TaskBoard.module.css';
 
 interface TaskBoardProps {
-
+    initDispFlg: Boolean;
+    setInitDispFlg: Dispatch<SetStateAction<Boolean>>
 }
 
 const TaskBoard: React.FC<TaskBoardProps> = (props) => {
@@ -16,8 +17,6 @@ const TaskBoard: React.FC<TaskBoardProps> = (props) => {
     const [taskListInProgress, setTaskListInProgress] = useState<Task[]>([]);
     // 対応済みのタスク
     const [taskListDone, setTaskListDone] = useState<Task[]>([]);
-    // 初期表示フラグ
-    const [initFlg, setInitFlg] = useState<Boolean>(true);
 
     const callGetTaskList = () => {
         var res: Promise<Task[][]> = getTaskList();
@@ -26,8 +25,8 @@ const TaskBoard: React.FC<TaskBoardProps> = (props) => {
         res.then(ret => setTaskListDone(ret[2]));
     }
 
-    if (initFlg) {
-        setInitFlg(false);
+    if (props.initDispFlg) {
+        props.setInitDispFlg(false);
         callGetTaskList();
     }
 

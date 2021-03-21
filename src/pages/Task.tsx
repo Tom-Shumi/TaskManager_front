@@ -9,8 +9,10 @@ import {Button} from 'react-bootstrap';
 
 
 const Task: React.FC = () => {
-    // 初期表示フラグ
+    // モーダル表示フラグ
     const [taskCreateModalDispFlg, setTaskCreateModalDispFlg] = useState<Boolean>(false);
+    // 初期表示フラグ
+    const [initDispFlg, setInitDispFlg] = useState<Boolean>(true);
 
     authentication();
 
@@ -25,17 +27,20 @@ const Task: React.FC = () => {
     return (
         <Layout title="Task.">
             <Button key="create" variant="primary" className="button_md" onClick={showTaskEditModal}>create task</Button>
-            <TaskBoard />
+            <TaskBoard
+                initDispFlg = {initDispFlg}
+                setInitDispFlg = {setInitDispFlg} />
             <br />
             <Link href="/">
                 <a>＜＜ Back to login page</a>
             </Link>
             {taskCreateModalDispFlg && 
-                   <TaskEditModal 
+                <TaskEditModal 
                     show = {showTaskEditModal}
                     close = {CloseTaskEditModal}
                     title = "Create task"
-                    />
+                    setInitDispFlg = {setInitDispFlg}
+                />
             }
         </Layout>
     )
