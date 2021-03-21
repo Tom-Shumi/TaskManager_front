@@ -14,7 +14,11 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
 
     return (
         <div className={styles.task_item}>
-            <div className={styles.task_item_title}>[<span className={priority_className}>{priority_str}</span>] {props.task.taskTitle}</div>
+            <div className={styles.task_item_title}>
+                [<span className={priority_className}>{priority_str}</span>]
+                {props.task.taskTitle}
+                <p className={styles.task_item_icon}><i className="fa fa-trash" /></p> 
+            </div>
             <div className={styles.task_item_description}>{props.task.description}</div>
         </div>
     )
