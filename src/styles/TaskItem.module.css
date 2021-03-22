@@ -27,4 +27,5 @@
 .task_item_icon{
     display: table-cell;
     text-align: left;
+    cursor : pointer;
 }

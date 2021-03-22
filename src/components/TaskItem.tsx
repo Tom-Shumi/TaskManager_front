@@ -12,12 +12,18 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
     var priority_str = priority.str;
     var priority_className = priority.className;
 
+    const deleteTask = () => {
+        if(confirm("Do you want to delete it?")){
+            alert(props.task.id);
+        }
+    }
+
     return (
         <div className={styles.task_item}>
             <div className={styles.task_item_title}>
                 [<span className={priority_className}>{priority_str}</span>]
                 {props.task.taskTitle}
-                <p className={styles.task_item_icon}><i className="fa fa-trash" /></p> 
+                <p className={styles.task_item_icon}><i onClick={deleteTask} className="fa fa-trash" /></p> 
             </div>
             <div className={styles.task_item_description}>{props.task.description}</div>
         </div>
