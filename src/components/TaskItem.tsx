@@ -1,9 +1,12 @@
-import React from 'react';
+import React , { Dispatch, SetStateAction } from 'react';
 import styles from '../styles/TaskItem.module.css';
 import { Task } from './interface';
+import Axios from "axios";
+import Router from 'next/router';
 
 interface TaskItemProps {
     task: Task;
+    setInitDispFlg: Dispatch<SetStateAction<Boolean>>
 }
 
 const TaskItem: React.FC<TaskItemProps> = (props) => {
@@ -12,9 +15,17 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
     var priority_str = priority.str;
     var priority_className = priority.className;
 
+    // cookieを使用するaxios生成
+    let client = Axios.create({ withCredentials: true });
+
     const deleteTask = () => {
         if(confirm("Do you want to delete it?")){
-            alert(props.task.id);
+            client.delete(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK + "/" + props.task.id)
+            .then( response => {
+                props.setInitDispFlg(true);
+            }).catch(() => {
+                Router.push('/Error?400');
+            })
         }
     }
 
