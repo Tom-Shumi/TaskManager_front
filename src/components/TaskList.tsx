@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { Dispatch, SetStateAction } from 'react';
 import TaskItem from '../components/TaskItem';
 import styles from '../styles/TaskList.module.css';
 import { Task } from './interface';
@@ -6,6 +6,7 @@ import { Task } from './interface';
 interface TaskListProps {
     taskList: Task[];
     status: string;
+    setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
 }
 
 const TaskList: React.FC<TaskListProps> = (props) => {
@@ -15,7 +16,10 @@ const TaskList: React.FC<TaskListProps> = (props) => {
             <p className={styles.task_status}>{status_str} [{Object.keys(props.taskList).length}]</p>
             {
                 props.taskList.map(task_item => (
-                    <TaskItem task={task_item} />
+                    <TaskItem
+                        task={task_item}
+                        setInitDispFlg={props.setInitDispFlg}
+                    />
                 ))
             }
         </div>
