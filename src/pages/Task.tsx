@@ -6,17 +6,23 @@ import TaskEditModal from '../components/TaskEditModal';
 import {authentication} from '../components/Authentication';
 import dynamic from "next/dynamic";
 import {Button} from 'react-bootstrap';
+import { Task as TaskClass } from '../components/interface'
 
 
 const Task: React.FC = () => {
-    // モーダル表示フラグ
+    // タスク作成モーダル表示フラグ
     const [taskCreateModalDispFlg, setTaskCreateModalDispFlg] = useState<Boolean>(false);
+    // タスク更新モーダル表示フラグ
+    const [taskUpdateModalDispFlg, setTaskUpdateModalDispFlg] = useState<Boolean>(false);
     // 初期表示フラグ
     const [initDispFlg, setInitDispFlg] = useState<Boolean>(true);
+    // 編集対象タスク
+    const [targetTask, setTargetTaskk] = useState<TaskClass>(null);
 
     authentication();
 
-    const showTaskCreateModal = () => {
+    const showTaskCreateModal = (task: TaskClass) => {
+        setTargetTaskk(task);
         setTaskCreateModalDispFlg(true);
     }
 
@@ -24,12 +30,22 @@ const Task: React.FC = () => {
         setTaskCreateModalDispFlg(false);
     }
 
+    const showTaskUpdateModal = (task: TaskClass) => {
+        setTargetTaskk(task);
+        setTaskUpdateModalDispFlg(true);
+    }
+
+    const closeTaskUpdateModal = () => {
+        setTaskUpdateModalDispFlg(false);
+    }
+
     return (
         <Layout title="Task.">
-            <Button key="create" variant="primary" className="button_md" onClick={showTaskCreateModal}>create task</Button>
+            <Button key="create" variant="primary" className="button_md" onClick={ () => showTaskCreateModal(null)}>create task</Button>
             <TaskBoard
                 initDispFlg = {initDispFlg}
-                setInitDispFlg = {setInitDispFlg} />
+                setInitDispFlg = {setInitDispFlg}
+                show = {showTaskUpdateModal} />
             <br />
             <Link href="/">
                 <a>＜＜ Back to login page</a>
@@ -40,6 +56,16 @@ const Task: React.FC = () => {
                     close = {closeTaskCreateModal}
                     title = "Create task"
                     setInitDispFlg = {setInitDispFlg}
+                    task = {targetTask}
+                />
+            }
+            {taskUpdateModalDispFlg && 
+                <TaskEditModal 
+                    show = {showTaskUpdateModal}
+                    close = {closeTaskUpdateModal}
+                    title = "Update task"
+                    setInitDispFlg = {setInitDispFlg}
+                    task = {targetTask}
                 />
             }
         </Layout>

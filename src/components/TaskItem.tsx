@@ -1,18 +1,16 @@
-import React , { Dispatch, SetStateAction, useState } from 'react';
+import React , { Dispatch, SetStateAction } from 'react';
 import styles from '../styles/TaskItem.module.css';
 import { Task } from './interface';
 import Axios from "axios";
 import Router from 'next/router';
-import TaskEditModal from '../components/TaskEditModal';
 
 interface TaskItemProps {
     task: Task;
     setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
+    show: (Task) => void;
 }
 
 const TaskItem: React.FC<TaskItemProps> = (props) => {
-    // モーダル表示フラグ
-    const [taskUpdateModalDispFlg, setTaskUpdateModalDispFlg] = useState<Boolean>(false);
 
     var priority = conversionPriority(props.task.priority);
     var priority_str = priority.str;
@@ -32,30 +30,14 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
         }
     }
 
-    const showTaskUpdateModal = () => {
-        setTaskUpdateModalDispFlg(true);
-    }
-
-    const closeTaskUpdateModal = () => {
-        setTaskUpdateModalDispFlg(false);
-    }
-
     return (
-        <div className={styles.task_item} onClick={showTaskUpdateModal}>
+        <div className={styles.task_item} onClick={ () => props.show(props.task)}>
             <div className={styles.task_item_title}>
                 [<span className={priority_className}>{priority_str}</span>]
                 {props.task.taskTitle}
                 <p className={styles.task_item_icon}><i onClick={deleteTask} className="fa fa-trash" /></p> 
             </div>
             <div className={styles.task_item_description}>{props.task.description}</div>
-            {taskUpdateModalDispFlg && 
-                <TaskEditModal 
-                    show = {showTaskUpdateModal}
-                    close = {closeTaskUpdateModal}
-                    title = "Update task"
-                    setInitDispFlg = {props.setInitDispFlg}
-                />
-            }
         </div>
     )
 }

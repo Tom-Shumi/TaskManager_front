@@ -7,7 +7,8 @@ import styles from '../styles/TaskBoard.module.css';
 
 interface TaskBoardProps {
     initDispFlg: Boolean;
-    setInitDispFlg: Dispatch<SetStateAction<Boolean>>
+    setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
+    show: (Task) => void;
 }
 
 const TaskBoard: React.FC<TaskBoardProps> = (props) => {
@@ -32,9 +33,9 @@ const TaskBoard: React.FC<TaskBoardProps> = (props) => {
 
     return (
         <div className={styles.task_board}>
-            <TaskList taskList={taskListNotStarted} status="1" setInitDispFlg={props.setInitDispFlg} />
-            <TaskList taskList={taskListInProgress} status="2" setInitDispFlg={props.setInitDispFlg} />
-            <TaskList taskList={taskListDone} status="3" setInitDispFlg={props.setInitDispFlg} />
+            <TaskList taskList={taskListNotStarted} status="1" setInitDispFlg={props.setInitDispFlg} show={props.show} />
+            <TaskList taskList={taskListInProgress} status="2" setInitDispFlg={props.setInitDispFlg} show={props.show} />
+            <TaskList taskList={taskListDone} status="3" setInitDispFlg={props.setInitDispFlg} show={props.show} />
         </div>
     )
 }

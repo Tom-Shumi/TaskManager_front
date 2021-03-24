@@ -2,12 +2,14 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import {Modal, Button, Form, Row, Col} from 'react-bootstrap';
 import Axios from "axios";
 import Router from 'next/router';
+import { Task } from '../components/interface'
 
 interface TaskEditModalProps {
-    show: () => void;
+    show: (Task) => void;
     close: () => void;
     title: string;
-    setInitDispFlg: Dispatch<SetStateAction<Boolean>>
+    setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
+    task: Task;
 }
 
 
