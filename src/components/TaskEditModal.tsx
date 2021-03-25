@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import {Modal, Button, Form, Row, Col} from 'react-bootstrap';
 import Axios from "axios";
 import Router from 'next/router';
@@ -7,15 +7,21 @@ import { Task } from '../components/interface'
 interface TaskEditModalProps {
     show: (Task) => void;
     close: () => void;
-    title: string;
+    execSbt: string;
     setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
     task: Task;
 }
 
 
 const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
-    const [form, setForm] = useState({task: "", priority: "1", description: ""});
+    const [form, setForm] = useState({id: -1, task: "", priority: 1, description: ""});
 　　
+    useEffect(() => {
+        if (props.task != null) {
+            setForm({id: props.task.id, task: props.task.taskTitle, priority: props.task.priority, description: props.task.description});
+        }
+    }, []);
+
     // form入力のハンドリング
     const handleChange = (input) => {
         return e => setForm({...form, [input]: e.target.value})
@@ -23,7 +29,13 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
     // cookieを使用するaxios生成
     let client = Axios.create({ withCredentials: true });
 
-    const createTask = () => {
+    // executeボタン押下処理
+    const clickExecute = () => {
+        execute();
+    }
+
+    // リクエスト用json取得
+    const getJsonParams = () => {
         var params = {
             task: form.task,
             priority: form.priority,
@@ -31,7 +43,12 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
             description: form.description
         }
         
-        var jsonParams = JSON.stringify(params);
+        return JSON.stringify(params);
+    }
+
+    // task登録
+    const create = () => {
+        var jsonParams = getJsonParams();
     
         client.post(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK
             , jsonParams
@@ -44,10 +61,38 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
         })
     }
 
+    // task更新
+    const update = () => {
+        var jsonParams = getJsonParams();
+    
+        client.put(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK + "/" + props.task.id
+            , jsonParams
+            , {headers: {'content-type': 'application/json'}})
+        .then( response => {
+            props.setInitDispFlg(true);
+            props.close();
+        }).catch(() => {
+            Router.push('/Error?400');
+        })
+    }
+
+    let title: string;
+    let execute: () => void;
+    switch(props.execSbt) {
+        case "1":
+            title = 'Create task';
+            execute = create;
+            break;
+        case "2":
+            title = 'Update task';
+            execute = update;
+            break;
+    }
+
     return (
         <Modal show={props.show} onHide={props.close} key='taskEditModal'>
             <Modal.Header closeButton>
-                <Modal.Title>{props.title}</Modal.Title>
+                <Modal.Title>{title}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>
@@ -80,7 +125,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-               <Button variant="primary" onClick={createTask} className="button_sm" >create</Button>
+               <Button variant="primary" onClick={clickExecute} className="button_sm" >execute</Button>
                 <Button variant="dark" onClick={props.close} className="button_sm" >close</Button>
             </Modal.Footer>
         </Modal>

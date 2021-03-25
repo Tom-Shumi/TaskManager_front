@@ -54,7 +54,7 @@ const Task: React.FC = () => {
                 <TaskEditModal 
                     show = {showTaskCreateModal}
                     close = {closeTaskCreateModal}
-                    title = "Create task"
+                    execSbt = "1"
                     setInitDispFlg = {setInitDispFlg}
                     task = {targetTask}
                 />
@@ -63,7 +63,7 @@ const Task: React.FC = () => {
                 <TaskEditModal 
                     show = {showTaskUpdateModal}
                     close = {closeTaskUpdateModal}
-                    title = "Update task"
+                    execSbt = "2"
                     setInitDispFlg = {setInitDispFlg}
                     task = {targetTask}
                 />
