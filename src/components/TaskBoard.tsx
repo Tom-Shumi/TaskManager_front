@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useState, useEffect} from 'react';
 import TaskList from '../components/TaskList'
 import { Task } from './interface';
 import Router from 'next/router';
@@ -19,16 +19,16 @@ const TaskBoard: React.FC<TaskBoardProps> = (props) => {
     // 対応済みのタスク
     const [taskListDone, setTaskListDone] = useState<Task[]>([]);
 
+    useEffect(() => {
+        props.setInitDispFlg(false);
+        callGetTaskList();
+    }, [props.initDispFlg]);
+
     const callGetTaskList = () => {
         var res: Promise<Task[][]> = getTaskList();
         res.then(ret => setTaskListNotStarted(ret[0]));
         res.then(ret => setTaskListInProgress(ret[1]));
         res.then(ret => setTaskListDone(ret[2]));
-    }
-
-    if (props.initDispFlg) {
-        props.setInitDispFlg(false);
-        callGetTaskList();
     }
 
     return (

@@ -19,7 +19,7 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
     // cookieを使用するaxios生成
     let client = Axios.create({ withCredentials: true });
 
-    const deleteTask = () => {
+    const deleteTask = (e) => {
         if(confirm("Do you want to delete it?")){
             client.delete(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK + "/" + props.task.id)
             .then( response => {
@@ -28,6 +28,7 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
                 Router.push('/Error?400');
             })
         }
+        e.stopPropagation();
     }
 
     return (
