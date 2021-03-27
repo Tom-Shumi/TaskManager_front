@@ -52,7 +52,6 @@ const Task: React.FC = () => {
             </Link>
             {taskCreateModalDispFlg && 
                 <TaskEditModal 
-                    show = {showTaskCreateModal}
                     close = {closeTaskCreateModal}
                     execSbt = "1"
                     setInitDispFlg = {setInitDispFlg}
@@ -61,7 +60,6 @@ const Task: React.FC = () => {
             }
             {taskUpdateModalDispFlg && 
                 <TaskEditModal 
-                    show = {showTaskUpdateModal}
                     close = {closeTaskUpdateModal}
                     execSbt = "2"
                     setInitDispFlg = {setInitDispFlg}

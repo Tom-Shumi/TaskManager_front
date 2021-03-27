@@ -5,7 +5,6 @@ import Router from 'next/router';
 import { Task } from '../components/interface'
 
 interface TaskEditModalProps {
-    show: (Task) => void;
     close: () => void;
     execSbt: string;
     setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
@@ -90,7 +89,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
     }
 
     return (
-        <Modal show={props.show} onHide={props.close} key='taskEditModal'>
+        <Modal show={true} onHide={props.close} key='taskEditModal'>
             <Modal.Header closeButton>
                 <Modal.Title>{title}</Modal.Title>
             </Modal.Header>
