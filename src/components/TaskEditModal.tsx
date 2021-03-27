@@ -13,11 +13,11 @@ interface TaskEditModalProps {
 
 
 const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
-    const [form, setForm] = useState({id: -1, task: "", priority: 1, description: ""});
+    const [form, setForm] = useState({id: -1, task: "", priority: 1, description: "", status: 1});
 　　
     useEffect(() => {
         if (props.task != null) {
-            setForm({id: props.task.id, task: props.task.taskTitle, priority: props.task.priority, description: props.task.description});
+            setForm({id: props.task.id, task: props.task.taskTitle, priority: props.task.priority, description: props.task.description, status: props.task.status});
         }
     }, []);
 
@@ -38,7 +38,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
         var params = {
             task: form.task,
             priority: form.priority,
-            status: '1',
+            status: form.status,
             description: form.description
         }
         
@@ -101,6 +101,17 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
                         </Col>
                         <Col xs={8} className="modal_input">
                                 <Form.Control type="text" value={form.task} onChange={handleChange('task')} />
+                        </Col>
+                        <hr />
+                        <Col xs={4} className="modal_label">
+                            <strong>Status</strong>
+                        </Col>
+                        <Col xs={8} className="modal_input">
+                            <Form.Control as="select" value={form.status} onChange={handleChange('status')}>
+                                <option key="status1" value="1">NOT STARTED</option>
+                                <option key="status2" value="2">IN PROGRESS</option>
+                                <option key="status3" value="3">DONE</option>
+                            </Form.Control>
                         </Col>
                         <hr />
                         <Col xs={4} className="modal_label">

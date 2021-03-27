@@ -65,7 +65,7 @@ function createTaskList(responseData: any[]): Task[]{
     let length: number = responseData.length;
     var taskList :Task[] = [];
     for (var i = 0 ; i < length ; i++) {
-        let task = new Task(responseData[i]["id"], responseData[i]["task"], responseData[i]["description"], responseData[i]["priority"]);
+        let task = new Task(responseData[i]["id"], responseData[i]["task"], responseData[i]["description"], responseData[i]["priority"], responseData[i]["status"]);
         taskList.push(task);
     }
     return taskList;
