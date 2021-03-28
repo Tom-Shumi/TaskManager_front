@@ -21,6 +21,7 @@ const TaskList: React.FC<TaskListProps> = (props) => {
                         task={task_item}
                         setInitDispFlg={props.setInitDispFlg}
                         show={props.show}
+                        key={"TaskItem" + task_item.id}
                     />
                 ))
             }
