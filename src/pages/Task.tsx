@@ -7,8 +7,6 @@ import {authentication} from '../components/Authentication';
 import dynamic from "next/dynamic";
 import {Button} from 'react-bootstrap';
 import { Task as TaskClass } from '../components/interface';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 
 
 const Task: React.FC = () => {
@@ -43,33 +41,31 @@ const Task: React.FC = () => {
 
     return (
         <Layout title="Task.">
-            <DndProvider backend={HTML5Backend}>
-                <Button key="create" variant="primary" className="button_md" onClick={ () => showTaskCreateModal(null)}>create task</Button>
-                <TaskBoard
-                    initDispFlg = {initDispFlg}
+            <Button key="create" variant="primary" className="button_md" onClick={ () => showTaskCreateModal(null)}>create task</Button>
+            <TaskBoard
+                initDispFlg = {initDispFlg}
+                setInitDispFlg = {setInitDispFlg}
+                show = {showTaskUpdateModal} />
+            <br />
+            <Link href="/">
+                <a>＜＜ Back to login page</a>
+            </Link>
+            {taskCreateModalDispFlg && 
+                <TaskEditModal 
+                    close = {closeTaskCreateModal}
+                    execSbt = "1"
                     setInitDispFlg = {setInitDispFlg}
-                    show = {showTaskUpdateModal} />
-                <br />
-                <Link href="/">
-                    <a>＜＜ Back to login page</a>
-                </Link>
-                {taskCreateModalDispFlg && 
-                    <TaskEditModal 
-                        close = {closeTaskCreateModal}
-                        execSbt = "1"
-                        setInitDispFlg = {setInitDispFlg}
-                        task = {targetTask}
-                    />
-                }
-                {taskUpdateModalDispFlg && 
-                    <TaskEditModal 
-                        close = {closeTaskUpdateModal}
-                        execSbt = "2"
-                        setInitDispFlg = {setInitDispFlg}
-                        task = {targetTask}
-                    />
-                }
-            </DndProvider>
+                    task = {targetTask}
+                />
+            }
+            {taskUpdateModalDispFlg && 
+                <TaskEditModal 
+                    close = {closeTaskUpdateModal}
+                    execSbt = "2"
+                    setInitDispFlg = {setInitDispFlg}
+                    task = {targetTask}
+                />
+            }
         </Layout>
     )
 }

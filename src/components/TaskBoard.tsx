@@ -4,6 +4,8 @@ import { Task } from './interface';
 import Router from 'next/router';
 import Axios from "axios";
 import styles from '../styles/TaskBoard.module.css';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 interface TaskBoardProps {
     initDispFlg: Boolean;
