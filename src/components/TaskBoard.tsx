@@ -5,7 +5,7 @@ import Router from 'next/router';
 import Axios from "axios";
 import styles from '../styles/TaskBoard.module.css';
 import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
 interface TaskBoardProps {
     initDispFlg: Boolean;
@@ -35,9 +35,11 @@ const TaskBoard: React.FC<TaskBoardProps> = (props) => {
 
     return (
         <div className={styles.task_board}>
-            <TaskList taskList={taskListNotStarted} status="1" setInitDispFlg={props.setInitDispFlg} show={props.show} key="TaskList1"/>
-            <TaskList taskList={taskListInProgress} status="2" setInitDispFlg={props.setInitDispFlg} show={props.show} key="TaskList2" />
-            <TaskList taskList={taskListDone} status="3" setInitDispFlg={props.setInitDispFlg} show={props.show} key="TaskList3" />
+            <DndProvider backend={HTML5Backend}>
+                <TaskList taskList={taskListNotStarted} status="1" setInitDispFlg={props.setInitDispFlg} show={props.show} key="TaskList1"/>
+                <TaskList taskList={taskListInProgress} status="2" setInitDispFlg={props.setInitDispFlg} show={props.show} key="TaskList2" />
+                <TaskList taskList={taskListDone} status="3" setInitDispFlg={props.setInitDispFlg} show={props.show} key="TaskList3" />
+            </DndProvider>
         </div>
     )
 }

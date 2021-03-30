@@ -13,3 +13,7 @@ export class Task {
       this.status = status;
     }
   }
+
+export const ItemTypes = {
+  TASK_ITEM: 'task_item',
+}

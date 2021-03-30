@@ -1,8 +1,9 @@
 import React , { Dispatch, SetStateAction } from 'react';
 import styles from '../styles/TaskItem.module.css';
-import { Task } from './interface';
+import { Task, ItemTypes } from './interface';
 import Axios from "axios";
 import Router from 'next/router';
+import { useDrag } from 'react-dnd';
 
 interface TaskItemProps {
     task: Task;
@@ -15,6 +16,14 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
     var priority = conversionPriority(props.task.priority);
     var priority_str = priority.str;
     var priority_className = priority.className;
+
+    const [isDragging, drag] = useDrag(() => ({
+        type: ItemTypes.TASK_ITEM, 
+        item: { type: ItemTypes.TASK_ITEM },
+        collect: monitor => ({
+            isDragging: !!monitor.isDragging(),
+        }),
+    }))
 
     // cookieを使用するaxios生成
     let client = Axios.create({ withCredentials: true });
@@ -32,7 +41,7 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
     }
 
     return (
-        <div className={styles.task_item} onClick={ () => props.show(props.task)}>
+        <div ref={drag} className={styles.task_item} onClick={ () => props.show(props.task)}>
             <div className={styles.task_item_title}>
                 [<span className={priority_className}>{priority_str}</span>]
                 {props.task.taskTitle}
