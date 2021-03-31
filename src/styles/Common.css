@@ -70,3 +70,13 @@ h1 {
     margin-top: 1%;
     margin-bottom: 1%;
 }
+
+.is_over {
+    border: 1px solid #ffff00;
+    background-color: #ffffe0;
+}
+
+.is_not_over {
+    border: 1px solid rgb(165, 181, 201);
+    background-color: rgb(241, 241, 241);
+}
