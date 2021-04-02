@@ -19,7 +19,7 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
 
     const [isDragging, drag] = useDrag(() => ({
         type: ItemTypes.TASK_ITEM, 
-        item: { type: ItemTypes.TASK_ITEM },
+        item: { id: props.task.id },
         collect: monitor => ({
             isDragging: !!monitor.isDragging(),
         }),

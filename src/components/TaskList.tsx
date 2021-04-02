@@ -30,7 +30,10 @@ const TaskList: React.FC<TaskListProps> = (props) => {
 
     const [{isOver}, drop] = useDrop({
         accept: ItemTypes.TASK_ITEM,
-        drop: () => console.log("drop"),
+        drop: (dragItem: any) => {
+            console.log(dragItem.id);
+            console.log(props.status);
+        },
         collect: monitor => ({
             isOver: !!monitor.isOver()
         })
