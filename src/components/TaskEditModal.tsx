@@ -129,7 +129,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
                             <strong>Description</strong>
                         </Col>
                         <Col xs={8} className="modal_input">
-                                <Form.Control as="textarea" rows={4} cols={40} value={form.description} onChange={handleChange('description')} />
+                                <Form.Control as="textarea" rows={2} cols={40} value={form.description} onChange={handleChange('description')} />
                         </Col>
                     </Row>
                 </Form>
