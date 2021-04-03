@@ -62,6 +62,7 @@ function conversionPriority(priority: number){
             break;
         case 2:
             str = 'MEDIUM';
+            className = 'green';
             break;
         case 3:
             str = 'HIGH';
