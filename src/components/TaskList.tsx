@@ -8,7 +8,7 @@ import Router from 'next/router';
 
 interface TaskListProps {
     taskList: Task[];
-    status: string;
+    status: number;
     setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
     show: (Task) => void;
 }
@@ -18,21 +18,26 @@ const TaskList: React.FC<TaskListProps> = (props) => {
     // cookieを使用するaxios生成
     let client = Axios.create({ withCredentials: true });
 
-    const updateTaskStatus = (e) => {
-        client.put(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK + "/" + "")
-        .then( response => {
+    const updateTaskStatus = (id: number, status: number) => {
+        var params = {
+            status: status
+        }
+        var jsonParams = JSON.stringify(params);
+
+        client.put(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK + "/status/" + id
+            , jsonParams
+            , {headers: {'content-type': 'application/json'}}
+        ).then( response => {
             props.setInitDispFlg(true);
         }).catch(() => {
             Router.push('/Error?400');
         })
-        e.stopPropagation();
     }
 
     const [{isOver}, drop] = useDrop({
         accept: ItemTypes.TASK_ITEM,
         drop: (dragItem: any) => {
-            console.log(dragItem.id);
-            console.log(props.status);
+            updateTaskStatus(dragItem.id, props.status);
         },
         collect: monitor => ({
             isOver: !!monitor.isOver()
@@ -58,16 +63,16 @@ const TaskList: React.FC<TaskListProps> = (props) => {
     )
 }
 
-function conversionStatus(status: string){
+function conversionStatus(status: number){
     var str: string;
     switch(status) {
-        case "1":
+        case 1:
             str = 'NOT STARTED';
             break;
-        case "2":
+        case 2:
             str = 'IN PROGRESS';
             break;
-        case "3":
+        case 3:
             str = 'DONE';
             break;
     }
