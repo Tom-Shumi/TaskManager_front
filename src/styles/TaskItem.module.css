@@ -19,6 +19,16 @@
     width: 90%;
 }
 
+.task_item_date {
+    font-size: 12px;
+    margin: 0 8px 4px;
+    border-bottom: 1px solid #333;
+    text-align: left;
+    padding: 4px 8px;
+    display: table;
+    width: 90%;
+}
+
 .task_item_description {
     word-wrap: break-word;
     padding: 8px 8px 0px 8px;

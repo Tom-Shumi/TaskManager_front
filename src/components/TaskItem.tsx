@@ -47,6 +47,7 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
                 {props.task.taskTitle}
                 <p className={styles.task_item_icon}><i onClick={deleteTask} className="fa fa-trash" /></p> 
             </div>
+            <div className={styles.task_item_date}>[Plan Date] 〜 2021/04/01</div>
             <div className={styles.task_item_description}>{props.task.description}</div>
         </div>
     )
