@@ -75,6 +75,28 @@ h1 {
     margin-bottom: 1%;
 }
 
+.modal_input_year{
+    width: 85px;
+}
+
+.modal_input_month{
+    width: 65px;
+}
+
+.modal_input_day{
+    width: 65px;
+    margin-left: 10px;
+}
+
+.modal_input_date_delimiter{
+    margin-top: 5px;
+    margin-left: 10px;
+}
+
+.display_flex{
+    display: flex;
+}
+
 .is_over {
     border: 1px solid #ffff00;
     background-color: #ffffe0;

@@ -88,6 +88,17 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
             break;
     }
 
+    let dateTitleStr: string;
+    switch(form.status){
+        case 1:
+        case 2:
+            dateTitleStr = 'Plan Date';
+            break;
+        case 3:
+            dateTitleStr = 'Done Date';
+            break;
+    }
+
     return (
         <Modal show={true} onHide={props.close} key='taskEditModal'>
             <Modal.Header closeButton>
@@ -123,6 +134,29 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
                                 <option key="priority2" value="2">MEDIUM</option>
                                 <option key="priority3" value="3">HIGH</option>
                             </Form.Control>
+                        </Col>
+                        <hr />
+                        <Col xs={4} className="modal_label">
+                            <strong>
+                                {
+                                    form.status == 3 ?
+                                        ("Done Date")
+                                        : ("Plan Date")
+                                }
+                            </strong>
+                        </Col>
+                        <Col xs={8} className="modal_input">
+                            <Row>
+                                <Col xs={4} className="display_flex">
+                                    <Form.Control type="number" min="1900"  className="modal_input_year" /><p className="modal_input_date_delimiter">/</p>
+                                </Col>
+                                <Col xs={3} className="display_flex">
+                                    <Form.Control type="number" min="1" max="12" className="modal_input_month" /><p className="modal_input_date_delimiter">/</p>
+                                </Col>
+                                <Col xs={3} className="display_flex">
+                                    <Form.Control type="number" min="1" max="31" className="modal_input_day" />
+                                </Col>
+                            </Row>
                         </Col>
                         <hr />
                         <Col xs={4} className="modal_label">
