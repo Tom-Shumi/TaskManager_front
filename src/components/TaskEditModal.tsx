@@ -2,7 +2,15 @@ import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import {Modal, Button, Form, Row, Col} from 'react-bootstrap';
 import Axios from "axios";
 import Router from 'next/router';
-import { Task } from '../components/interface'
+import { Task } from '../components/interface';
+import DatePicker, { registerLocale } from "react-datepicker";
+import moment from 'moment';
+import "react-datepicker/dist/react-datepicker.css";
+import ja from 'date-fns/locale/ja';
+import * as DatePickerUtil from './DatePickerUtil';
+
+registerLocale('ja', ja)
+
 
 interface TaskEditModalProps {
     close: () => void;
@@ -13,11 +21,18 @@ interface TaskEditModalProps {
 
 
 const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
-    const [form, setForm] = useState({id: -1, task: "", priority: 1, description: "", status: 1});
+    const initDate = DatePickerUtil.toUtcIso8601str(moment())
+    const [form, setForm] = useState({id: -1, task: "", priority: 1, description: "", status: 1, date: initDate});
 　　
+    // 初期表示処理
     useEffect(() => {
         if (props.task != null) {
-            setForm({id: props.task.id, task: props.task.taskTitle, priority: props.task.priority, description: props.task.description, status: props.task.status});
+            setForm({id: props.task.id
+                    , task: props.task.taskTitle
+                    , priority: props.task.priority
+                    , description: props.task.description
+                    , status: props.task.status
+                    , date: initDate});
         }
     }, []);
 
@@ -25,6 +40,17 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
     const handleChange = (input) => {
         return e => setForm({...form, [input]: e.target.value})
     }
+    
+    // form入力（日付）のハンドリング
+    const handleChangeDate = (date) => {
+        setForm({id: form.id
+            , task: form.task
+            , priority: form.priority
+            , description: form.description
+            , status: form.status
+            , date: DatePickerUtil.toUtcIso8601str(moment(date))});
+    }
+
     // cookieを使用するaxios生成
     let client = Axios.create({ withCredentials: true });
 
@@ -75,6 +101,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
         })
     }
 
+    // タイトル表示文字列設定
     let title: string;
     let execute: () => void;
     switch(props.execSbt) {
@@ -88,6 +115,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
             break;
     }
 
+    // 日付表示文字列設定
     let dateTitleStr: string;
     switch(form.status){
         case 1:
@@ -146,17 +174,15 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
                             </strong>
                         </Col>
                         <Col xs={8} className="modal_input">
-                            <Row>
-                                <Col xs={4} className="display_flex">
-                                    <Form.Control type="number" min="1900"  className="modal_input_year" /><p className="modal_input_date_delimiter">/</p>
-                                </Col>
-                                <Col xs={3} className="display_flex">
-                                    <Form.Control type="number" min="1" max="12" className="modal_input_month" /><p className="modal_input_date_delimiter">/</p>
-                                </Col>
-                                <Col xs={3} className="display_flex">
-                                    <Form.Control type="number" min="1" max="31" className="modal_input_day" />
-                                </Col>
-                            </Row>
+                            <DatePicker
+                                locale="ja"
+                                selected={moment(form.date).toDate()}
+                                onChange={handleChangeDate}
+                                dateFormat="yyyy/MM/dd"
+                                customInput={
+                                    <Form.Control type="text"/>
+                                }
+                            />
                         </Col>
                         <hr />
                         <Col xs={4} className="modal_label">
