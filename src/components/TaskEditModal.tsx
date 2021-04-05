@@ -65,7 +65,8 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
             task: form.task,
             priority: form.priority,
             status: form.status,
-            description: form.description
+            description: form.description,
+            date: form.date
         }
         
         return JSON.stringify(params);
