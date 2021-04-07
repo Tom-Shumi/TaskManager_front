@@ -5,6 +5,7 @@ import { ItemTypes, Task } from './interface';
 import { useDrop } from 'react-dnd';
 import Axios from "axios";
 import Router from 'next/router';
+import * as ConversionUtil from './ConversionUtil';
 
 interface TaskListProps {
     taskList: Task[];
@@ -44,7 +45,7 @@ const TaskList: React.FC<TaskListProps> = (props) => {
         })
     })
 
-    var status_str = conversionStatus(props.status);
+    var status_str = ConversionUtil.conversionStatus(props.status);
     var style_is_over = isOver ? "is_over" : "is_not_over"; 
     return (
         <div className={styles.task_list + " " +  style_is_over} ref={drop}>
@@ -61,22 +62,6 @@ const TaskList: React.FC<TaskListProps> = (props) => {
             }
         </div>
     )
-}
-
-function conversionStatus(status: number){
-    var str: string;
-    switch(status) {
-        case 1:
-            str = 'NOT STARTED';
-            break;
-        case 2:
-            str = 'IN PROGRESS';
-            break;
-        case 3:
-            str = 'DONE';
-            break;
-    }
-    return str;
 }
 
 export default TaskList;

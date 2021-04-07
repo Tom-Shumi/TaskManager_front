@@ -8,6 +8,7 @@ import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
 import ja from 'date-fns/locale/ja';
 import * as DatePickerUtil from './DatePickerUtil';
+import * as ConversionUtil from './ConversionUtil';
 
 registerLocale('ja', ja)
 
@@ -117,17 +118,8 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
     }
 
     // 日付表示文字列設定
-    let dateTitleStr: string;
-    switch(form.status){
-        case 1:
-        case 2:
-            dateTitleStr = 'Plan Date';
-            break;
-        case 3:
-            dateTitleStr = 'Done Date';
-            break;
-    }
-
+    let dateTitleStr = ConversionUtil.conversionDateStr(form.status);
+    
     return (
         <Modal show={true} onHide={props.close} key='taskEditModal'>
             <Modal.Header closeButton>

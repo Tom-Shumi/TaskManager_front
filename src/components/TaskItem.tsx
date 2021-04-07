@@ -4,6 +4,7 @@ import { Task, ItemTypes } from './interface';
 import Axios from "axios";
 import Router from 'next/router';
 import { useDrag } from 'react-dnd';
+import * as ConversionUtil from './ConversionUtil';
 
 interface TaskItemProps {
     task: Task;
@@ -13,7 +14,10 @@ interface TaskItemProps {
 
 const TaskItem: React.FC<TaskItemProps> = (props) => {
 
-    var priority = conversionPriority(props.task.priority);
+    // 日付表示文字列設定
+    let dateTitleStr = ConversionUtil.conversionDateStr(props.task.status);
+
+    var priority = ConversionUtil.conversionPriority(props.task.priority);
     var priority_str = priority.str;
     var priority_className = priority.className;
 
@@ -47,30 +51,10 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
                 {props.task.taskTitle}
                 <p className={styles.task_item_icon}><i onClick={deleteTask} className="fa fa-trash" /></p> 
             </div>
-            <div className={styles.task_item_date}>[Plan Date] 〜 2021/04/01</div>
+            <div className={styles.task_item_date}>[{dateTitleStr}] 〜 2021/04/01</div>
             <div className={styles.task_item_description}>{props.task.description}</div>
         </div>
     )
-}
-
-function conversionPriority(priority: number){
-    var str: string;
-    var className: string;
-    switch(priority) {
-        case 1:
-            str = 'LOW';
-            className = 'blue';
-            break;
-        case 2:
-            str = 'MEDIUM';
-            className = 'green';
-            break;
-        case 3:
-            str = 'HIGH';
-            className = 'red';
-            break;
-    }
-    return { str: str, className: className }
 }
 
 export default TaskItem;
