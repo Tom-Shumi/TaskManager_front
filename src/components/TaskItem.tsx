@@ -16,6 +16,16 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
 
     // 日付表示文字列設定
     let dateTitleStr = ConversionUtil.conversionDateStr(props.task.status);
+    var date: string;
+    switch(props.task.status){
+        case 1:
+        case 2:
+            date = props.task.planDate;
+            break;
+        case 3:
+            date = props.task.doneDate;
+            break;
+    }
 
     var priority = ConversionUtil.conversionPriority(props.task.priority);
     var priority_str = priority.str;
@@ -51,7 +61,7 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
                 {props.task.taskTitle}
                 <p className={styles.task_item_icon}><i onClick={deleteTask} className="fa fa-trash" /></p> 
             </div>
-            <div className={styles.task_item_date}>[{dateTitleStr}] 〜 2021/04/01</div>
+            <div className={styles.task_item_date}>[{dateTitleStr}] {date}</div>
             <div className={styles.task_item_description}>{props.task.description}</div>
         </div>
     )

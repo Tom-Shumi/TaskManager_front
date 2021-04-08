@@ -4,13 +4,17 @@ export class Task {
     description: string;
     priority: number;
     status: number;
+    planDate: string;
+    doneDate: string;
 
-    constructor(id: number, taskTitle: string, description: string, priority: number, status: number) {
+    constructor(id: number, taskTitle: string, description: string, priority: number, status: number, planDate: string, doneDate: string) {
       this.id = id;
       this.taskTitle = taskTitle;
       this.description = description;
       this.priority = priority;
       this.status = status;
+      this.planDate = planDate;
+      this.doneDate = doneDate;
     }
   }
 
