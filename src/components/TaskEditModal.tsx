@@ -28,12 +28,19 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
     // 初期表示処理
     useEffect(() => {
         if (props.task != null) {
+            let date;
+            if (props.task.status == 3) {
+                date = props.task.doneDate
+            } else {
+                date = props.task.planDate
+            }
+
             setForm({id: props.task.id
                     , task: props.task.taskTitle
                     , priority: props.task.priority
                     , description: props.task.description
                     , status: props.task.status
-                    , date: initDate});
+                    , date: date});
         }
     }, []);
 
