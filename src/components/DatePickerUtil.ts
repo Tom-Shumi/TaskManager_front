@@ -21,4 +21,11 @@ const toUtcIso8601str = (momentInstance) => {
       .format('YYYY-MM-DDTHH:mm:00Z')
 }
 
-export {parseAsMoment, toUtcIso8601str};
+const parseDate = (dateStr) => {
+  if (!dateStr) {
+    return "";
+  } else {
+    return Date.parse(dateStr);
+  }
+}
+export {parseAsMoment, toUtcIso8601str, parseDate};

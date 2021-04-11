@@ -27,20 +27,20 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
 　　
     // 初期表示処理
     useEffect(() => {
+        
         if (props.task != null) {
-            let date;
+            let dateStr: string;
             if (props.task.status == 3) {
-                date = props.task.doneDate
+                dateStr = props.task.doneDate
             } else {
-                date = props.task.planDate
+                dateStr = props.task.planDate
             }
-
             setForm({id: props.task.id
                     , task: props.task.taskTitle
                     , priority: props.task.priority
                     , description: props.task.description
                     , status: props.task.status
-                    , date: date});
+                    , date: DatePickerUtil.parseDate(dateStr)});
         }
     }, []);
 
