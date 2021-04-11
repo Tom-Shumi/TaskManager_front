@@ -45,6 +45,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
     }, []);
 
     // form入力のハンドリング
+    // 日付を空欄には更新不可
     const handleChange = (input) => {
         return e => setForm({...form, [input]: e.target.value})
     }
