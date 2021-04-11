@@ -176,7 +176,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
                         <Col xs={8} className="modal_input">
                             <DatePicker
                                 locale="ja"
-                                selected={moment(form.date).toDate()}
+                                selected={form.date == "" ? null : moment(form.date).toDate()}
                                 onChange={handleChangeDate}
                                 dateFormat="yyyy/MM/dd"
                                 customInput={

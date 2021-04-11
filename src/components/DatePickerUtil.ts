@@ -23,7 +23,7 @@ const toUtcIso8601str = (momentInstance) => {
 
 const parseDate = (dateStr) => {
   if (!dateStr) {
-    return "";
+    return ""
   } else {
     return Date.parse(dateStr);
   }
