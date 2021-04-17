@@ -59,7 +59,7 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
             <div className={styles.task_item_title}>
                 [<span className={priority_className}>{priority_str}</span>]
                 {props.task.taskTitle}
-                <p className={styles.task_item_icon}><i onClick={deleteTask} className="fa fa-trash" /></p> 
+                <p className={styles.task_item_icon}><i onClick={deleteTask} className="fa fa-trash faa-wrench animated-hover" /></p> 
             </div>
             <div className={styles.task_item_date}>[{dateTitleStr}] {date}</div>
             <div className={styles.task_item_description}>{props.task.description}</div>
