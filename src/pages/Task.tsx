@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Layout from '../components/Layout';
 import TaskBoard from '../components/TaskBoard';
 import TaskEditModal from '../components/TaskEditModal';
+import TaskCommentModal from '../components/TaskCommentModal';
 import {authentication} from '../components/Authentication';
 import dynamic from "next/dynamic";
 import {Button} from 'react-bootstrap';
@@ -14,6 +15,8 @@ const Task: React.FC = () => {
     const [taskCreateModalDispFlg, setTaskCreateModalDispFlg] = useState<Boolean>(false);
     // タスク更新モーダル表示フラグ
     const [taskUpdateModalDispFlg, setTaskUpdateModalDispFlg] = useState<Boolean>(false);
+    // タスクコメントモーダル表示フラグ
+    const [taskCommentModalDispFlg, setTaskCommentModalDispFlg] = useState<Boolean>(false);
     // 初期表示フラグ
     const [initDispFlg, setInitDispFlg] = useState<Boolean>(true);
     // 編集対象タスク
@@ -39,13 +42,23 @@ const Task: React.FC = () => {
         setTaskUpdateModalDispFlg(false);
     }
 
+    const showTaskCommentModal = (task: TaskClass) => {
+        setTargetTaskk(task);
+        setTaskCommentModalDispFlg(true);
+    }
+
+    const closeTaskCommentModal = () => {
+        setTaskCommentModalDispFlg(false);
+    }
+
     return (
         <Layout title="Task.">
             <Button key="create" variant="primary" className="button_md" onClick={ () => showTaskCreateModal(null)}>create task</Button>
             <TaskBoard
                 initDispFlg = {initDispFlg}
                 setInitDispFlg = {setInitDispFlg}
-                show = {showTaskUpdateModal} />
+                showTaskUpdateModal = {showTaskUpdateModal}
+                showTaskCommentModal = {showTaskCommentModal} />
             <br />
             <Link href="/">
                 <a>＜＜ Back to login page</a>
@@ -62,6 +75,13 @@ const Task: React.FC = () => {
                 <TaskEditModal 
                     close = {closeTaskUpdateModal}
                     execSbt = "2"
+                    setInitDispFlg = {setInitDispFlg}
+                    task = {targetTask}
+                />
+            }
+            {taskCommentModalDispFlg && 
+                <TaskCommentModal 
+                    close = {closeTaskCommentModal}
                     setInitDispFlg = {setInitDispFlg}
                     task = {targetTask}
                 />

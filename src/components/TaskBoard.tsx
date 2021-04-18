@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useState, useEffect} from 'react';
 import TaskList from '../components/TaskList'
-import { Task } from './interface';
+import { Task, TaskComment } from './interface';
 import Router from 'next/router';
 import Axios from "axios";
 import styles from '../styles/TaskBoard.module.css';
@@ -10,7 +10,8 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 interface TaskBoardProps {
     initDispFlg: Boolean;
     setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
-    show: (Task) => void;
+    showTaskUpdateModal: (Task) => void;
+    showTaskCommentModal: (Task) => void;
 }
 
 const TaskBoard: React.FC<TaskBoardProps> = (props) => {
@@ -36,9 +37,9 @@ const TaskBoard: React.FC<TaskBoardProps> = (props) => {
     return (
         <div className={styles.task_board}>
             <DndProvider backend={HTML5Backend}>
-                <TaskList taskList={taskListNotStarted} status={1} setInitDispFlg={props.setInitDispFlg} show={props.show} key="TaskList1"/>
-                <TaskList taskList={taskListInProgress} status={2} setInitDispFlg={props.setInitDispFlg} show={props.show} key="TaskList2" />
-                <TaskList taskList={taskListDone} status={3} setInitDispFlg={props.setInitDispFlg} show={props.show} key="TaskList3" />
+                <TaskList taskList={taskListNotStarted} status={1} setInitDispFlg={props.setInitDispFlg} showTaskUpdateModal={props.showTaskUpdateModal} showTaskCommentModal={props.showTaskCommentModal} key="TaskList1"/>
+                <TaskList taskList={taskListInProgress} status={2} setInitDispFlg={props.setInitDispFlg} showTaskUpdateModal={props.showTaskUpdateModal} showTaskCommentModal={props.showTaskCommentModal} key="TaskList2" />
+                <TaskList taskList={taskListDone} status={3} setInitDispFlg={props.setInitDispFlg} showTaskUpdateModal={props.showTaskUpdateModal} showTaskCommentModal={props.showTaskCommentModal} key="TaskList3" />
             </DndProvider>
         </div>
     )
@@ -69,10 +70,19 @@ function createTaskList(responseData: any[]): Task[]{
     let length: number = responseData.length;
     var taskList :Task[] = [];
     for (var i = 0 ; i < length ; i++) {
-        let task = new Task(responseData[i]["id"], responseData[i]["task"], responseData[i]["description"], responseData[i]["priority"], responseData[i]["status"], responseData[i]["planDate"], responseData[i]["doneDate"]);
+        let taskCommentList = createTaskCommentList(responseData[i]["comments"])
+        let task = new Task(responseData[i]["id"], responseData[i]["task"], responseData[i]["description"], responseData[i]["priority"], responseData[i]["status"], responseData[i]["planDate"], responseData[i]["doneDate"], taskCommentList);
         taskList.push(task);
     }
+    console.log(taskList)
     return taskList;
+}
+function createTaskCommentList(commentList: any[]): TaskComment[] {
+    var taskCommentList :TaskComment[] = [];
+    for (var i = 0 ; i < commentList.length ; i++) {
+        taskCommentList.push(new TaskComment(commentList[i]["id"], commentList[i]["taskId"], commentList[i]["username"], commentList[i]["comment"], commentList[i]["createDate"]))
+    }
+    return taskCommentList;
 }
 
 export default TaskBoard;

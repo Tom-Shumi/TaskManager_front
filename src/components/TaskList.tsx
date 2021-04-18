@@ -11,7 +11,8 @@ interface TaskListProps {
     taskList: Task[];
     status: number;
     setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
-    show: (Task) => void;
+    showTaskUpdateModal: (Task) => void;
+    showTaskCommentModal: (Task) => void;
 }
 
 const TaskList: React.FC<TaskListProps> = (props) => {
@@ -55,7 +56,8 @@ const TaskList: React.FC<TaskListProps> = (props) => {
                     <TaskItem
                         task={task_item}
                         setInitDispFlg={props.setInitDispFlg}
-                        show={props.show}
+                        showTaskUpdateModal={props.showTaskUpdateModal}
+                        showTaskCommentModal={props.showTaskCommentModal}
                         key={"TaskItem" + task_item.id}
                     />
                 ))
