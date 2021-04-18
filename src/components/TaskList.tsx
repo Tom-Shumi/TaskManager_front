@@ -52,13 +52,13 @@ const TaskList: React.FC<TaskListProps> = (props) => {
         <div className={styles.task_list + " " +  style_is_over} ref={drop}>
             <p className={styles.task_status}>{status_str} [{Object.keys(props.taskList).length}]</p>
             {
-                props.taskList.map(task_item => (
+                props.taskList.map(taskItem => (
                     <TaskItem
-                        task={task_item}
+                        task={taskItem}
                         setInitDispFlg={props.setInitDispFlg}
                         showTaskUpdateModal={props.showTaskUpdateModal}
                         showTaskCommentModal={props.showTaskCommentModal}
-                        key={"TaskItem" + task_item.id}
+                        key={"TaskItem" + taskItem.id}
                     />
                 ))
             }

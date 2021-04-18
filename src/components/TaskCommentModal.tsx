@@ -9,6 +9,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import ja from 'date-fns/locale/ja';
 import * as DatePickerUtil from './DatePickerUtil';
 import * as ConversionUtil from './ConversionUtil';
+import TaskComment from '../components/TaskComment';
+
 
 registerLocale('ja', ja)
 
@@ -33,10 +35,17 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
                 <Modal.Title>Comment</Modal.Title>
             </Modal.Header>
             <Modal.Body>
+            {
+                props.task.comments.map(taskComment => (
+                    <TaskComment
+                        id={taskComment.id}
+                        taskId={taskComment.taskId}
+                        comment={taskComment.comment}
+                    />
+                ))
+            }
             </Modal.Body>
             <Modal.Footer>
-               <Button variant="primary" className="button_sm" >execute</Button>
-                <Button variant="dark" onClick={props.close} className="button_sm" >close</Button>
             </Modal.Footer>
         </Modal>
     )
