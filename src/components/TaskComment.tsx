@@ -10,11 +10,13 @@ interface TaskCommentProps {
 const TaskComment: React.FC<TaskCommentProps> = (props) => {
 
     return (
-        <div className={styles.task_comment} key={"taskComment" + props.id}>
+        <div className={styles.task_comment}>
             <p>
                 {props.comment}
-                <i className="fa fa-trash faa-wrench animated-hover" />
-                <i className="fa fa-edit faa-wrench animated-hover" />
+                <div className={styles.task_comment_icons}>
+                    <div className={styles.task_comment_icon}><i className="fa fa-edit faa-wrench animated-hover" /></div>
+                    <div className={styles.task_comment_icon}><i className="fa fa-trash faa-wrench animated-hover" /></div>
+                </div>
             </p>
         </div>
     )

@@ -41,6 +41,7 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
                         id={taskComment.id}
                         taskId={taskComment.taskId}
                         comment={taskComment.comment}
+                        key={"taskComment" + taskComment.id}
                     />
                 ))
             }

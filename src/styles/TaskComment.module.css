@@ -15,3 +15,12 @@
     text-align: left;
     cursor : pointer;
 }
+
+.task_comment_icons{
+    margin-left: 85%;
+}
+
+.task_comment_icon{
+    padding-left: 10px;
+    padding-right: 10px;
+}
