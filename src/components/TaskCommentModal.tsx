@@ -10,6 +10,7 @@ import ja from 'date-fns/locale/ja';
 import * as DatePickerUtil from './DatePickerUtil';
 import * as ConversionUtil from './ConversionUtil';
 import TaskComment from '../components/TaskComment';
+import styles from '../styles/TaskComment.module.css';
 
 
 registerLocale('ja', ja)
@@ -35,6 +36,18 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
                 <Modal.Title>Comment</Modal.Title>
             </Modal.Header>
             <Modal.Body>
+            <Form>
+                <Row>
+                    <Col xs={12} className="modal_input">
+                        <Form.Control as="textarea" rows={2} />
+                    </Col>
+                    <div className={styles.task_comment_button_frame}>
+                        <div className={styles.task_comment_button}><Button variant="primary" className="button_sm" >save</Button></div>
+                        <div className={styles.task_comment_button}><Button variant="outline-dark" className="button_sm" >cancel</Button></div>
+                    </div>
+                    <hr />
+                </Row>
+            </Form>
             {
                 props.task.comments.map(taskComment => (
                     <TaskComment
@@ -47,6 +60,7 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
             }
             </Modal.Body>
             <Modal.Footer>
+                <Button variant="dark" onClick={props.close} className="button_sm" >close</Button>
             </Modal.Footer>
         </Modal>
     )

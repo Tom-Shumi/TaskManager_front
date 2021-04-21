@@ -24,3 +24,14 @@
     padding-left: 10px;
     padding-right: 10px;
 }
+
+.task_comment_button_frame{
+    margin-left: 60%;
+    margin-top: 2%;
+    display: flex;
+}
+
+.task_comment_button{
+    margin-left: 5%;
+    margin-right: 5%;
+}
