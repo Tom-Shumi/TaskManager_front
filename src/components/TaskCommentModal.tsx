@@ -24,12 +24,21 @@ interface TaskCommentModalProps {
 
 
 const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
+    const [saveComment, setSaveComment] = useState<string>("");
 　　
     // 初期表示処理
     useEffect(() => {        
 
     }, []);
   
+    const handleChangeSaveComment = () => {
+        return e => setSaveComment(e.target.value);
+    }
+
+    const clearSaveComment = () => {
+        return setSaveComment("");
+    }
+
     return (
         <Modal show={true} onHide={props.close} key='taskCommentModal'>
             <Modal.Header closeButton>
@@ -39,11 +48,11 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
             <Form>
                 <Row>
                     <Col xs={12} className="modal_input">
-                        <Form.Control as="textarea" rows={2} />
+                        <Form.Control as="textarea" rows={2} value={saveComment} onChange={handleChangeSaveComment()}/>
                     </Col>
                     <div className={styles.task_comment_button_frame}>
                         <div className={styles.task_comment_button}><Button variant="primary" className="button_sm" >save</Button></div>
-                        <div className={styles.task_comment_button}><Button variant="outline-dark" className="button_sm" >cancel</Button></div>
+                        <div className={styles.task_comment_button}><Button variant="outline-dark" className="button_sm" onClick={clearSaveComment} >clear</Button></div>
                     </div>
                     <hr />
                 </Row>
