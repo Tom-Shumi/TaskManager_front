@@ -11,6 +11,7 @@ import * as DatePickerUtil from './DatePickerUtil';
 import * as ConversionUtil from './ConversionUtil';
 import TaskComment from '../components/TaskComment';
 import styles from '../styles/TaskComment.module.css';
+import { TaskComment as TaskCommentClass } from './interface';
 
 
 registerLocale('ja', ja)
@@ -24,19 +25,39 @@ interface TaskCommentModalProps {
 
 
 const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
-    const [saveComment, setSaveComment] = useState<string>("");
+    const [inputComment, setInputComment] = useState<string>("");
+    const [comments, setComments] = useState<TaskCommentClass[]>(props.task.comments);
 　　
-    // 初期表示処理
+    // cookieを使用するaxios生成
+    let client = Axios.create({ withCredentials: true });
+
+   // 初期表示処理
     useEffect(() => {        
 
     }, []);
   
-    const handleChangeSaveComment = () => {
-        return e => setSaveComment(e.target.value);
+    const handleChangeInputComment = () => {
+        return e => setInputComment(e.target.value);
     }
 
-    const clearSaveComment = () => {
-        return setSaveComment("");
+    const saveComment = () => {
+        var params = {
+            comment: inputComment
+        }
+        var jsonParams = JSON.stringify(params);
+        client.post(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK_COMMENT + props.task.id
+            , jsonParams
+            , {headers: {'content-type': 'application/json'}})
+        .then( response => {
+            // TODO 一覧にコメントセット
+
+        }).catch(() => {
+            Router.push('/Error?400');
+        })
+    }
+
+    const clearInputComment = () => {
+        return setInputComment("");
     }
 
     return (
@@ -48,17 +69,17 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
             <Form>
                 <Row>
                     <Col xs={12} className="modal_input">
-                        <Form.Control as="textarea" rows={2} value={saveComment} onChange={handleChangeSaveComment()}/>
+                        <Form.Control as="textarea" rows={2} value={inputComment} onChange={handleChangeInputComment()}/>
                     </Col>
                     <div className={styles.task_comment_button_frame}>
-                        <div className={styles.task_comment_button}><Button variant="primary" className="button_sm" >save</Button></div>
-                        <div className={styles.task_comment_button}><Button variant="outline-dark" className="button_sm" onClick={clearSaveComment} >clear</Button></div>
+                        <div className={styles.task_comment_button}><Button variant="primary" className="button_sm" onClick={saveComment} >save</Button></div>
+                        <div className={styles.task_comment_button}><Button variant="outline-dark" className="button_sm" onClick={clearInputComment} >clear</Button></div>
                     </div>
                     <hr />
                 </Row>
             </Form>
             {
-                props.task.comments.map(taskComment => (
+                comments.map(taskComment => (
                     <TaskComment
                         id={taskComment.id}
                         taskId={taskComment.taskId}
