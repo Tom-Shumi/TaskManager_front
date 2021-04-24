@@ -49,8 +49,11 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
             , jsonParams
             , {headers: {'content-type': 'application/json'}})
         .then( response => {
-            // TODO 一覧にコメントセット
-
+            props.task.comments.unshift(
+                new TaskCommentClass(response.data["id"], response.data["taskId"], response.data["username"], response.data["comment"], response.data["createDate"])
+            );
+            setComments(props.task.comments);
+            setInputComment("");
         }).catch(() => {
             Router.push('/Error?400');
         })
