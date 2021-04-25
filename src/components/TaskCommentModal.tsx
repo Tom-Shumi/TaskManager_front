@@ -3,34 +3,37 @@ import {Modal, Button, Form, Row, Col} from 'react-bootstrap';
 import Axios from "axios";
 import Router from 'next/router';
 import { Task } from '../components/interface';
-import DatePicker, { registerLocale } from "react-datepicker";
-import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
-import ja from 'date-fns/locale/ja';
-import * as DatePickerUtil from './DatePickerUtil';
-import * as ConversionUtil from './ConversionUtil';
 import TaskComment from '../components/TaskComment';
 import styles from '../styles/TaskComment.module.css';
 import { TaskComment as TaskCommentClass } from './interface';
 
-
-registerLocale('ja', ja)
-
-
 interface TaskCommentModalProps {
     close: () => void;
-    setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
+    _setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
     task: Task;
 }
 
 
 const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
     const [inputComment, setInputComment] = useState<string>("");
-    const [comments, setComments] = useState<TaskCommentClass[]>(props.task.comments);
+    const [comments, setComments] = useState<TaskCommentClass[]>([]);
+    const [initDispFlg, setInitDispFlg] = useState<boolean>(true);
 　　
+    useEffect(() => {
+        setInitDispFlg(false);
+        clearInputComment();
+        callGetTaskCommentList();
+    }, [initDispFlg]);
+
     // cookieを使用するaxios生成
     let client = Axios.create({ withCredentials: true });
   
+    const callGetTaskCommentList = () => {
+        var res: Promise<TaskCommentClass[]> = getTaskCommentList(props.task.id);
+        res.then(ret => setComments(ret));
+    }
+
     const handleChangeInputComment = () => {
         return e => setInputComment(e.target.value);
     }
@@ -44,11 +47,7 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
             , jsonParams
             , {headers: {'content-type': 'application/json'}})
         .then( response => {
-            props.task.comments.unshift(
-                new TaskCommentClass(response.data["id"], response.data["taskId"], response.data["username"], response.data["comment"], response.data["createDate"])
-            );
-            setComments(props.task.comments);
-            setInputComment("");
+            setInitDispFlg(true);
         }).catch(() => {
             Router.push('/Error?400');
         })
@@ -77,11 +76,10 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
                 </Row>
             </Form>
             {
-                comments.map(taskComment => (
+                comments.map((taskComment) => (
                     <TaskComment
-                        id={taskComment.id}
-                        taskId={taskComment.taskId}
-                        comment={taskComment.comment}
+                        taskComment={taskComment}
+                        setInitDispFlg={setInitDispFlg}
                         key={"taskComment" + taskComment.id}
                     />
                 ))
@@ -92,6 +90,31 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
             </Modal.Footer>
         </Modal>
     )
+}
+
+// 各apiを呼び出しタスクコメントリストを取得する
+async function getTaskCommentList(taskId){
+    let client = Axios.create({ withCredentials: true });
+    var taskCommentList :TaskCommentClass[] = [];
+    try {
+        const res = await client.get(`${process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK_COMMENT}${taskId}`);
+
+        taskCommentList = createTaskCommentList(res.data);
+    } catch(error){
+        Router.push('/Error?400');
+    }
+    return taskCommentList;
+}
+
+function createTaskCommentList(commentList: any[]): TaskCommentClass[] {
+    var taskCommentList :TaskCommentClass[] = [];
+    if (commentList == null) {
+        return taskCommentList;
+    }
+    for (var i = 0 ; i < commentList.length ; i++) {
+        taskCommentList.push(new TaskCommentClass(commentList[i]["id"], commentList[i]["taskId"], commentList[i]["username"], commentList[i]["comment"], commentList[i]["createDate"]))
+    }
+    return taskCommentList;
 }
 
 export default TaskCommentModal;

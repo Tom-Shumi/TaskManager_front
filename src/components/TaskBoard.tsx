@@ -70,21 +70,10 @@ function createTaskList(responseData: any[]): Task[]{
     let length: number = responseData.length;
     var taskList :Task[] = [];
     for (var i = 0 ; i < length ; i++) {
-        let taskCommentList = createTaskCommentList(responseData[i]["comments"])
-        let task = new Task(responseData[i]["id"], responseData[i]["task"], responseData[i]["description"], responseData[i]["priority"], responseData[i]["status"], responseData[i]["planDate"], responseData[i]["doneDate"], taskCommentList);
+        let task = new Task(responseData[i]["id"], responseData[i]["task"], responseData[i]["description"], responseData[i]["priority"], responseData[i]["status"], responseData[i]["planDate"], responseData[i]["doneDate"], []);
         taskList.push(task);
     }
     return taskList;
-}
-function createTaskCommentList(commentList: any[]): TaskComment[] {
-    var taskCommentList :TaskComment[] = [];
-    if (commentList == null) {
-        return taskCommentList;
-    }
-    for (var i = 0 ; i < commentList.length ; i++) {
-        taskCommentList.push(new TaskComment(commentList[i]["id"], commentList[i]["taskId"], commentList[i]["username"], commentList[i]["comment"], commentList[i]["createDate"]))
-    }
-    return taskCommentList;
 }
 
 export default TaskBoard;
