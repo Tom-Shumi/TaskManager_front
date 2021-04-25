@@ -30,11 +30,6 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
 　　
     // cookieを使用するaxios生成
     let client = Axios.create({ withCredentials: true });
-
-   // 初期表示処理
-    useEffect(() => {        
-
-    }, []);
   
     const handleChangeInputComment = () => {
         return e => setInputComment(e.target.value);
