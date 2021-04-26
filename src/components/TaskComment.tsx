@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import styles from '../styles/TaskComment.module.css';
 import { TaskComment as TaskCommentClass } from './interface';
+import {Form} from 'react-bootstrap';
 import Router from 'next/router';
 import Axios from "axios";
 
@@ -10,9 +11,22 @@ interface TaskCommentProps {
 }
 
 const TaskComment: React.FC<TaskCommentProps> = (props) => {
+    const [updateFlg, setUpdateFlg] = useState<boolean>(false);
+    const [inputComment, setInputComment] = useState<string>(props.taskComment.comment);
 
     // cookieを使用するaxios生成
     let client = Axios.create({ withCredentials: true });
+
+    const handleChangeInputComment = () => {
+        return e => setInputComment(e.target.value);
+    }
+
+    let comment = [];
+    if (updateFlg) {
+        comment.push(<Form.Control type="text" value={inputComment} onChange={handleChangeInputComment()} key={"comment" + props.taskComment.id} />);
+    } else {
+        comment.push(props.taskComment.comment);
+    }
 
     const deleteTaskComment = () => {
         if(confirm("Do you want to delete it?")){
@@ -26,12 +40,17 @@ const TaskComment: React.FC<TaskCommentProps> = (props) => {
     }
 
     const updateTaskComment = () => {
+        if (updateFlg) {
+
+        } else {
+            setUpdateFlg(true);
+        }
     }
 
     return (
         <div className={styles.task_comment}>
             <div>
-                {props.taskComment.comment}
+                {comment}
                 <div className={styles.task_comment_icons}>
                     <div className={styles.task_comment_icon}><i onClick={updateTaskComment} className="fa fa-edit faa-wrench animated-hover" /></div>
                     <div className={styles.task_comment_icon}><i onClick={deleteTaskComment} className="fa fa-trash faa-wrench animated-hover" /></div>
