@@ -21,11 +21,8 @@ const TaskComment: React.FC<TaskCommentProps> = (props) => {
         return e => setInputComment(e.target.value);
     }
 
-    let comment = [];
-    if (updateFlg) {
-        comment.push(<Form.Control type="text" value={inputComment} onChange={handleChangeInputComment()} key={"comment" + props.taskComment.id} />);
-    } else {
-        comment.push(props.taskComment.comment);
+    const cancelTaskCommentEdit = () => {
+        setUpdateFlg(false);
     }
 
     const deleteTaskComment = () => {
@@ -45,6 +42,14 @@ const TaskComment: React.FC<TaskCommentProps> = (props) => {
         } else {
             setUpdateFlg(true);
         }
+    }
+
+    let comment = [];
+    if (updateFlg) {
+        comment.push(<div className={styles.task_comment_cancel_icon}　key={"commentCancel" + props.taskComment.id}><i onClick={cancelTaskCommentEdit} className="fa fa-times faa-wrench animated-hover" /></div>);
+        comment.push(<Form.Control as="textarea" rows={2} cols={40} value={inputComment} onChange={handleChangeInputComment} key={"comment" + props.taskComment.id} />);
+    } else {
+        comment.push(props.taskComment.comment);
     }
 
     return (

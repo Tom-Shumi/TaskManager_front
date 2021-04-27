@@ -12,6 +12,11 @@
     cursor : pointer;
 }
 
+.task_comment_cancel_icon{
+    float: right;
+    cursor : pointer;
+}
+
 .task_comment_icons{
     margin-left: 85%;
 }
