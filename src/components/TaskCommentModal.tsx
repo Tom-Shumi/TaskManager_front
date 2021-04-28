@@ -57,6 +57,11 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
         return setInputComment("");
     }
 
+    const loadNextComment = () => {
+        let maxCommentId = comments[comments.length - 1].id
+        alert(maxCommentId)
+    }
+
     return (
         <Modal show={true} onHide={props.close} key='taskCommentModal'>
             <Modal.Header closeButton>
@@ -84,6 +89,7 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
                     />
                 ))
             }
+            <div className={styles.task_comment_load} onClick={loadNextComment}><i className="fa fa-arrow-circle-down faa-wrench animated-hover" /></div>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="dark" onClick={props.close} className="button_sm" >close</Button>
