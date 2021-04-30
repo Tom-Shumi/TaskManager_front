@@ -106,3 +106,18 @@ h1 {
     border: 1px solid rgb(165, 181, 201);
     background-color: rgb(241, 241, 241);
 }
+
+.div_link {
+    position: relative;
+    margin-bottom: 50px;
+}
+
+.div_link_left {
+    position: absolute;
+    left: 0;
+}
+
+.div_link_right {
+    position: absolute;
+    right: 0;
+}

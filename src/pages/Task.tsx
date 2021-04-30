@@ -60,9 +60,18 @@ const Task: React.FC = () => {
                 showTaskUpdateModal = {showTaskUpdateModal}
                 showTaskCommentModal = {showTaskCommentModal} />
             <br />
-            <Link href="/">
-                <a>＜＜ Back to login page</a>
-            </Link>
+            <div className="div_link">
+                <div className="div_link_left">
+                    <Link href="/">
+                        <a>＜＜ Back to Login page</a>
+                    </Link>
+                </div>
+                <div className="div_link_right">
+                    <Link href="/Graph">
+                        <a> Go to Graph page ＞＞</a>
+                    </Link>
+                </div>
+            </div>
             {taskCreateModalDispFlg && 
                 <TaskEditModal 
                     close = {closeTaskCreateModal}
@@ -82,7 +91,6 @@ const Task: React.FC = () => {
             {taskCommentModalDispFlg && 
                 <TaskCommentModal 
                     close = {closeTaskCommentModal}
-                    setInitDispFlg = {setInitDispFlg}
                     task = {targetTask}
                 />
             }

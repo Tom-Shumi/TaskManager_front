@@ -10,7 +10,6 @@ import { TaskComment as TaskCommentClass } from './interface';
 
 interface TaskCommentModalProps {
     close: () => void;
-    _setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
     task: Task;
 }
 
