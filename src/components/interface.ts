@@ -36,6 +36,16 @@ export class TaskComment {
   }
 }
 
+export class TaskGraph {
+  date: string;
+  count: number;
+
+  constructor(date: string, count: number) {
+    this.date = date;
+    this.count = count;
+  }
+}
+
 export const ItemTypes = {
   TASK_ITEM: 'task_item',
 }
