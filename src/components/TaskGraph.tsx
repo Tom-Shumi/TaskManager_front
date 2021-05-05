@@ -31,61 +31,41 @@ const TaskGraph: React.FC<TaskGraphProps> = (props) => {
     res.then(ret => setCommentGraphList(ret[2]));
   }
 
-      /** グラフデータ */
-  const graphData = {
-    labels: [
-      // 軸ラベル
-      // 各ラベルを配列にすることで軸ラベルが改行されて表示される
-      ['2019年', '1月'],
-      ['2019年', '2月'],
-      ['2019年', '3月'],
-      ['2019年', '4月'],
-      ['2019年', '5月'],
-      ['2019年', '6月'],
-      ['2019年', '7月'],
-      ['2019年', '8月'],
-      ['2019年', '9月'],
-      ['2019年', '10月'],
-      ['2019年', '11月'],
-      ['2019年', '12月'],
-    ],
+  let planTaskGraphLabel = [];
+  planTaskGraphList.map(taskGraph => planTaskGraphLabel.push(taskGraph.date));
+
+  let planTaskGraphDataSet = [];
+  planTaskGraphList.map(taskGraph => planTaskGraphDataSet.push(taskGraph.count));
+
+  const planTaskGraphData = {
+    labels: planTaskGraphLabel,
     datasets: [
-      // 表示するデータセット
       {
-        data: [5.6, 7.2, 10.6, 13.6, 20, 21.8, 24.1, 28.4, 25.1, 19.4, 13.1, 8.5],
+        data: planTaskGraphDataSet,
         backgroundColor: 'rgba(30, 144, 255, 1)',
-        label: '月別合計降水量(mm)',
+        label: '完了予定のタスク(件数)',
       },
     ],
   };
 
-  /** グラフオプション */
-  const graphOption = {
+  const planTaskGraphOption = {
     scales: {
       xAxes: [
-        // x軸オプション
         {
           scaleLabel: {
-            // x軸ラベルオプション
-            display: true,
-            labelString: '2019年',
+            display: true
           },
         },
       ],
       yAxes: [
-        // y軸オプション
         {
           scaleLabel: {
-            // y軸ラベルオプション
             display: true,
-            labelString: '合計降水量(mm)',
+            labelString: 'タスク(件数)',
           },
           ticks: {
-            // y軸メモリオプション
             beginAtZero: true,
-            callback: function (value, index, values) {
-              return `${value}(mm)`;
-            },
+            callback: function(value) {if (value % 1 === 0) {return value;}},
           },
         },
       ],
@@ -94,7 +74,7 @@ const TaskGraph: React.FC<TaskGraphProps> = (props) => {
 
     return (
         <div>
-            <Bar type="" data={graphData} options={graphOption} />
+            <Bar type="" data={planTaskGraphData} options={planTaskGraphOption} />
         </div>
     )
 }
