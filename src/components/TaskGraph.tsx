@@ -1,12 +1,8 @@
-import React, { Dispatch, SetStateAction, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Bar } from 'react-chartjs-2';
-import TaskList from '../components/TaskList'
 import { TaskGraph as TaskGraphClass } from './interface';
 import Router from 'next/router';
 import Axios from "axios";
-import styles from '../styles/TaskBoard.module.css';
-import { DndProvider } from 'react-dnd';
-import {HTML5Backend} from 'react-dnd-html5-backend';
 
 interface TaskGraphProps {
 
@@ -61,22 +57,25 @@ const TaskGraph: React.FC<TaskGraphProps> = (props) => {
         {
           scaleLabel: {
             display: true,
-            labelString: 'タスク(件数)',
+            labelString: 'タスク(件数)'
           },
           ticks: {
             beginAtZero: true,
             callback: function(value) {if (value % 1 === 0) {return value;}},
-          },
-        },
-      ],
-    },
+            display: false
+          }
+        }
+      ]
+    }
   };
 
-    return (
+  console.log("done")
+
+  return (
         <div>
             <Bar type="" data={planTaskGraphData} options={planTaskGraphOption} />
         </div>
-    )
+  )
 }
 
 async function getTaskGraphInfo(){
