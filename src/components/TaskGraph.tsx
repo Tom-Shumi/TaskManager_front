@@ -39,41 +39,37 @@ const TaskGraph: React.FC<TaskGraphProps> = (props) => {
       {
         data: planTaskGraphDataSet,
         backgroundColor: 'rgba(30, 144, 255, 1)',
-        label: '完了予定のタスク(件数)',
+        label: '完了予定タスク(件数)',
       },
     ],
   };
 
-  const planTaskGraphOption = {
-    scales: {
-      xAxes: [
-        {
-          scaleLabel: {
-            display: true
-          },
-        },
-      ],
-      yAxes: [
-        {
-          scaleLabel: {
-            display: true,
-            labelString: 'タスク(件数)'
-          },
-          ticks: {
-            beginAtZero: true,
-            callback: function(value) {if (value % 1 === 0) {return value;}},
-            display: false
-          }
-        }
-      ]
-    }
+  let doneTaskGraphLabel = [];
+  doneTaskGraphList.map(taskGraph => doneTaskGraphLabel.push(taskGraph.date));
+
+  let doneTaskGraphDataSet = [];
+  doneTaskGraphList.map(taskGraph => doneTaskGraphDataSet.push(taskGraph.count));
+
+  const doneTaskGraphData = {
+    labels: doneTaskGraphLabel,
+    datasets: [
+      {
+        data: doneTaskGraphDataSet,
+        backgroundColor: 'rgba(255, 200, 0, 1)',
+        label: '完了タスク(件数)',
+      },
+    ],
   };
 
   console.log("done")
 
   return (
         <div>
-            <Bar type="" data={planTaskGraphData} options={planTaskGraphOption} />
+          ■日毎の完了予定タスク数
+          <Bar type="" data={planTaskGraphData} options={{}}/>
+          <br />
+          ■日毎の完了タスク数
+          <Bar type="" data={doneTaskGraphData} options={{}} />
         </div>
   )
 }
