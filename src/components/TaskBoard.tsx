@@ -52,9 +52,9 @@ async function getTaskList(){
     var lisInProgress :Task[] = [];
     var listDone :Task[] = [];
     try {
-        const resNotStarted = await getApiClient().get(process.env.NEXT_PUBLIC_API_TASK + "1");
-        const resInProgress = await getApiClient().get(process.env.NEXT_PUBLIC_API_TASK + "2");
-        const resDone = await getApiClient().get(process.env.NEXT_PUBLIC_API_TASK + "3");
+        const resNotStarted = await getApiClient().get(process.env.NEXT_PUBLIC_API_TASK + "/1");
+        const resInProgress = await getApiClient().get(process.env.NEXT_PUBLIC_API_TASK + "/2");
+        const resDone = await getApiClient().get(process.env.NEXT_PUBLIC_API_TASK + "/3");
 
         listNotStarted = createTaskList(resNotStarted.data);
         lisInProgress = createTaskList(resInProgress.data);
