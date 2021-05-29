@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import Router from 'next/router';
 import {Container, Button, Form} from 'react-bootstrap';
 import styles from '../styles/Index.module.css';
-import {getApiClient} from '../components/Authentication';
+import Axios from "axios";
 
 const index: React.FC = () => {
 
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     // cookieを使用するaxios生成
-    let client = getApiClient();
+    let client = Axios.create({withCredentials: true });
 
     // ログイン処理
     const login = () => {
