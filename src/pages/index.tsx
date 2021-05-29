@@ -21,18 +21,20 @@ const index: React.FC = () => {
 
     // ログインapi実行
     const postToken = () => {
-        var params = {
-            username: username,
-            password: password
-        }
-        client.post(`${process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TOKEN}`
-            , JSON.stringify(params)
-            , {headers: {'content-type': 'application/json'}})
-        .then( _ => {
+        var params = new URLSearchParams();
+        params.append('username', username);
+        params.append('password', password);
+
+        client.post(`${process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_LOGIN}`, params)
+        .then( response => {
             console.log('login success');
             // セッションにログイン情報保持
             sessionStorage.clear();
             sessionStorage.setItem('n', username);
+            sessionStorage.setItem('t', response.headers['authorization']);
+            console.log(response.headers)
+            console.log(response.headers['authorization'])
+            
 
             Router.push('/Task');
 
