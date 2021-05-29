@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import {Modal, Button, Form, Row, Col} from 'react-bootstrap';
-import Axios from "axios";
+import {getApiClient} from '../components/Authentication';
 import Router from 'next/router';
 import { Task } from '../components/interface';
 import DatePicker, { registerLocale } from "react-datepicker";
@@ -61,7 +61,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
     }
 
     // cookieを使用するaxios生成
-    let client = Axios.create({ withCredentials: true });
+    let client = getApiClient();
 
     // executeボタン押下処理
     const clickExecute = () => {

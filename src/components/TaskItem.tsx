@@ -1,7 +1,7 @@
 import React , { Dispatch, SetStateAction } from 'react';
 import styles from '../styles/TaskItem.module.css';
 import { Task, ItemTypes } from './interface';
-import Axios from "axios";
+import {getApiClient} from '../components/Authentication';
 import Router from 'next/router';
 import { useDrag } from 'react-dnd';
 import * as ConversionUtil from './ConversionUtil';
@@ -41,7 +41,7 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
     }))
 
     // cookieを使用するaxios生成
-    let client = Axios.create({ withCredentials: true });
+    let client = getApiClient();
 
     const deleteTask = (e) => {
         if(confirm("Do you want to delete it?")){

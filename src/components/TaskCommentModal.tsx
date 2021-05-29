@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import {Modal, Button, Form, Row, Col} from 'react-bootstrap';
-import Axios from "axios";
+import {getApiClient} from '../components/Authentication';
 import Router from 'next/router';
 import { Task } from '../components/interface';
 import "react-datepicker/dist/react-datepicker.css";
@@ -26,7 +26,7 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
     }, [initDispFlg]);
 
     // cookieを使用するaxios生成
-    let client = Axios.create({ withCredentials: true });
+    let client = getApiClient();
   
     const callGetTaskCommentList = () => {
         var res: Promise<TaskCommentClass[]> = getTaskCommentList(props.task.id);
@@ -42,7 +42,7 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
             comment: inputComment
         }
         var jsonParams = JSON.stringify(params);
-        client.post(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK_COMMENT + props.task.id
+        client.post(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK_COMMENT + '/' + props.task.id
             , jsonParams
             , {headers: {'content-type': 'application/json'}})
         .then( response => {
@@ -59,7 +59,7 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
     const loadNextComment = () => {
         let maxCommentId = comments[comments.length - 1].id
         try {
-            client.get(`${process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK_COMMENT}${props.task.id}?nextKey=${maxCommentId}`)
+            client.get(`${process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK_COMMENT}/${props.task.id}?nextKey=${maxCommentId}`)
                 .then(res => {
                     let taskCommentList = createTaskCommentList(res.data);
                     setComments([...comments, ...taskCommentList])
@@ -107,10 +107,10 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
 
 // 各apiを呼び出しタスクコメントリストを取得する
 async function getTaskCommentList(taskId){
-    let client = Axios.create({ withCredentials: true });
+    let client = getApiClient();
     var taskCommentList :TaskCommentClass[] = [];
     try {
-        const res = await client.get(`${process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK_COMMENT}${taskId}`);
+        const res = await client.get(`${process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK_COMMENT}/${taskId}`);
 
         taskCommentList = createTaskCommentList(res.data);
     } catch(error){
