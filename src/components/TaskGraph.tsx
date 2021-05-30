@@ -80,7 +80,7 @@ async function getTaskGraphInfo(){
   var doneTaskGraphList :TaskGraphClass[] = [];
   var commentGraphList :TaskGraphClass[] = [];
   try {
-      const taskGraphInfo = await client.get(process.env.NEXT_PUBLIC_API_SERVER + '/' + process.env.NEXT_PUBLIC_API_TASK_GRAPH);
+      const taskGraphInfo = await client.get(process.env.NEXT_PUBLIC_API_TASK_GRAPH);
       
       planTaskGraphList = createTaskGraphList(taskGraphInfo.data["planTask"]);
       doneTaskGraphList = createTaskGraphList(taskGraphInfo.data["doneTask"]);
