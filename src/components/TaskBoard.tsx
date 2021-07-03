@@ -2,10 +2,10 @@ import React, { Dispatch, SetStateAction, useState, useEffect} from 'react';
 import TaskList from '../components/TaskList'
 import { Task, TaskComment } from './interface';
 import Router from 'next/router';
-import Axios from "axios";
 import styles from '../styles/TaskBoard.module.css';
 import { DndProvider } from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
+import {getApiClient} from '../components/Authentication';
 
 interface TaskBoardProps {
     initDispFlg: Boolean;
@@ -47,14 +47,13 @@ const TaskBoard: React.FC<TaskBoardProps> = (props) => {
 
 // 各apiを呼び出しタスクリストを取得する
 async function getTaskList(){
-    let client = Axios.create({ withCredentials: true });
     var listNotStarted :Task[] = [];
     var lisInProgress :Task[] = [];
     var listDone :Task[] = [];
     try {
-        const resNotStarted = await client.get(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK + "/1");
-        const resInProgress = await client.get(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK + "/2");
-        const resDone = await client.get(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK + "/3");
+        const resNotStarted = await getApiClient().get(process.env.NEXT_PUBLIC_API_TASK + "/1");
+        const resInProgress = await getApiClient().get(process.env.NEXT_PUBLIC_API_TASK + "/2");
+        const resDone = await getApiClient().get(process.env.NEXT_PUBLIC_API_TASK + "/3");
 
         listNotStarted = createTaskList(resNotStarted.data);
         lisInProgress = createTaskList(resInProgress.data);

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Bar } from 'react-chartjs-2';
 import { TaskGraph as TaskGraphClass } from './interface';
 import Router from 'next/router';
-import Axios from "axios";
+import {getApiClient} from '../components/Authentication';
 
 interface TaskGraphProps {
 
@@ -75,12 +75,12 @@ const TaskGraph: React.FC<TaskGraphProps> = (props) => {
 }
 
 async function getTaskGraphInfo(){
-  let client = Axios.create({ withCredentials: true });
+  let client = getApiClient();
   var planTaskGraphList :TaskGraphClass[] = [];
   var doneTaskGraphList :TaskGraphClass[] = [];
   var commentGraphList :TaskGraphClass[] = [];
   try {
-      const taskGraphInfo = await client.get(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK_GRAPH);
+      const taskGraphInfo = await client.get(process.env.NEXT_PUBLIC_API_TASK_GRAPH);
       
       planTaskGraphList = createTaskGraphList(taskGraphInfo.data["planTask"]);
       doneTaskGraphList = createTaskGraphList(taskGraphInfo.data["doneTask"]);

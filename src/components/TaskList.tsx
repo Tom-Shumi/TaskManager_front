@@ -3,7 +3,7 @@ import TaskItem from '../components/TaskItem';
 import styles from '../styles/TaskList.module.css';
 import { ItemTypes, Task } from './interface';
 import { useDrop } from 'react-dnd';
-import Axios from "axios";
+import {getApiClient} from '../components/Authentication';
 import Router from 'next/router';
 import * as ConversionUtil from './ConversionUtil';
 
@@ -18,7 +18,7 @@ interface TaskListProps {
 const TaskList: React.FC<TaskListProps> = (props) => {
 
     // cookieを使用するaxios生成
-    let client = Axios.create({ withCredentials: true });
+    let client = getApiClient();
 
     const updateTaskStatus = (id: number, status: number) => {
         var params = {

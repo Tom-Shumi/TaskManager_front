@@ -3,7 +3,7 @@ import styles from '../styles/TaskComment.module.css';
 import { TaskComment as TaskCommentClass } from './interface';
 import {Form} from 'react-bootstrap';
 import Router from 'next/router';
-import Axios from "axios";
+import {getApiClient} from '../components/Authentication';
 
 interface TaskCommentProps {
     taskComment: TaskCommentClass;
@@ -15,7 +15,7 @@ const TaskComment: React.FC<TaskCommentProps> = (props) => {
     const [inputComment, setInputComment] = useState<string>(props.taskComment.comment);
 
     // cookieを使用するaxios生成
-    let client = Axios.create({ withCredentials: true });
+    let client = getApiClient();
 
     const handleChangeInputComment = () => {
         return e => setInputComment(e.target.value);
@@ -27,7 +27,7 @@ const TaskComment: React.FC<TaskCommentProps> = (props) => {
 
     const deleteTaskComment = () => {
         if(confirm("Do you want to delete it?")){
-            client.delete(`${process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK_COMMENT}${props.taskComment.taskId}/${props.taskComment.id}`)
+            client.delete(`${process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK_COMMENT}/${props.taskComment.taskId}/${props.taskComment.id}`)
             .then( response => {
                 props.setInitDispFlg(true);
             }).catch(() => {
@@ -43,7 +43,7 @@ const TaskComment: React.FC<TaskCommentProps> = (props) => {
             }
             var jsonParams = JSON.stringify(params);
 
-            client.put(`${process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK_COMMENT}${props.taskComment.taskId}/${props.taskComment.id}`
+            client.put(`${process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK_COMMENT}/${props.taskComment.taskId}/${props.taskComment.id}`
                 , jsonParams
                 , {headers: {'content-type': 'application/json'}})
             .then( response => {
