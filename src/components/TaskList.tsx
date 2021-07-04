@@ -50,7 +50,7 @@ const TaskList: React.FC<TaskListProps> = (props) => {
     var style_is_over = isOver ? "is_over" : "is_not_over"; 
     return (
         <div className={styles.task_list + " " +  style_is_over} ref={drop}>
-            <p className={styles.task_status}>{status_str} [{Object.keys(props.taskList).length}]</p>
+            <p className={styles.task_status}>{status_str} [ {Object.keys(props.taskList).length} ]</p>
             {
                 props.taskList.map(taskItem => (
                     <TaskItem
