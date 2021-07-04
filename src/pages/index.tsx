@@ -31,10 +31,6 @@ const index: React.FC = () => {
             // セッションにログイン情報保持
             sessionStorage.clear();
             sessionStorage.setItem('n', username);
-            sessionStorage.setItem('t', response.headers['authorization']);
-            console.log(response.headers)
-            console.log(response.headers['authorization'])
-            
 
             Router.push('/Task');
 

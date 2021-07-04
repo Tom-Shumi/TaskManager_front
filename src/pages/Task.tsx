@@ -66,11 +66,11 @@ const Task: React.FC = () => {
                         <a>＜＜ Back to Login page</a>
                     </Link>
                 </div>
-                <div className="div_link_right">
+                {/* <div className="div_link_right">
                     <Link href="/Graph">
                         <a> Go to Graph page ＞＞</a>
                     </Link>
-                </div>
+                </div> */}
             </div>
             {taskCreateModalDispFlg && 
                 <TaskEditModal 

@@ -6,11 +6,6 @@ const getSessionUsername = (): String => {
     return sessionStorage.getItem('n');
 }
 
-const getSessionJwtToken = (): String => {
-    return sessionStorage.getItem('t');
-}
-
-
 export const authentication = () => {
     const [username] = useState<String>(getSessionUsername());
     if (username == null){
@@ -27,8 +22,7 @@ export const getApiClient = () => {
     return Axios.create({
         baseURL: process.env.NEXT_PUBLIC_API_SERVER,
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': getSessionJwtToken()
+          'Content-Type': 'application/json'
         },
         withCredentials: true });
 }
