@@ -119,4 +119,14 @@ h1 {
 
 .div_link_right {
     display: initial;
+    text-align: right;
+    padding: 0px;
+}
+
+.margin_top_5 {
+    margin-top: 5px;
+}
+
+.cursor_pointer {
+    cursor : pointer;
 }

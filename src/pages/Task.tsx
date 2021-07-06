@@ -4,7 +4,7 @@ import Layout from '../components/Layout';
 import TaskBoard from '../components/TaskBoard';
 import TaskEditModal from '../components/TaskEditModal';
 import TaskCommentModal from '../components/TaskCommentModal';
-import {authentication} from '../components/Authentication';
+import {authentication, logout} from '../components/Authentication';
 import dynamic from "next/dynamic";
 import {Button} from 'react-bootstrap';
 import { Task as TaskClass } from '../components/interface';
@@ -56,16 +56,20 @@ const Task: React.FC = () => {
         <Layout title="Task Board.">
             <Container>
                 <Row>
-                    <Col xs={4}>
+                    <Col xs={4} className="margin_top_5">
                         <Button key="create" variant="primary" className="button_md" onClick={ () => showTaskCreateModal(null)}>create task</Button>
                     </Col>
                     <Col xs={8} className="div_link_right">
-                        <Link href="/Graph">
-                            <a> Go to Daily Task page ＞＞</a>
-                        </Link>
-                        <Link href="/Graph">
-                            <a> Go to Weekly Tasks page ＞＞</a>
-                        </Link>
+                        <div>
+                            <Link href="/Graph">
+                                <a> Go to Daily Task page ＞＞</a>
+                            </Link>
+                        </div>
+                        <div className="margin_top_5">
+                            <Link href="/Graph">
+                                <a> Go to Weekly Tasks page ＞＞</a>
+                            </Link>
+                        </div>
                     </Col>
                 </Row>
             </Container>
@@ -77,9 +81,7 @@ const Task: React.FC = () => {
             <br />
             <div className="div_link">
                 <div className="div_link_left">
-                    <Link href="/">
-                        <a>＜＜ Back to Login page</a>
-                    </Link>
+                    <a onClick={logout} href="#">＜＜ Logout</a>
                 </div>
             </div>
             {taskCreateModalDispFlg && 

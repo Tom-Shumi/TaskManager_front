@@ -13,6 +13,11 @@ export const authentication = () => {
     }
 }
 
+export const logout = () => {
+    sessionStorage.clear();
+    Router.push('/');
+}
+
 export const getUsername = () => {
     const [username] = useState<String>(getSessionUsername());
     return username;
