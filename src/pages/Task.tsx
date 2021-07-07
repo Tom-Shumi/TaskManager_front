@@ -61,7 +61,7 @@ const Task: React.FC = () => {
                     </Col>
                     <Col xs={8} className="div_link_right">
                         <div>
-                            <Link href="/Graph">
+                            <Link href="/DailyTask">
                                 <a> Go to Daily Task page ＞＞</a>
                             </Link>
                         </div>
