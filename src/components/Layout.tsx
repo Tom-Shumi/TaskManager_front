@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-
+import BurgerMenu from '../components/BurgerMenu';
 
 interface LayoutProps {
     title: string;
@@ -12,6 +12,7 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = (props) => {
     return (
         <div>
+            <BurgerMenu width={250}/>
             <Head>
                 <title>{props.title}</title>
                 <meta charSet='utf-8' />

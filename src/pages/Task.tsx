@@ -8,8 +8,6 @@ import {authentication, logout} from '../components/Authentication';
 import dynamic from "next/dynamic";
 import {Button} from 'react-bootstrap';
 import { Task as TaskClass } from '../components/interface';
-import {Container, Row, Col} from 'react-bootstrap';
-
 
 const Task: React.FC = () => {
     // タスク作成モーダル表示フラグ
@@ -54,25 +52,7 @@ const Task: React.FC = () => {
 
     return (
         <Layout title="Task Board.">
-            <Container>
-                <Row>
-                    <Col xs={4} className="margin_top_5">
-                        <Button key="create" variant="primary" className="button_md" onClick={ () => showTaskCreateModal(null)}>create task</Button>
-                    </Col>
-                    <Col xs={8} className="div_link_right">
-                        <div>
-                            <Link href="/DailyTask">
-                                <a> Go to Daily Task page ＞＞</a>
-                            </Link>
-                        </div>
-                        <div className="margin_top_5">
-                            <Link href="/Graph">
-                                <a> Go to Weekly Tasks page ＞＞</a>
-                            </Link>
-                        </div>
-                    </Col>
-                </Row>
-            </Container>
+            <Button key="create" variant="primary" className="button_md" onClick={ () => showTaskCreateModal(null)}>create task</Button>
             <TaskBoard
                 initDispFlg = {initDispFlg}
                 setInitDispFlg = {setInitDispFlg}

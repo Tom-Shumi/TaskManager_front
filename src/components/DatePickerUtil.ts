@@ -28,4 +28,10 @@ const parseDate = (dateStr) => {
     return Date.parse(dateStr);
   }
 }
-export {parseAsMoment, toUtcIso8601str, parseDate};
+
+const curentDateStrYYYYMMDD = () => {
+  let today = new Date();
+  return today.getFullYear() + " / " + (today.getMonth() + 1) + " / " + today.getDate();
+}
+
+export {parseAsMoment, toUtcIso8601str, parseDate, curentDateStrYYYYMMDD};
