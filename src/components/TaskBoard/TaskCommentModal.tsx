@@ -1,12 +1,12 @@
-import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Modal, Button, Form, Row, Col} from 'react-bootstrap';
-import {getApiClient} from '../components/Authentication';
+import {getApiClient} from '../util/AuthenticationUtil';
 import Router from 'next/router';
-import { Task } from '../components/interface';
+import { Task } from '../common/interface';
 import "react-datepicker/dist/react-datepicker.css";
-import TaskComment from '../components/TaskComment';
-import styles from '../styles/TaskComment.module.css';
-import { TaskComment as TaskCommentClass } from './interface';
+import TaskComment from './TaskComment';
+import styles from '../../styles/TaskComment.module.css';
+import { TaskComment as TaskCommentClass } from '../common/interface';
 
 interface TaskCommentModalProps {
     close: () => void;

@@ -1,9 +1,9 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import styles from '../styles/TaskComment.module.css';
-import { TaskComment as TaskCommentClass } from './interface';
+import styles from '../../styles/TaskComment.module.css';
+import { TaskComment as TaskCommentClass } from '../common/interface';
 import {Form} from 'react-bootstrap';
 import Router from 'next/router';
-import {getApiClient} from '../components/Authentication';
+import {getApiClient} from '../util/AuthenticationUtil';
 
 interface TaskCommentProps {
     taskComment: TaskCommentClass;

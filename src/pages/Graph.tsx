@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Layout from '../components/Layout';
-import TaskGraph from '../components/TaskGraph';
-import {authentication} from '../components/Authentication';
+import Layout from '../components/common/Layout';
+import TaskGraph from '../components/TaskBoard/TaskGraph';
+import {authentication} from '../components/util/AuthenticationUtil';
 import dynamic from "next/dynamic";
 
 

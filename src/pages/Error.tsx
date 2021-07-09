@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import Layout from '../components/Layout';
+import Layout from '../components/common/Layout';
 import { useState } from "react";
 import dynamic from "next/dynamic";
 

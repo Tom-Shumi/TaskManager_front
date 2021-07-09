@@ -1,10 +1,10 @@
 import React , { Dispatch, SetStateAction } from 'react';
-import styles from '../styles/TaskItem.module.css';
-import { Task, ItemTypes } from './interface';
-import {getApiClient} from '../components/Authentication';
+import styles from '../../styles/TaskItem.module.css';
+import { Task, ItemTypes } from '../common/interface';
+import {getApiClient} from '../util/AuthenticationUtil';
 import Router from 'next/router';
 import { useDrag } from 'react-dnd';
-import * as ConversionUtil from './ConversionUtil';
+import * as ConversionUtil from '../util/ConversionUtil';
 
 interface TaskItemProps {
     task: Task;

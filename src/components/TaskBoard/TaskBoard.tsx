@@ -1,11 +1,11 @@
 import React, { Dispatch, SetStateAction, useState, useEffect} from 'react';
-import TaskList from '../components/TaskList'
-import { Task, TaskComment } from './interface';
+import TaskList from './TaskList'
+import { Task, TaskComment } from '../common/interface';
 import Router from 'next/router';
-import styles from '../styles/TaskBoard.module.css';
+import styles from '../../styles/TaskBoard.module.css';
 import { DndProvider } from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
-import {getApiClient} from '../components/Authentication';
+import {getApiClient} from '../util/AuthenticationUtil';
 
 interface TaskBoardProps {
     initDispFlg: Boolean;

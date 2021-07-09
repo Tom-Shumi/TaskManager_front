@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { Bar } from 'react-chartjs-2';
-import { TaskGraph as TaskGraphClass } from './interface';
+import { TaskGraph as TaskGraphClass } from '../common/interface';
 import Router from 'next/router';
-import {getApiClient} from '../components/Authentication';
+import {getApiClient} from '../util/AuthenticationUtil';
 
 interface TaskGraphProps {
 

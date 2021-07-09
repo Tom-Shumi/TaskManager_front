@@ -99,6 +99,11 @@ h1 {
     margin-bottom: 10px;
 }
 
+.burger_menu_link_logout{
+    display: block;
+    margin-top: 50px;
+}
+
 .display_flex{
     display: flex;
 }

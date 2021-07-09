@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import Link from 'next/link';
-import Layout from '../components/Layout';
-import TaskBoard from '../components/TaskBoard';
-import TaskEditModal from '../components/TaskEditModal';
-import TaskCommentModal from '../components/TaskCommentModal';
-import {authentication, logout} from '../components/Authentication';
+import Layout from '../components/common/Layout';
+import TaskBoard from '../components/TaskBoard/TaskBoard';
+import TaskEditModal from '../components/TaskBoard/TaskEditModal';
+import TaskCommentModal from '../components/TaskBoard/TaskCommentModal';
+import {authentication, logout} from '../components/util/AuthenticationUtil';
 import dynamic from "next/dynamic";
 import {Button} from 'react-bootstrap';
-import { Task as TaskClass } from '../components/interface';
+import { Task as TaskClass } from '../components/common/interface';
 
 const Task: React.FC = () => {
     // タスク作成モーダル表示フラグ
@@ -58,12 +57,6 @@ const Task: React.FC = () => {
                 setInitDispFlg = {setInitDispFlg}
                 showTaskUpdateModal = {showTaskUpdateModal}
                 showTaskCommentModal = {showTaskCommentModal} />
-            <br />
-            <div className="div_link">
-                <div className="div_link_left">
-                    <a onClick={logout} href="#">＜＜ Logout</a>
-                </div>
-            </div>
             {taskCreateModalDispFlg && 
                 <TaskEditModal 
                     close = {closeTaskCreateModal}

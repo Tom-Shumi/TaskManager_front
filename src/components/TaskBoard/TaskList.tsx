@@ -1,11 +1,11 @@
 import React , { Dispatch, SetStateAction } from 'react';
-import TaskItem from '../components/TaskItem';
-import styles from '../styles/TaskList.module.css';
-import { ItemTypes, Task } from './interface';
+import TaskItem from './TaskItem';
+import styles from '../../styles/TaskList.module.css';
+import { ItemTypes, Task } from '../common/interface';
 import { useDrop } from 'react-dnd';
-import {getApiClient} from '../components/Authentication';
+import {getApiClient} from '../util/AuthenticationUtil';
 import Router from 'next/router';
-import * as ConversionUtil from './ConversionUtil';
+import * as ConversionUtil from '../util/ConversionUtil';
 
 interface TaskListProps {
     taskList: Task[];

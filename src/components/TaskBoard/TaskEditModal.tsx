@@ -1,14 +1,14 @@
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import {Modal, Button, Form, Row, Col} from 'react-bootstrap';
-import {getApiClient} from '../components/Authentication';
+import {getApiClient} from '../util/AuthenticationUtil';
 import Router from 'next/router';
-import { Task } from '../components/interface';
+import { Task } from '../common/interface';
 import DatePicker, { registerLocale } from "react-datepicker";
 import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
 import ja from 'date-fns/locale/ja';
-import * as DatePickerUtil from './DatePickerUtil';
-import * as ConversionUtil from './ConversionUtil';
+import * as DatePickerUtil from '../util/DatePickerUtil';
+import * as ConversionUtil from '../util/ConversionUtil';
 
 registerLocale('ja', ja)
 
