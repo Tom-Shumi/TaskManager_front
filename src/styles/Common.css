@@ -108,6 +108,10 @@ h1 {
     display: flex;
 }
 
+.display_inline{
+    display: inline;
+}
+
 .is_over {
     border: 1px solid #ffff00;
     background-color: #ffffe0;
@@ -136,6 +140,11 @@ h1 {
 
 .margin_top_5 {
     margin-top: 5px;
+}
+
+.margin_side_10 {
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .cursor_pointer {
