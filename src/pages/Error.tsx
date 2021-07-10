@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Layout from '../components/common/Layout';
 import { useState } from "react";
 import dynamic from "next/dynamic";
+import {logout} from '../components/util/AuthenticationUtil';
 
 const getErrorCd = (): String => {
     return window.location.search.substring(1);
@@ -26,9 +27,7 @@ const Error: React.FC = () => {
         <Layout title="Error.">
             {errorMsg}
             <br /><br />
-            <Link href="/">
-                <a>＜＜ Back to login page</a>
-            </Link>
+            <a onClick={logout} className="cursor_pointer">＜＜ Back to login page</a>
         </Layout>
     )
 }
