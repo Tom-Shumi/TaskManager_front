@@ -11,17 +11,17 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
     return (
         <div className={styles.daily_task_item}>
             <div className={styles.title}>アプリ開発 [Done]</div>
-            <Container>
-                <Row>
-                    <Col xs={4} className={styles.label}>[Quota] 2h</Col>
-                    <Col xs={4} className={styles.label}>[Achievement ratio] 80%</Col>
-                    <Col xs={4}>
-                        [Done time]
-                        <Form.Control type="text" className={styles.done_time_textbox}/> m
-                        <Button variant="primary" className={styles.done_time_button}>Done</Button>
-                    </Col>
-                </Row>
-            </Container>
+            <Row>
+                <Col xs={2} className={styles.quota_label}>[Quota] 2h</Col>
+                <Col xs={2} className={styles.label}>[Done] 1h</Col>
+                <Col xs={3} className={styles.label}>[Remaining] 1h</Col>
+                <Col xs={5}>
+                    [logged]
+                    <Form.Control type="text" className={styles.done_time_textbox}/> m
+                    <Button variant="primary" className={styles.done_time_button}>Done</Button>
+                </Col>
+            </Row>
+            
         </div>
     )
 }
