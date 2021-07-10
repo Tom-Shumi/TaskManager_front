@@ -6,8 +6,8 @@ import Axios from "axios";
 
 const index: React.FC = () => {
 
-    const [username, setUsername] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
+    const [username, setUsername] = useState<string>("shumiya");
+    const [password, setPassword] = useState<string>("shumiya");
     // cookieを使用するaxios生成
     let client = Axios.create({withCredentials: true});
 
