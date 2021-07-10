@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useState, useEffect} from 'react';
 import TaskList from './TaskList'
-import { Task, TaskComment } from '../common/interface';
+import { Task } from '../common/interface';
 import Router from 'next/router';
 import styles from '../../styles/TaskBoard.module.css';
 import { DndProvider } from 'react-dnd';
