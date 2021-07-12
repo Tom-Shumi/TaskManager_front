@@ -8,6 +8,9 @@ import DailyTaskBoard from '../components/DailyTask/DailyTaskBoard';
 
 
 const DailyTask: React.FC = () => {
+    // 初期表示フラグ
+    const [initDispFlg, setInitDispFlg] = useState<Boolean>(true);
+
     authentication();
 
     return (
@@ -16,7 +19,10 @@ const DailyTask: React.FC = () => {
           <Button key="create" variant="success" className="button_md">history</Button>
           <div className="display_inline margin_side_10">Achievement : 5 of 10</div>
 
-          <DailyTaskBoard />
+          <DailyTaskBoard
+            initDispFlg = {initDispFlg}
+            setInitDispFlg = {setInitDispFlg}
+          />
         </Layout>
     )
 }

@@ -49,3 +49,30 @@ export class TaskGraph {
 export const ItemTypes = {
   TASK_ITEM: 'task_item',
 }
+
+export class DailyTask {
+  id: number;
+  username: string;
+  title: string;
+  description: string;
+  priority: number;
+  quota: number;
+  deleteFlg: number;
+  createDate: string;
+  doneDate: string;
+  doneTime: number;
+
+  constructor(id: number, username: string, title: string, description: string,
+     priority: number, quota: number, deleteFlg: number, createDate: string, doneDate: string, doneTime: number) {
+    this.id = id;
+    this.username = username;
+    this.title = title;
+    this.description = description;
+    this.priority = priority;
+    this.quota = quota;
+    this.deleteFlg = deleteFlg;
+    this.createDate = createDate;
+    this.doneDate = doneDate;
+    this.doneTime = doneTime;
+  }
+}
