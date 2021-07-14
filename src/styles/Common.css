@@ -47,6 +47,18 @@ h1 {
     color: green;
 }
 
+.white{
+    background-color: #fafbfd;
+}
+
+.yellow{
+    background: lightyellow;
+}
+
+.gray{
+    background: gainsboro;
+}
+
 .form_frame{
     padding: 1em 1em 0.5em 1em;
     margin: 0 1rem 0 1rem;

@@ -15,6 +15,22 @@ const conversionStatus = (status: number) => {
     return str;
 }
 
+const conversionStatusByTime = (quota: number, doneTime: number) => {
+    if (doneTime == 0 || doneTime == null) {
+
+        return { str: conversionStatus(1), color: "yellow" }
+
+    } else if (quota > doneTime) {
+
+        return { str: conversionStatus(2), color: "white" }
+
+    } else {
+
+        return { str: conversionStatus(3), color: "gray" }
+
+    }
+}
+
 const conversionPriority = (priority: number) => {
     var str: string;
     var className: string;
@@ -51,4 +67,4 @@ const conversionDateStr = (status: number) => {
 }
 
 
-export {conversionStatus, conversionPriority, conversionDateStr};
+export {conversionStatus, conversionPriority, conversionDateStr, conversionStatusByTime};

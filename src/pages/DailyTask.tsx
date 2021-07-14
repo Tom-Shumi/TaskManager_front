@@ -17,7 +17,8 @@ const DailyTask: React.FC = () => {
         <Layout title={"Daily Task : " + DatePickerUtil.curentDateStrYYYYMMDD() + "."}>
           <Button key="create" variant="primary" className="button_md margin_side_10">create task</Button>
           <Button key="history" variant="success" className="button_md">history</Button>
-          <div className="display_inline margin_side_10">Achievement : 5 of 10</div>
+          <div className="display_inline margin_side_10">Achievement: 5 of 10</div>
+          <div className="display_inline margin_side_10">TotalDoneTime: 2 h 30 m</div>
 
           <DailyTaskBoard
             initDispFlg = {initDispFlg}
