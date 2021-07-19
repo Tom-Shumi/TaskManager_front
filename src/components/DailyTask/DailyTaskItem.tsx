@@ -28,8 +28,10 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
 
     const saveDoneTime = () => {
 
-        console.log("saveDoneTime")
-        console.log(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_DAILY_TASK_HISTORY)
+        if (!NumberUtil.isNumber(inputDoneTime)) {
+            setInputDoneTime("");
+            return;
+        }
 
         var params = {
             daily_task_id: props.dailyTask.id,

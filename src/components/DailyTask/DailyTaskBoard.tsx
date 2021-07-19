@@ -5,10 +5,14 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 import { DailyTask } from '../common/interface';
 import {getApiClient} from '../util/AuthenticationUtil';
 import Router from 'next/router';
+import * as NumberUtil from '../util/NumberUtil';
 
 interface DailyTaskBoardProps {
     initDispFlg: Boolean;
     setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
+    setTotalTaskCount: Dispatch<SetStateAction<number>>;
+    setDoneTaskCount: Dispatch<SetStateAction<number>>;
+    setTotalDoneTime: Dispatch<SetStateAction<string>>;
 }
 
 const DailyTaskBoard: React.FC<DailyTaskBoardProps> = (props) => {
@@ -23,6 +27,18 @@ const DailyTaskBoard: React.FC<DailyTaskBoardProps> = (props) => {
     const callGetDailyTaskList = () => {
         var res: Promise<DailyTask[]> = getDailyTaskList();
         res.then(ret => setDailyTaskList(ret));
+
+        let doneTaskCount = 0;
+        let totalDoneTime = 0;
+        for (var i = 0 ; i < dailyTaskList.length ; i++) {
+            if (dailyTaskList[i].quota <= dailyTaskList[i].doneTime) {
+                doneTaskCount++;
+            }
+            totalDoneTime += dailyTaskList[i].doneTime
+        }
+        props.setTotalTaskCount(dailyTaskList.length);
+        props.setDoneTaskCount(doneTaskCount);
+        props.setTotalDoneTime(NumberUtil.convertHourMinute(totalDoneTime));
     }
 
     return (
