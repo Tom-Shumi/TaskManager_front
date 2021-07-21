@@ -3,22 +3,16 @@ import {Modal, Button, Form, Row, Col} from 'react-bootstrap';
 import {getApiClient} from '../util/AuthenticationUtil';
 import Router from 'next/router';
 import { DailyTask } from '../common/interface';
-import DatePicker, { registerLocale } from "react-datepicker";
-import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
-import ja from 'date-fns/locale/ja';
-import * as DatePickerUtil from '../util/DatePickerUtil';
-import * as ConversionUtil from '../util/ConversionUtil';
 
 interface DailyTaskEditModalProps {
     close: () => void;
-    execSbt: string;
     setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
     dailyTask: DailyTask;
 }
 
 const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
-    const [form, setForm] = useState({id: -1, title: "", description: "", priority: 1, quota: 0, deleteFlg: 0});
+    const [form, setForm] = useState({id: -1, title: "", description: "", priority: 1, quota: "", deleteFlg: 0});
 　　
     // form入力のハンドリング
     const handleChange = (input) => {
@@ -79,16 +73,15 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
     // 登録or更新判定
     let title: string;
     let execute: () => void;
-    switch(props.execSbt) {
-        case "1":
-            title = 'Create Daily Task';
-            execute = create;
-            break;
-        case "2":
-            title = 'Update Daily Task';
-            execute = update;
-            break;
+    if (props.dailyTask == null) {
+        title = 'Create Daily Task';
+        execute = create;
+    } else {
+        title = 'Update Daily Task';
+        execute = update;
     }
+
+    console.log(form.deleteFlg)
     
     return (
         <Modal show={true} onHide={props.close} key='dailyTaskEditModal'>
@@ -127,15 +120,15 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
                             <strong>Quota</strong>
                         </Col>
                         <Col xs={8} className="modal_input">
-                                <Form.Control as="text" value={form.quota} onChange={handleChange('quota')} />
+                                <Form.Control type="text" className="modal_input_num display_inline" value={form.quota} onChange={handleChange('quota')} /> m
                         </Col>
                         <hr />
                         <Col xs={4} className="modal_label">
                             <strong>Delete Flg</strong>
                         </Col>
                         <Col xs={8} className="modal_input">
-                            <Form.Check inline type="radio" id="deleteFlgOn" name="deleteFlg" value="1" label="ON" onChange={handleChange('deleteFlg')} />
-                            <Form.Check inline type="radio" id="deleteFlgOff" name="deleteFlg" value="0" label="OFF" onChange={handleChange('deleteFlg')} />
+                            <Form.Check inline type="radio" id="deleteFlg_ON" name="deleteFlg" checked={form.deleteFlg == 1} value="1" label="ON" onChange={handleChange('deleteFlg')} />
+                            <Form.Check inline type="radio" id="deleteFlg_OFF" name="deleteFlg" checked={form.deleteFlg == 0} value="0" label="OFF" onChange={handleChange('deleteFlg')} />
                         </Col>
                     </Row>
                 </Form>

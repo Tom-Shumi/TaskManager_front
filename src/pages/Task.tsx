@@ -18,12 +18,12 @@ const Task: React.FC = () => {
     // 初期表示フラグ
     const [initDispFlg, setInitDispFlg] = useState<Boolean>(true);
     // 編集対象タスク
-    const [targetTask, setTargetTaskk] = useState<TaskClass>(null);
+    const [targetTask, setTargetTask] = useState<TaskClass>(null);
 
     authentication();
 
     const showTaskCreateModal = (task: TaskClass) => {
-        setTargetTaskk(task);
+        setTargetTask(task);
         setTaskCreateModalDispFlg(true);
     }
 
@@ -32,7 +32,7 @@ const Task: React.FC = () => {
     }
 
     const showTaskUpdateModal = (task: TaskClass) => {
-        setTargetTaskk(task);
+        setTargetTask(task);
         setTaskUpdateModalDispFlg(true);
     }
 
@@ -41,7 +41,7 @@ const Task: React.FC = () => {
     }
 
     const showTaskCommentModal = (task: TaskClass) => {
-        setTargetTaskk(task);
+        setTargetTask(task);
         setTaskCommentModalDispFlg(true);
     }
 

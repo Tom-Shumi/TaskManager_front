@@ -5,6 +5,8 @@ import dynamic from "next/dynamic";
 import {Button} from 'react-bootstrap';
 import * as DatePickerUtil from '../components/util/DatePickerUtil';
 import DailyTaskBoard from '../components/DailyTask/DailyTaskBoard';
+import { DailyTask as DailyTaskClass } from '../components/common/interface';
+import DailyTaskEditModal from '../components/DailyTask/DailyTaskEditModal';
 
 
 const DailyTask: React.FC = () => {
@@ -16,12 +18,25 @@ const DailyTask: React.FC = () => {
     const [doneTaskCount, setDoneTaskCount] = useState<number>(0);
     // 合計Done時間
     const [totalDoneTime, setTotalDoneTime] = useState<string>("");
+    // デイリータスク登録モーダル表示フラグ
+    const [dailyTaskEditModalDispFlg, setDailyTaskEditModalDispFlg] = useState<Boolean>(false);
+    // 編集対象デイリータスク
+    const [targetDailyTask, setTargetDailyTask] = useState<DailyTaskClass>(null);
 
     authentication();
 
+    const showDailyTaskEditModal = (dailyTask: DailyTaskClass) => {
+      setTargetDailyTask(dailyTask);
+      setDailyTaskEditModalDispFlg(true);
+  }
+
+  const closeDailyTaskEditModal = () => {
+    setDailyTaskEditModalDispFlg(false);
+  }
+
     return (
         <Layout title={"Daily Task : " + DatePickerUtil.curentDateStrYYYYMMDD() + "."}>
-          <Button key="create" variant="primary" className="button_md margin_side_10">create task</Button>
+          <Button key="create" variant="primary" className="button_md margin_side_10" onClick={ () => showDailyTaskEditModal(null)}>create task</Button>
           <Button key="history" variant="success" className="button_md">history</Button>
           <div className="display_inline margin_side_10">Achievement: {doneTaskCount} of {totalTaskCount}</div>
           <div className="display_inline margin_side_10">TotalDoneTime: {totalDoneTime}</div>
@@ -33,6 +48,14 @@ const DailyTask: React.FC = () => {
             setDoneTaskCount = {setDoneTaskCount}
             setTotalDoneTime = {setTotalDoneTime}
           />
+
+          {dailyTaskEditModalDispFlg && 
+            <DailyTaskEditModal 
+              close = {closeDailyTaskEditModal}
+              setInitDispFlg = {setInitDispFlg}
+              dailyTask = {targetDailyTask}
+            />
+          }
         </Layout>
     )
 }

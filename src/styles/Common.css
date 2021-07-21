@@ -100,6 +100,10 @@ h1 {
     margin-left: 10px;
 }
 
+.modal_input_num{
+    width: 70px;
+}
+
 .modal_input_date_delimiter{
     margin-top: 5px;
     margin-left: 10px;
