@@ -24,7 +24,7 @@ const index: React.FC = () => {
             sessionStorage.clear();
             sessionStorage.setItem('n', username);
 
-            Router.push('/Task');
+            Router.push('/DailyTask');
 
         }).catch((err) => {
             console.log('err:', err.response);

@@ -8,7 +8,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = (props) => {
     return (
         <header>
-            <Link href="/Task">
+            <Link href="/DailyTask">
                 <div className="cursor_pointer">Shumi Pro</div>
             </Link>
             <h1>{props.title}</h1>

@@ -22,27 +22,40 @@ const DailyTask: React.FC = () => {
     const [dailyTaskEditModalDispFlg, setDailyTaskEditModalDispFlg] = useState<Boolean>(false);
     // 編集対象デイリータスク
     const [targetDailyTask, setTargetDailyTask] = useState<DailyTaskClass>(null);
+    // 削除済みタスクを含む
+    const [includeDeleteFlg, setIncludeDeleteFlg] = useState<number>(0);
 
     authentication();
 
     const showDailyTaskEditModal = (dailyTask: DailyTaskClass) => {
       setTargetDailyTask(dailyTask);
       setDailyTaskEditModalDispFlg(true);
-  }
+    }
 
-  const closeDailyTaskEditModal = () => {
-    setDailyTaskEditModalDispFlg(false);
-  }
+    const closeDailyTaskEditModal = () => {
+      setDailyTaskEditModalDispFlg(false);
+    }
+
+    const changeIncludeDeleteTask = () => {
+      let flg = includeDeleteFlg == 0 ? 1 : 0
+      return () => setIncludeDeleteFlg(flg);
+    }
 
     return (
         <Layout title={"Daily Task : " + DatePickerUtil.curentDateStrYYYYMMDD() + "."}>
-          <Button key="create" variant="primary" className="button_md margin_side_10" onClick={ () => showDailyTaskEditModal(null)}>create task</Button>
-          <Button key="history" variant="success" className="button_md">history</Button>
+          <Button key="create" variant="primary" className="button_md margin_side_10" onClick={ () => showDailyTaskEditModal(null)}>Create Task</Button>
+          <Button key="history" variant="success" className="button_md">History</Button>
           <div className="display_inline margin_side_10">Achievement: {doneTaskCount} of {totalTaskCount}</div>
-          <div className="display_inline margin_side_10">TotalDoneTime: {totalDoneTime}</div>
+          <div className="display_inline margin_side_10">Total Done Time: {totalDoneTime}</div>
+          <div className="display_inline margin_side_10">
+            <label>
+              <input type="checkbox" name="includeDeleteTask" id="includeDeleteTask" value={includeDeleteFlg} checked={includeDeleteFlg == 1} onChange={changeIncludeDeleteTask()} /> Include Delete Task
+            </label>
+          </div>
 
           <DailyTaskBoard
             initDispFlg = {initDispFlg}
+            includeDeleteFlg = {includeDeleteFlg}
             setInitDispFlg = {setInitDispFlg}
             setTotalTaskCount = {setTotalTaskCount}
             setDoneTaskCount = {setDoneTaskCount}

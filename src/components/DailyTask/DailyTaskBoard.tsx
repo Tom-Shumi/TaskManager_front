@@ -9,6 +9,7 @@ import * as NumberUtil from '../util/NumberUtil';
 
 interface DailyTaskBoardProps {
     initDispFlg: Boolean;
+    includeDeleteFlg: number;
     setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
     setTotalTaskCount: Dispatch<SetStateAction<number>>;
     setDoneTaskCount: Dispatch<SetStateAction<number>>;
@@ -22,23 +23,29 @@ const DailyTaskBoard: React.FC<DailyTaskBoardProps> = (props) => {
     useEffect(() => {
         props.setInitDispFlg(false);
         callGetDailyTaskList();
-    }, [props.initDispFlg]);
+    }, [props.initDispFlg, props.includeDeleteFlg]);
 
     const callGetDailyTaskList = () => {
-        var res: Promise<DailyTask[]> = getDailyTaskList();
-        res.then(ret => setDailyTaskList(ret));
-
-        let doneTaskCount = 0;
-        let totalDoneTime = 0;
-        for (var i = 0 ; i < dailyTaskList.length ; i++) {
-            if (dailyTaskList[i].quota <= dailyTaskList[i].doneTime) {
-                doneTaskCount++;
+        var res: Promise<DailyTask[]> = getDailyTaskList(props.includeDeleteFlg);
+        res.then(ret => {
+            setDailyTaskList(ret);
+            let doneTaskCount = 0;
+            let totalDoneTime = 0;
+            let deleteTaskCount = 0;
+            for (var i = 0 ; i < ret.length ; i++) {
+                if (ret[i].deleteFlg == 1) {
+                    deleteTaskCount++;
+                    continue;
+                }
+                if (ret[i].quota <= ret[i].doneTime) {
+                    doneTaskCount++;
+                }
+                totalDoneTime += ret[i].doneTime
             }
-            totalDoneTime += dailyTaskList[i].doneTime
-        }
-        props.setTotalTaskCount(dailyTaskList.length);
-        props.setDoneTaskCount(doneTaskCount);
-        props.setTotalDoneTime(NumberUtil.convertHourMinute(totalDoneTime));
+            props.setTotalTaskCount(ret.length - deleteTaskCount);
+            props.setDoneTaskCount(doneTaskCount);
+            props.setTotalDoneTime(NumberUtil.convertHourMinute(totalDoneTime));
+        });
     }
 
     return (
@@ -50,11 +57,16 @@ const DailyTaskBoard: React.FC<DailyTaskBoardProps> = (props) => {
     )
 }
 
-async function getDailyTaskList(){
+async function getDailyTaskList(includeDeleteFlg: number){
+
     var dailyTaskList : DailyTask[] = [];
 
     try {
-        const res = await getApiClient().get(process.env.NEXT_PUBLIC_API_DAILY_TASK);
+        const res = await getApiClient().get(process.env.NEXT_PUBLIC_API_DAILY_TASK, {
+            params: {
+                includeDeleteFlg: includeDeleteFlg
+            }
+        });
         dailyTaskList = createDailyTaskList(res.data);
     } catch(error){
         Router.push('/Error?400');

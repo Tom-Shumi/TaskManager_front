@@ -19,8 +19,8 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
     const done = NumberUtil.convertHourMinute(props.dailyTask.doneTime);
     const remaining = NumberUtil.convertRemaining(props.dailyTask.quota, props.dailyTask.doneTime);
 
-    const taskStatus = ConversionUtil. conversionStatusByTime(props.dailyTask.quota, props.dailyTask.doneTime);
-    var taskStatusStr = taskStatus.str;
+    const taskStatus = ConversionUtil. conversionStatusByTime(props.dailyTask.quota, props.dailyTask.doneTime, props.dailyTask.deleteFlg);
+    var taskStatusStr = props.dailyTask.deleteFlg == 1 ? "【" + taskStatus.str + "】" : "";
     var taskStatusColor = taskStatus.color;
 
     // cookieを使用するaxios生成
@@ -58,14 +58,14 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
  
     return (
         <div className={styles.daily_task_item + " " + taskStatusColor}>
-            <div className={styles.title}>{props.dailyTask.title} [ {taskStatusStr} ]</div>
+            <div className={styles.title}>{props.dailyTask.title}{taskStatusStr}</div>
             <Row>
                 <Col xs={2} className={styles.quota_label}>Quota: {quota}</Col>
                 <Col xs={2} className={styles.label}>Done: {done}</Col>
                 <Col xs={3} className={styles.label}>Remaining: {remaining}</Col>
                 <Col xs={5}>
                     logged:
-                    <Form.Control type="text" value={inputDoneTime} className={styles.done_time_textbox} onChange={handleChangeInputDoneTime()}/> m
+                    <Form.Control type="text" value={inputDoneTime} className={styles.done_time_textbox} onChange={handleChangeInputDoneTime()} disabled={props.dailyTask.deleteFlg == 1} /> m
                     <Button variant="primary" className={styles.done_time_button} onClick={saveDoneTime}>Done</Button>
                 </Col>
             </Row>

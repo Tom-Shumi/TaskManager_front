@@ -3,19 +3,22 @@ const conversionStatus = (status: number) => {
     var str: string;
     switch(status) {
         case 1:
-            str = 'NOT STARTED';
+            str = 'Not Started';
             break;
         case 2:
-            str = 'IN PROGRESS';
+            str = 'In Progress';
             break;
         case 3:
-            str = 'DONE';
+            str = 'Done';
             break;
     }
     return str;
 }
 
-const conversionStatusByTime = (quota: number, doneTime: number) => {
+const conversionStatusByTime = (quota: number, doneTime: number, deleteFlg: number) => {
+    if (deleteFlg == 1) {
+        return { str: "Delete", color: "gray" }
+    }
     if (doneTime == 0 || doneTime == null) {
 
         return { str: conversionStatus(1), color: "yellow" }

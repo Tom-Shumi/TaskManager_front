@@ -17,9 +17,9 @@ const BurgerMenu: React.FC<MenuProps> = (props) => {
             <Link href="/DailyTask">
                 <a className="burger_menu_link">Daily Task page</a>
             </Link>
-            <Link href="/WeeklyTask">
+            {/* <Link href="/WeeklyTask">
                 <a className="burger_menu_link">Weekly Tasks page</a>
-            </Link>
+            </Link> */}
             <a className="burger_menu_link_logout" onClick={logout} href="#">Logout</a>
         </Menu>
     )
