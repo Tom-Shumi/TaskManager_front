@@ -44,7 +44,7 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
     const create = () => {
         var jsonParams = getJsonParams();
     
-        client.post(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_DAILY_TASK_HISTORY
+        client.post(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_DAILY_TASK
             , jsonParams
             , {headers: {'content-type': 'application/json'}})
         .then( () => {
@@ -59,7 +59,7 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
     const update = () => {
         var jsonParams = getJsonParams();
     
-        client.put(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_DAILY_TASK_HISTORY + "/" + props.dailyTask.id
+        client.put(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_DAILY_TASK + "/" + props.dailyTask.id
             , jsonParams
             , {headers: {'content-type': 'application/json'}})
         .then( () => {
@@ -80,8 +80,6 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
         title = 'Update Daily Task';
         execute = update;
     }
-
-    console.log(form.deleteFlg)
     
     return (
         <Modal show={true} onHide={props.close} key='dailyTaskEditModal'>
@@ -126,7 +124,7 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
                         <Col xs={4} className="modal_label">
                             <strong>Delete Flg</strong>
                         </Col>
-                        <Col xs={8} className="modal_input">
+                        <Col xs={8} className="modal_input padding_top_10">
                             <Form.Check inline type="radio" id="deleteFlg_ON" name="deleteFlg" checked={form.deleteFlg == 1} value="1" label="ON" onChange={handleChange('deleteFlg')} />
                             <Form.Check inline type="radio" id="deleteFlg_OFF" name="deleteFlg" checked={form.deleteFlg == 0} value="0" label="OFF" onChange={handleChange('deleteFlg')} />
                         </Col>
