@@ -37,3 +37,9 @@
     margin-top: 8px;
     padding-left: 25px;
 }
+
+.icon{
+    display: inline;
+    margin-left: 10px;
+    cursor : pointer;
+}

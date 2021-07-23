@@ -55,10 +55,27 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
     const handleChangeInputDoneTime = () => {
         return e => setInputDoneTime(e.target.value);
     }
- 
+
+    const deleteDailyTask = (e) => {
+        if(confirm("Do you want to delete it?")){
+            client.delete(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_DAILY_TASK + "/" + props.dailyTask.id)
+            .then( () => {
+                props.setInitDispFlg(true);
+            }).catch(() => {
+                Router.push('/Error?400');
+            })
+        }
+        e.stopPropagation();
+    }
+    
     return (
         <div className={styles.daily_task_item + " " + taskStatusColor}>
-            <div className={styles.title}>{props.dailyTask.title}{taskStatusStr}</div>
+            <div className={styles.title}>
+                {props.dailyTask.title}{taskStatusStr}
+                {props.dailyTask.deleteFlg == 1 && 
+                    <p className={styles.icon}><i onClick={deleteDailyTask} className="fa fa-trash faa-wrench animated-hover" /></p> 
+                }
+            </div>
             <Row>
                 <Col xs={2} className={styles.quota_label}>Quota: {quota}</Col>
                 <Col xs={2} className={styles.label}>Done: {done}</Col>
