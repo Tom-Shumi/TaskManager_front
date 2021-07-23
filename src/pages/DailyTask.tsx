@@ -7,6 +7,7 @@ import * as DatePickerUtil from '../components/util/DatePickerUtil';
 import DailyTaskBoard from '../components/DailyTask/DailyTaskBoard';
 import { DailyTask as DailyTaskClass } from '../components/common/interface';
 import DailyTaskEditModal from '../components/DailyTask/DailyTaskEditModal';
+import Link from 'next/link';
 
 
 const DailyTask: React.FC = () => {
@@ -44,7 +45,9 @@ const DailyTask: React.FC = () => {
     return (
         <Layout title={"Daily Task : " + DatePickerUtil.curentDateStrYYYYMMDD() + "."}>
           <Button key="create" variant="primary" className="button_md margin_side_10" onClick={ () => showDailyTaskEditModal(null)}>Create Task</Button>
-          <Button key="history" variant="success" className="button_md">History</Button>
+          <Link href="/DailyTaskHistory">
+            <Button key="history" variant="success" className="button_md">History ＞</Button>
+          </Link>
           <div className="display_inline margin_side_10">Achievement: {doneTaskCount} of {totalTaskCount}</div>
           <div className="display_inline margin_side_10">Total Done Time: {totalDoneTime}</div>
           <div className="display_inline margin_side_10">
@@ -60,6 +63,7 @@ const DailyTask: React.FC = () => {
             setTotalTaskCount = {setTotalTaskCount}
             setDoneTaskCount = {setDoneTaskCount}
             setTotalDoneTime = {setTotalDoneTime}
+            showDailyTaskEditModal={showDailyTaskEditModal}
           />
 
           {dailyTaskEditModalDispFlg && 

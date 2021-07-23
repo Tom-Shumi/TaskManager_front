@@ -67,6 +67,10 @@ h1 {
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
 }
 
+.button_lg {
+    width: 180px;
+}
+
 .button_md {
     width: 120px;
 }

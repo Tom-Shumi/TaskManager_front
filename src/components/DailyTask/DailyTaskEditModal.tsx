@@ -4,6 +4,7 @@ import {getApiClient} from '../util/AuthenticationUtil';
 import Router from 'next/router';
 import { DailyTask } from '../common/interface';
 import "react-datepicker/dist/react-datepicker.css";
+import * as NumberUtil from '../util/NumberUtil';
 
 interface DailyTaskEditModalProps {
     close: () => void;
@@ -14,6 +15,18 @@ interface DailyTaskEditModalProps {
 const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
     const [form, setForm] = useState({id: -1, title: "", description: "", priority: 1, quota: "", deleteFlg: 0});
 　　
+    // 初期表示処理
+    useEffect(() => {   
+        if (props.dailyTask != null) {
+            setForm({id: props.dailyTask.id
+                , title: props.dailyTask.title
+                , description: props.dailyTask.description
+                , priority: props.dailyTask.priority
+                , quota: props.dailyTask.quota.toString()
+                , deleteFlg: props.dailyTask.deleteFlg});
+        }
+    }, []);
+
     // form入力のハンドリング
     const handleChange = (input) => {
         return e => setForm({...form, [input]: e.target.value})
@@ -40,8 +53,19 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
         return JSON.stringify(params);
     }
 
+    const validate = () => {
+        if (form.title == "") return false;
+        if (form.quota == "" || !NumberUtil.isNumber(form.quota)) return false;
+        
+        return true;
+    }
+
     // task登録
     const create = () => {
+        if (!validate()) {
+            return false;
+        }
+        
         var jsonParams = getJsonParams();
     
         client.post(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_DAILY_TASK
@@ -57,6 +81,10 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
 
     // task更新
     const update = () => {
+        if (!validate()) {
+            return false;
+        }
+
         var jsonParams = getJsonParams();
     
         client.put(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_DAILY_TASK + "/" + props.dailyTask.id

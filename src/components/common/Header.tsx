@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 
 interface HeaderProps {
     title: string;
@@ -8,9 +7,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = (props) => {
     return (
         <header>
-            <Link href="/DailyTask">
-                <div className="cursor_pointer">Shumi Pro</div>
-            </Link>
+            <div>Shumi Pro</div>
             <h1>{props.title}</h1>
         </header>
     )

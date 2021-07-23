@@ -6,6 +6,7 @@ import { DailyTask } from '../common/interface';
 interface DailyTaskListProps {
     dailyTaskList: DailyTask[];
     setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
+    showDailyTaskEditModal: (DailyTask) => void;
 }
 
 const DailyTaskList: React.FC<DailyTaskListProps> = (props) => {
@@ -18,6 +19,7 @@ const DailyTaskList: React.FC<DailyTaskListProps> = (props) => {
                         dailyTask={dailyTask}
                         setInitDispFlg={props.setInitDispFlg}
                         key={"DailyTaskItem" + dailyTask.id}
+                        showDailyTaskEditModal={props.showDailyTaskEditModal}
                     />
                 ))
             }

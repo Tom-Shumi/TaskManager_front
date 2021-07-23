@@ -10,6 +10,7 @@ import Router from 'next/router';
 interface DailyTaskItemProps {
     dailyTask: DailyTask;
     setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
+    showDailyTaskEditModal: (DailyTask) => void;
 }
 
 const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
@@ -53,7 +54,9 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
     }
 
     const handleChangeInputDoneTime = () => {
-        return e => setInputDoneTime(e.target.value);
+        return e => {
+            setInputDoneTime(e.target.value);
+        };
     }
 
     const deleteDailyTask = (e) => {
@@ -67,10 +70,10 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
         }
         e.stopPropagation();
     }
-    
+
     return (
         <div className={styles.daily_task_item + " " + taskStatusColor}>
-            <div className={styles.title}>
+            <div className={styles.title} onClick={ () => props.showDailyTaskEditModal(props.dailyTask)}>
                 {props.dailyTask.title}{taskStatusStr}
                 {props.dailyTask.deleteFlg == 1 && 
                     <p className={styles.icon}><i onClick={deleteDailyTask} className="fa fa-trash faa-wrench animated-hover" /></p> 

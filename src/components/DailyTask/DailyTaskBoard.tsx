@@ -14,6 +14,7 @@ interface DailyTaskBoardProps {
     setTotalTaskCount: Dispatch<SetStateAction<number>>;
     setDoneTaskCount: Dispatch<SetStateAction<number>>;
     setTotalDoneTime: Dispatch<SetStateAction<string>>;
+    showDailyTaskEditModal: (DailyTask) => void;
 }
 
 const DailyTaskBoard: React.FC<DailyTaskBoardProps> = (props) => {
@@ -51,7 +52,12 @@ const DailyTaskBoard: React.FC<DailyTaskBoardProps> = (props) => {
     return (
         <div>
             <DndProvider backend={HTML5Backend}>
-                <DailyTaskList key="DailyTaskList" dailyTaskList={dailyTaskList} setInitDispFlg={props.setInitDispFlg}/>
+                <DailyTaskList 
+                    key="DailyTaskList"
+                    dailyTaskList={dailyTaskList}
+                    setInitDispFlg={props.setInitDispFlg}
+                    showDailyTaskEditModal={props.showDailyTaskEditModal}
+                />
             </DndProvider>
         </div>
     )
