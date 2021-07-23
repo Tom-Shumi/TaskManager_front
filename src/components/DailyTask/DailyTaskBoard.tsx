@@ -89,7 +89,7 @@ function createDailyTaskList(responseData: any[]): DailyTask[]{
         let dailyTask = new DailyTask(responseData[i]["id"], responseData[i]["username"], 
         responseData[i]["title"], responseData[i]["description"], responseData[i]["priority"], 
         responseData[i]["quota"], responseData[i]["deleteFlg"], responseData[i]["createDate"],
-        responseData[i]["doneDate"], responseData[i]["doneTime"]);
+        responseData[i]["deleteDate"], responseData[i]["doneDate"], responseData[i]["doneTime"]);
 
         dailyTaskList.push(dailyTask);
     }

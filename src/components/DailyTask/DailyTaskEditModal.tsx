@@ -5,6 +5,7 @@ import Router from 'next/router';
 import { DailyTask } from '../common/interface';
 import "react-datepicker/dist/react-datepicker.css";
 import * as NumberUtil from '../util/NumberUtil';
+import { formatWithOptions } from 'util';
 
 interface DailyTaskEditModalProps {
     close: () => void;
@@ -47,9 +48,10 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
             description: form.description,
             priority: form.priority,
             quota: form.quota,
-            deleteFlg: form.deleteFlg
+            deleteFlg: form.deleteFlg,
+            createDate: props.dailyTask == null ? "": props.dailyTask.createDate,
+            deleteDate: props.dailyTask == null ? "": props.dailyTask.deleteDate
         }
-        
         return JSON.stringify(params);
     }
 
@@ -156,6 +158,24 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
                             <Form.Check inline type="radio" id="deleteFlg_ON" name="deleteFlg" checked={form.deleteFlg == 1} value="1" label="ON" onChange={handleChange('deleteFlg')} />
                             <Form.Check inline type="radio" id="deleteFlg_OFF" name="deleteFlg" checked={form.deleteFlg == 0} value="0" label="OFF" onChange={handleChange('deleteFlg')} />
                         </Col>
+                        {props.dailyTask != null && 
+                        <React.Fragment>
+                            <hr />
+                            <Col xs={4} className="modal_label">
+                                <strong>Create Date</strong>
+                            </Col>
+                            <Col xs={8} className="modal_input padding_top_10">
+                                {props.dailyTask.createDate}
+                            </Col>
+                            <hr />
+                            <Col xs={4} className="modal_label">
+                                <strong>Delete Date</strong>
+                            </Col>
+                            <Col xs={8} className="modal_input padding_top_10">
+                                {props.dailyTask.deleteDate != "" ? props.dailyTask.deleteDate : "-"}
+                            </Col>
+                        </React.Fragment>
+                        }
                     </Row>
                 </Form>
             </Modal.Body>
