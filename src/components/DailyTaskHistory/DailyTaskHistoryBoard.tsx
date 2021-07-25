@@ -4,11 +4,13 @@ import { DailyTaskHistory } from '../common/interface';
 import {getApiClient} from '../util/AuthenticationUtil';
 import Router from 'next/router';
 import * as DatePickerUtil from '../util/DatePickerUtil';
+import styles from '../../styles/DailyTaskHistoryBoard.module.css';
 
 
 interface DailyTaskHistoryBoardProps {
     targetDate: Date;
-    setTargetDate: Dispatch<SetStateAction<Date>>;
+    targetDateDiff: number;
+    setTargetDateDiff: Dispatch<SetStateAction<number>>;
 }
 
 const DailyTaskHistoryBoard: React.FC<DailyTaskHistoryBoardProps> = (props) => {
@@ -25,6 +27,27 @@ const DailyTaskHistoryBoard: React.FC<DailyTaskHistoryBoardProps> = (props) => {
         });
     }
 
+    const loadNextHistory = () => {
+        let nextTargetDate = new Date(props.targetDate)
+        let diff = props.targetDateDiff + 5;
+        nextTargetDate.setDate(nextTargetDate.getDate() - diff)
+
+        try {
+
+            getApiClient().get(process.env.NEXT_PUBLIC_API_DAILY_TASK_HISTORY, {
+                params: {
+                    nextTargetDate: DatePickerUtil.dateStrYYYYMMDD(nextTargetDate)
+                }
+            }).then(res => {
+                let taskCommentList = createDailyTaskHistoryList(res.data);
+                setDailyTaskHistoryList([...dailyTaskHistoryList, ...taskCommentList])
+                props.setTargetDateDiff(diff)
+            })
+        } catch(error){
+            Router.push('/Error?400');
+        }
+    }
+
     return (
         <div>
             <DailyTaskHistoryList 
@@ -32,6 +55,8 @@ const DailyTaskHistoryBoard: React.FC<DailyTaskHistoryBoardProps> = (props) => {
                 dailyTaskHistoryList={dailyTaskHistoryList}
                 targetDate={props.targetDate}
             />
+
+            <div className={styles.daily_task_history_load} onClick={loadNextHistory}><i className="fa fa-arrow-circle-down faa-wrench animated-hover" /></div>
         </div>
     )
 }
