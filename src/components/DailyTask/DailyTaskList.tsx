@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState, useEffect} from 'react';
+import React, { Dispatch, SetStateAction} from 'react';
 import DailyTaskItem from './DailyTaskItem';
 import styles from '../../styles/DailyTaskList.module.css';
 import { DailyTask } from '../common/interface';

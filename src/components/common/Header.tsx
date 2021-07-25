@@ -7,7 +7,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = (props) => {
     return (
         <header>
-            <div>Shumi Pro</div>
+            <div>Task Manager</div>
             <h1>{props.title}</h1>
         </header>
     )

@@ -31,7 +31,15 @@ const parseDate = (dateStr) => {
 
 const curentDateStrYYYYMMDD = () => {
   let today = new Date();
-  return today.getFullYear() + " / " + (today.getMonth() + 1) + " / " + today.getDate();
+  return today.getFullYear() + " / " + String((today.getMonth() + 1)).padStart(2, '0') + " / " + String(today.getDate()).padStart(2, '0');
 }
 
-export {parseAsMoment, toUtcIso8601str, parseDate, curentDateStrYYYYMMDD};
+const dateStrDelimiterYYYYMMDD = (date: Date) => {
+  return date.getFullYear() + " / " + String((date.getMonth() + 1)).padStart(2, '0') + " / " + String(date.getDate()).padStart(2, '0');
+}
+
+const dateStrYYYYMMDD = (date: Date) => {
+  return String(date.getFullYear()) + String((date.getMonth() + 1)).padStart(2, '0') + String(date.getDate()).padStart(2, '0');
+}
+
+export {parseAsMoment, toUtcIso8601str, parseDate, curentDateStrYYYYMMDD, dateStrDelimiterYYYYMMDD, dateStrYYYYMMDD};
