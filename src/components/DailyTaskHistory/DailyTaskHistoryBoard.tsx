@@ -11,6 +11,7 @@ interface DailyTaskHistoryBoardProps {
     targetDate: Date;
     targetDateDiff: number;
     setTargetDateDiff: Dispatch<SetStateAction<number>>;
+    showDailyTaskHistoryDetailModal: (dailyTaskHistoryList: DailyTaskHistory[]) => void;
 }
 
 const DailyTaskHistoryBoard: React.FC<DailyTaskHistoryBoardProps> = (props) => {
@@ -54,6 +55,7 @@ const DailyTaskHistoryBoard: React.FC<DailyTaskHistoryBoardProps> = (props) => {
                 key="DailyTaskHistoryList"
                 dailyTaskHistoryList={dailyTaskHistoryList}
                 targetDate={props.targetDate}
+                showDailyTaskHistoryDetailModal={props.showDailyTaskHistoryDetailModal}
             />
 
             <div className={styles.daily_task_history_load} onClick={loadNextHistory}><i className="fa fa-arrow-circle-down faa-wrench animated-hover" /></div>

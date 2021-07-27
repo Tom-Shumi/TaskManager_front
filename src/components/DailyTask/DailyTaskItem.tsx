@@ -20,7 +20,7 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
     const done = NumberUtil.convertHourMinute(props.dailyTask.doneTime);
     const remaining = NumberUtil.convertRemaining(props.dailyTask.quota, props.dailyTask.doneTime);
 
-    const taskStatus = ConversionUtil. conversionStatusByTime(props.dailyTask.quota, props.dailyTask.doneTime, props.dailyTask.deleteFlg);
+    const taskStatus = ConversionUtil.conversionStatusByTime(props.dailyTask.quota, props.dailyTask.doneTime, props.dailyTask.deleteFlg);
     var taskStatusStr = props.dailyTask.deleteFlg == 1 ? "【" + taskStatus.str + "】" : "";
     var taskStatusColor = taskStatus.color;
 

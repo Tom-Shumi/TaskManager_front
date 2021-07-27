@@ -10,6 +10,7 @@ import * as NumberUtil from '../util/NumberUtil';
 interface DailyTaskHistoryItemProps {
     dailyTaskHistoryList: DailyTaskHistory[];
     date: Date;
+    showDailyTaskHistoryDetailModal: (dailyTaskHistoryList: DailyTaskHistory[]) => void;
 }
 
 const DailyTaskHistoryItem: React.FC<DailyTaskHistoryItemProps> = (props) => {
@@ -30,7 +31,7 @@ const DailyTaskHistoryItem: React.FC<DailyTaskHistoryItemProps> = (props) => {
     }
 
     return (
-        <div className={styles.daily_task_history_item + statusColor}>
+        <div className={styles.daily_task_history_item + statusColor} onClick={ () => props.showDailyTaskHistoryDetailModal(props.dailyTaskHistoryList)}>
             <Row>
                 <Col xs={1} ></Col>
                 <Col xs={2} >{DatePickerUtil.dateStrDelimiterYYYYMMDD(props.date)}</Col>

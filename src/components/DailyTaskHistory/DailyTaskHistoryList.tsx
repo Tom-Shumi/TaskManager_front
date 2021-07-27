@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState, useEffect} from 'react';
+import React from 'react';
 import { DailyTaskHistory } from '../common/interface';
 import styles from '../../styles/DailyTaskHistoryList.module.css';
 import DailyTaskHistoryItem from './DailyTaskHistoryItem';
@@ -7,6 +7,7 @@ import DailyTaskHistoryItem from './DailyTaskHistoryItem';
 interface DailyTaskHistoryListProps {
     dailyTaskHistoryList: DailyTaskHistory[][];
     targetDate: Date;
+    showDailyTaskHistoryDetailModal: (dailyTaskHistoryList: DailyTaskHistory[]) => void;
 }
 
 const DailyTaskHistoryList: React.FC<DailyTaskHistoryListProps> = (props) => {
@@ -22,6 +23,7 @@ const DailyTaskHistoryList: React.FC<DailyTaskHistoryListProps> = (props) => {
                         dailyTaskHistoryList={dailyTaskHistoryList}
                         key={"DailyTaskHistoryItem" + index}
                         date={date}
+                        showDailyTaskHistoryDetailModal={props.showDailyTaskHistoryDetailModal}
                     />)
                 })
             }
