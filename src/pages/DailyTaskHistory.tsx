@@ -6,6 +6,7 @@ import DailyTaskHistoryBoard from '../components/DailyTaskHistory/DailyTaskHisto
 import DailyTaskHistoryDetailModal from '../components/DailyTaskHistory/DailyTaskHistoryDetailModal';
 import Link from 'next/link';
 import { DailyTaskHistory as DailyTaskHistoryClass } from '../components/common/interface';
+import dynamic from "next/dynamic";
 
 const DailyTaskHistory: React.FC = () => {
   // 基準日
@@ -16,7 +17,7 @@ const DailyTaskHistory: React.FC = () => {
   const [dailyTaskHistoryDetailModalDispFlg, setDailyTaskHistoryDetailModalDispFlg] = useState<Boolean>(false);
   // 編集対象デイリータスク
   const [targetDailyTaskHistoryList, setTargetDailyTaskHistoryList] = useState<DailyTaskHistoryClass[]>([]);
- 
+
   authentication();
 
   const showDailyTaskHistoryDetailModal = (dailyTaskHistoryList: DailyTaskHistoryClass[]) => {
@@ -40,7 +41,7 @@ const DailyTaskHistory: React.FC = () => {
           showDailyTaskHistoryDetailModal = {showDailyTaskHistoryDetailModal}
         />
 
-        {dailyTaskHistoryDetailModalDispFlg && 
+        {dailyTaskHistoryDetailModalDispFlg &&
           <DailyTaskHistoryDetailModal
             close = {closeDailyTaskHistoryDetailModal}
             dailyTaskHistoryList = {targetDailyTaskHistoryList}
@@ -50,4 +51,11 @@ const DailyTaskHistory: React.FC = () => {
     )
 }
 
-export default DailyTaskHistory;
+const DynamicDailyTaskHistory = dynamic(
+  {
+    loader: async () => DailyTaskHistory,
+  },
+  { ssr: false }
+);
+
+export default DynamicDailyTaskHistory;

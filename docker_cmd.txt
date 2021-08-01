@@ -1,0 +1,10 @@
+
+■ Frontend
+cd /Users/shumiya/Desktop/dev/react/shumipro_front
+
+rm -r out
+
+npm run build
+npm run export
+
+docker image build -t shumipro_front .
