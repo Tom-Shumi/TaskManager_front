@@ -1,6 +1,9 @@
 import Router from 'next/router';
 import { useState } from "react";
 import Axios from "axios";
+import getConfig from "next/config";
+const { publicRuntimeConfig }= getConfig();
+
 
 const getSessionUsername = (): String => {
     return sessionStorage.getItem('n');
@@ -25,7 +28,7 @@ export const getUsername = () => {
 
 export const getApiClient = () => {
     return Axios.create({
-        baseURL: process.env.API_SERVER,
+        baseURL: publicRuntimeConfig.NEXT_PUBLIC_API_SERVER,
         headers: {
           'Content-Type': 'application/json'
         },

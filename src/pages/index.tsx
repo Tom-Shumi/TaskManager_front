@@ -3,6 +3,8 @@ import Router from 'next/router';
 import {Container, Button, Form} from 'react-bootstrap';
 import styles from '../styles/Index.module.css';
 import Axios from "axios";
+import getConfig from "next/config";
+const { publicRuntimeConfig }= getConfig();
 
 const index: React.FC = () => {
 
@@ -17,7 +19,7 @@ const index: React.FC = () => {
             return false;
         }
 
-        client.post(`${process.env.API_SERVER + process.env.NEXT_PUBLIC_API_LOGIN}`, createParams())
+        client.post(`${publicRuntimeConfig.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_LOGIN}`, createParams())
         .then(() => {
             console.log('login success');
             // セッションにログイン情報保持
