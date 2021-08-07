@@ -17,7 +17,7 @@ const index: React.FC = () => {
             return false;
         }
 
-        client.post(`${process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_LOGIN}`, createParams())
+        client.post(`${process.env.API_SERVER + process.env.NEXT_PUBLIC_API_LOGIN}`, createParams())
         .then(() => {
             console.log('login success');
             // セッションにログイン情報保持
@@ -64,7 +64,7 @@ const index: React.FC = () => {
             enabledflg: 1,
             adminflg: 0
         }
-        
+
         return JSON.stringify(params);
     }
 

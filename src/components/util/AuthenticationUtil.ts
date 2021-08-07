@@ -25,7 +25,7 @@ export const getUsername = () => {
 
 export const getApiClient = () => {
     return Axios.create({
-        baseURL: process.env.NEXT_PUBLIC_API_SERVER,
+        baseURL: process.env.API_SERVER,
         headers: {
           'Content-Type': 'application/json'
         },
