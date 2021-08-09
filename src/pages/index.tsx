@@ -8,8 +8,8 @@ const { publicRuntimeConfig }= getConfig();
 
 const index: React.FC = () => {
 
-    const [username, setUsername] = useState<string>("shumiya");
-    const [password, setPassword] = useState<string>("shumiya");
+    const [username, setUsername] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
     // cookieを使用するaxios生成
     let client = Axios.create({withCredentials: true});
 
