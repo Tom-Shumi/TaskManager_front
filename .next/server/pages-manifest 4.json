@@ -1,0 +1,12 @@
+{
+  "/DailyTask": "pages/DailyTask.html",
+  "/DailyTaskHistory": "pages/DailyTaskHistory.html",
+  "/Error": "pages/Error.html",
+  "/Graph": "pages/Graph.html",
+  "/Task": "pages/Task.html",
+  "/_app": "pages/_app.js",
+  "/": "pages/index.html",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/404": "pages/404.html"
+}
