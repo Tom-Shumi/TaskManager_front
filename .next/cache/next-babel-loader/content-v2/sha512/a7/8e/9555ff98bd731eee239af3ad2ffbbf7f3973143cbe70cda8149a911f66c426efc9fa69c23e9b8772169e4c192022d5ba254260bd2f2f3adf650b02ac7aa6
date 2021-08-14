@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { jsx as _jsx } from \"react/jsx-runtime\";\nimport React from 'react';\n\nvar Footer = function Footer(props) {\n  return /*#__PURE__*/_jsx(\"footer\", {\n    children: /*#__PURE__*/_jsx(\"div\", {\n      children: props.footer\n    })\n  });\n};\n\nexport default Footer;","map":null,"metadata":{},"sourceType":"module"}
