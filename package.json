@@ -3,7 +3,7 @@
         "dev": "next",
         "build": "next build",
         "start": "next start",
-        "export": "rm -rf .next out && next build && next export"
+        "export": "next export"
     },
     "dependencies": {
         "@types/react-beautiful-dnd": "^13.0.0",
