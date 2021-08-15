@@ -13,5 +13,6 @@ module.exports = {
         return {
             '/': { page: '/' }
         }
-    }
+    },
+    future: {webpack5: true}
 }
