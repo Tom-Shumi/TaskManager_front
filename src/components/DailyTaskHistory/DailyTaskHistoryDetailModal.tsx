@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction} from 'react';
 import {Modal, Button,} from 'react-bootstrap';
 import "react-datepicker/dist/react-datepicker.css";
 import { DailyTaskHistory } from '../common/interface';
@@ -7,11 +7,13 @@ import DailyTaskHistoryDetailItem from './DailyTaskHistoryDetailItem';
 
 interface DailyTaskHistoryDetailModalProps {
     dailyTaskHistoryList: DailyTaskHistory[];
+    doneDate: Date;
     close: () => void;
+    setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
 }
 
 const DailyTaskHistoryDetailModal: React.FC<DailyTaskHistoryDetailModalProps> = (props) => {
-    
+
     return (
         <Modal show={true} onHide={props.close} key='DailyTaskHistoryDetailModal'>
             <Modal.Header closeButton>
@@ -20,9 +22,12 @@ const DailyTaskHistoryDetailModal: React.FC<DailyTaskHistoryDetailModalProps> = 
             <Modal.Body>
             {
                 props.dailyTaskHistoryList.map((dailyTaskHistory, index)  => (
-                    <DailyTaskHistoryDetailItem 
-                      dailyTaskHistory={dailyTaskHistory}
-                      key={"DailyTaskHistoryDetailItem" + index} />
+                    <DailyTaskHistoryDetailItem
+                        dailyTaskHistory={dailyTaskHistory}
+                        doneDate={props.doneDate}
+                        setInitDispFlg={props.setInitDispFlg}
+                        close={props.close}
+                        key={"DailyTaskHistoryDetailItem" + index} />
                 ))
             }
             </Modal.Body>

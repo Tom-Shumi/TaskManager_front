@@ -8,18 +8,21 @@ import styles from '../../styles/DailyTaskHistoryBoard.module.css';
 
 
 interface DailyTaskHistoryBoardProps {
+    initDispFlg: Boolean;
+    setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
     targetDate: Date;
     targetDateDiff: number;
     setTargetDateDiff: Dispatch<SetStateAction<number>>;
-    showDailyTaskHistoryDetailModal: (dailyTaskHistoryList: DailyTaskHistory[]) => void;
+    showDailyTaskHistoryDetailModal: (dailyTaskHistoryList: DailyTaskHistory[], doneDate: Date) => void;
 }
 
 const DailyTaskHistoryBoard: React.FC<DailyTaskHistoryBoardProps> = (props) => {
     const [dailyTaskHistoryList, setDailyTaskHistoryList] = useState<DailyTaskHistory[][]>([]);
 
     useEffect(() => {
+        props.setInitDispFlg(false);
         callGetDailyTaskHistoryList();
-    }, []);
+    }, [props.initDispFlg]);
 
     const callGetDailyTaskHistoryList = () => {
         var res: Promise<DailyTaskHistory[][]> = getDailyTaskHistoryList(props.targetDate);
@@ -51,7 +54,7 @@ const DailyTaskHistoryBoard: React.FC<DailyTaskHistoryBoardProps> = (props) => {
 
     return (
         <div>
-            <DailyTaskHistoryList 
+            <DailyTaskHistoryList
                 key="DailyTaskHistoryList"
                 dailyTaskHistoryList={dailyTaskHistoryList}
                 targetDate={props.targetDate}
@@ -99,6 +102,7 @@ function createDailyTaskHistoryList(responseData: any[]): DailyTaskHistory[][]{
 
             dailyTaskHistoryList[i].push(dailyTaskHistory);
         }
+        console.log(dailyTaskHistoryList)
     }
     return dailyTaskHistoryList;
 }

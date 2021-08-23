@@ -27,7 +27,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
 　　
     // 初期表示処理
     useEffect(() => {
-        
+
         if (props.task != null) {
             let dateStr: string;
             if (props.task.status == 3) {
@@ -49,7 +49,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
     const handleChange = (input) => {
         return e => setForm({...form, [input]: e.target.value})
     }
-    
+
     // form入力（日付）のハンドリング
     const handleChangeDate = (date) => {
         setForm({id: form.id
@@ -77,14 +77,14 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
             description: form.description,
             date: form.date
         }
-        
+
         return JSON.stringify(params);
     }
 
     // task登録
     const create = () => {
         var jsonParams = getJsonParams();
-    
+
         client.post(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK
             , jsonParams
             , {headers: {'content-type': 'application/json'}})
@@ -99,7 +99,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
     // task更新
     const update = () => {
         var jsonParams = getJsonParams();
-    
+
         client.put(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK + "/" + props.task.id
             , jsonParams
             , {headers: {'content-type': 'application/json'}})
@@ -127,7 +127,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
 
     // 日付表示文字列設定
     let dateTitleStr = ConversionUtil.conversionDateStr(form.status);
-    
+
     return (
         <Modal show={true} onHide={props.close} key='taskEditModal'>
             <Modal.Header closeButton>
@@ -179,7 +179,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
                                 locale="ja"
                                 selected={form.date == "" ? null : moment(form.date).toDate()}
                                 onChange={handleChangeDate}
-                                dateFormat="yyyy/MM/dd"
+                                dateFormat="yyyy-MM-dd"
                                 customInput={
                                     <Form.Control type="text"/>
                                 }
@@ -196,7 +196,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-               <Button variant="primary" onClick={clickExecute} className="button_sm" >execute</Button>
+                <Button variant="primary" onClick={clickExecute} className="button_sm" >execute</Button>
                 <Button variant="dark" onClick={props.close} className="button_sm" >close</Button>
             </Modal.Footer>
         </Modal>

@@ -75,21 +75,21 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
         <div className={styles.daily_task_item + " " + taskStatusColor}>
             <div className={styles.title} onClick={ () => props.showDailyTaskEditModal(props.dailyTask)}>
                 {props.dailyTask.title}{taskStatusStr}
-                {props.dailyTask.deleteFlg == 1 && 
-                    <p className={styles.icon}><i onClick={deleteDailyTask} className="fa fa-trash faa-wrench animated-hover" /></p> 
+                {props.dailyTask.deleteFlg == 1 &&
+                    <p className={styles.icon}><i onClick={deleteDailyTask} className="fa fa-trash faa-wrench animated-hover" /></p>
                 }
             </div>
             <Row>
-                <Col xs={2} className={styles.quota_label}>Quota: {quota}</Col>
-                <Col xs={2} className={styles.label}>Done: {done}</Col>
-                <Col xs={3} className={styles.label}>Remaining: {remaining}</Col>
-                <Col xs={5}>
+                <Col md={2} className={styles.quota_label}>Quota: {quota}</Col>
+                <Col xs={12} md={2} className={styles.label}>Done: {done}</Col>
+                <Col md={3} className={styles.label}>Remaining: {remaining}</Col>
+                <Col xs={12} md={5}>
                     logged:
                     <Form.Control type="text" value={inputDoneTime} className={styles.done_time_textbox} onChange={handleChangeInputDoneTime()} disabled={props.dailyTask.deleteFlg == 1} /> m
                     <Button variant="primary" className={styles.done_time_button} onClick={saveDoneTime}>Done</Button>
                 </Col>
             </Row>
-            
+
         </div>
     )
 }

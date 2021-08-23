@@ -14,9 +14,20 @@
     padding: 4px 8px;
     display: table;
     width: 98%;
-    cursor : pointer;
 }
 
 .quota_label {
     padding-left: 30px;
+}
+
+.done_time_textbox{
+    width: 60px;
+    display: inline;
+    margin-left: 10px;
+}
+
+.done_time_button{
+    width: 65px;
+    display: inline;
+    margin-left: 10px;
 }
