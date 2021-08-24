@@ -5,6 +5,7 @@ import * as NumberUtil from '../util/NumberUtil';
 import { DailyTaskHistory } from '../common/interface';
 import {getApiClient} from '../util/AuthenticationUtil';
 import Router from 'next/router';
+import {judgePcScreen} from '../util/Util';
 
 interface DailyTaskHistoryDetailItemProps {
     dailyTaskHistory: DailyTaskHistory;
@@ -16,7 +17,7 @@ interface DailyTaskHistoryDetailItemProps {
 const DailyTaskHistoryDetailItem: React.FC<DailyTaskHistoryDetailItemProps> = (props) => {
     const [inputDoneTime, setInputDoneTime] = useState<string>("");
 
-    console.log(props.dailyTaskHistory)
+    const isOnlyPcScreen = judgePcScreen();
 
     const quota = NumberUtil.convertHourMinute(props.dailyTaskHistory.quota);
     const done = NumberUtil.convertHourMinute(props.dailyTaskHistory.doneTime);
@@ -71,14 +72,15 @@ const DailyTaskHistoryDetailItem: React.FC<DailyTaskHistoryDetailItemProps> = (p
         <div className={styles.daily_task_history_detail_item + statusColor}>
             <div className={styles.title}>
                 {props.dailyTaskHistory.title} {taskStatusStr}
-                :[logged]
+                <div>[logged]
                     <Form.Control type="text" value={inputDoneTime} className={styles.done_time_textbox} onChange={handleChangeInputDoneTime()} /> m
                     <Button variant="primary" className={styles.done_time_button}  onClick={saveDoneTime}>Done</Button>
+                </div>
             </div>
-            <Row>
-                <Col xs={4} className={styles.quota_label}>Quota: {quota}</Col>
-                <Col xs={3} className={styles.label}>Done: {done}</Col>
-                <Col xs={5} className={styles.label}>Remaining: {remaining}</Col>
+            <Row className={styles.row}>
+                {isOnlyPcScreen && <Col md={4} className={styles.label}>Quota: {quota}</Col>}
+                <Col md={3} className={styles.label}>Done: {done}</Col>
+                {isOnlyPcScreen && <Col md={5} className={styles.label}>Remaining: {remaining}</Col>}
             </Row>
 
         </div>

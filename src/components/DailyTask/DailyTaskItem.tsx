@@ -6,6 +6,7 @@ import * as NumberUtil from '../util/NumberUtil';
 import * as ConversionUtil from '../util/ConversionUtil';
 import {getApiClient} from '../util/AuthenticationUtil';
 import Router from 'next/router';
+import {judgePcScreen} from '../util/Util';
 
 interface DailyTaskItemProps {
     dailyTask: DailyTask;
@@ -23,6 +24,8 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
     const taskStatus = ConversionUtil.conversionStatusByTime(props.dailyTask.quota, props.dailyTask.doneTime, props.dailyTask.deleteFlg);
     var taskStatusStr = props.dailyTask.deleteFlg == 1 ? "【" + taskStatus.str + "】" : "";
     var taskStatusColor = taskStatus.color;
+
+    const isOnlyPcScreen = judgePcScreen();
 
     // cookieを使用するaxios生成
     let client = getApiClient();
@@ -79,10 +82,10 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
                     <p className={styles.icon}><i onClick={deleteDailyTask} className="fa fa-trash faa-wrench animated-hover" /></p>
                 }
             </div>
-            <Row>
-                <Col md={2} className={styles.quota_label}>Quota: {quota}</Col>
+            <Row className={styles.row}>
+                {isOnlyPcScreen && <Col md={2} className={styles.label}>Quota: {quota}</Col>}
                 <Col xs={12} md={2} className={styles.label}>Done: {done}</Col>
-                <Col md={3} className={styles.label}>Remaining: {remaining}</Col>
+                {isOnlyPcScreen && <Col md={3} className={styles.label}>Remaining: {remaining}</Col>}
                 <Col xs={12} md={5}>
                     logged:
                     <Form.Control type="text" value={inputDoneTime} className={styles.done_time_textbox} onChange={handleChangeInputDoneTime()} disabled={props.dailyTask.deleteFlg == 1} /> m

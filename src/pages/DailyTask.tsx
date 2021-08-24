@@ -8,7 +8,7 @@ import DailyTaskBoard from '../components/DailyTask/DailyTaskBoard';
 import { DailyTask as DailyTaskClass } from '../components/common/interface';
 import DailyTaskEditModal from '../components/DailyTask/DailyTaskEditModal';
 import Link from 'next/link';
-import {judgeOnlyPcScreen} from '../components/util/Util';
+import {judgePcScreen} from '../components/util/Util';
 
 
 const DailyTask: React.FC = () => {
@@ -27,7 +27,7 @@ const DailyTask: React.FC = () => {
     // 削除済みタスクを含む
     const [includeDeleteFlg, setIncludeDeleteFlg] = useState<number>(0);
 
-    const isOnlyPcScreen = judgeOnlyPcScreen();
+    const isOnlyPcScreen = judgePcScreen();
 
     authentication();
 

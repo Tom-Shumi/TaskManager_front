@@ -16,10 +16,6 @@
     width: 98%;
 }
 
-.quota_label {
-    padding-left: 30px;
-}
-
 .done_time_textbox{
     width: 60px;
     display: inline;
@@ -30,4 +26,8 @@
     width: 65px;
     display: inline;
     margin-left: 10px;
+}
+
+.row{
+    padding-left: 15px;
 }

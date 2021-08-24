@@ -3,6 +3,7 @@ import {Modal, Button,} from 'react-bootstrap';
 import "react-datepicker/dist/react-datepicker.css";
 import { DailyTaskHistory } from '../common/interface';
 import DailyTaskHistoryDetailItem from './DailyTaskHistoryDetailItem';
+import * as DatePickerUtil from '../util/DatePickerUtil';
 
 
 interface DailyTaskHistoryDetailModalProps {
@@ -14,10 +15,12 @@ interface DailyTaskHistoryDetailModalProps {
 
 const DailyTaskHistoryDetailModal: React.FC<DailyTaskHistoryDetailModalProps> = (props) => {
 
+    const doneDate = DatePickerUtil.dateStrDelimiterYYYYMMDD(props.doneDate);
+
     return (
         <Modal show={true} onHide={props.close} key='DailyTaskHistoryDetailModal'>
             <Modal.Header closeButton>
-                <Modal.Title>Detail History</Modal.Title>
+                <Modal.Title>{doneDate}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
             {
