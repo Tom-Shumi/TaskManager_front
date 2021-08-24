@@ -5,7 +5,6 @@ import Router from 'next/router';
 import { DailyTask } from '../common/interface';
 import "react-datepicker/dist/react-datepicker.css";
 import * as NumberUtil from '../util/NumberUtil';
-import { formatWithOptions } from 'util';
 
 interface DailyTaskEditModalProps {
     close: () => void;
@@ -14,16 +13,17 @@ interface DailyTaskEditModalProps {
 }
 
 const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
-    const [form, setForm] = useState({id: -1, title: "", description: "", priority: 1, quota: "", deleteFlg: 0});
+    const [form, setForm] = useState({id: -1, title: "", description: "", priority: 1, quota: "", dispOrder: "", deleteFlg: 0});
 　　
     // 初期表示処理
-    useEffect(() => {   
+    useEffect(() => {
         if (props.dailyTask != null) {
             setForm({id: props.dailyTask.id
                 , title: props.dailyTask.title
                 , description: props.dailyTask.description
                 , priority: props.dailyTask.priority
                 , quota: props.dailyTask.quota.toString()
+                , dispOrder: props.dailyTask.dispOrder == undefined ? "" : props.dailyTask.dispOrder.toString()
                 , deleteFlg: props.dailyTask.deleteFlg});
         }
     }, []);
@@ -32,7 +32,7 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
     const handleChange = (input) => {
         return e => setForm({...form, [input]: e.target.value})
     }
-    
+
     // cookieを使用するaxios生成
     let client = getApiClient();
 
@@ -48,6 +48,7 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
             description: form.description,
             priority: form.priority,
             quota: form.quota,
+            dispOrder: form.dispOrder,
             deleteFlg: form.deleteFlg,
             createDate: props.dailyTask == null ? "": props.dailyTask.createDate,
             deleteDate: props.dailyTask == null ? "": props.dailyTask.deleteDate
@@ -58,7 +59,8 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
     const validate = () => {
         if (form.title == "") return false;
         if (form.quota == "" || !NumberUtil.isNumber(form.quota)) return false;
-        
+        if (form.dispOrder != "" && !NumberUtil.isNumber(form.dispOrder)) return false;
+
         return true;
     }
 
@@ -67,9 +69,9 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
         if (!validate()) {
             return false;
         }
-        
+
         var jsonParams = getJsonParams();
-    
+
         client.post(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_DAILY_TASK
             , jsonParams
             , {headers: {'content-type': 'application/json'}})
@@ -88,7 +90,7 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
         }
 
         var jsonParams = getJsonParams();
-    
+
         client.put(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_DAILY_TASK + "/" + props.dailyTask.id
             , jsonParams
             , {headers: {'content-type': 'application/json'}})
@@ -110,7 +112,7 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
         title = 'Update Daily Task';
         execute = update;
     }
-    
+
     return (
         <Modal show={true} onHide={props.close} key='dailyTaskEditModal'>
             <Modal.Header closeButton>
@@ -152,13 +154,20 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
                         </Col>
                         <hr />
                         <Col xs={4} className="modal_label">
+                            <strong>Display Order</strong>
+                        </Col>
+                        <Col xs={8} className="modal_input">
+                                <Form.Control type="text" className="modal_input_num display_inline" value={form.dispOrder} onChange={handleChange('dispOrder')} />
+                        </Col>
+                        <hr />
+                        <Col xs={4} className="modal_label">
                             <strong>Delete Flg</strong>
                         </Col>
                         <Col xs={8} className="modal_input padding_top_10">
                             <Form.Check inline type="radio" id="deleteFlg_ON" name="deleteFlg" checked={form.deleteFlg == 1} value="1" label="ON" onChange={handleChange('deleteFlg')} />
                             <Form.Check inline type="radio" id="deleteFlg_OFF" name="deleteFlg" checked={form.deleteFlg == 0} value="0" label="OFF" onChange={handleChange('deleteFlg')} />
                         </Col>
-                        {props.dailyTask != null && 
+                        {props.dailyTask != null &&
                         <React.Fragment>
                             <hr />
                             <Col xs={4} className="modal_label">
@@ -180,7 +189,7 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-               <Button variant="primary" onClick={clickExecute} className="button_sm" >execute</Button>
+                <Button variant="primary" onClick={clickExecute} className="button_sm" >execute</Button>
                 <Button variant="dark" onClick={props.close} className="button_sm" >close</Button>
             </Modal.Footer>
         </Modal>

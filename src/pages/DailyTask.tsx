@@ -8,6 +8,7 @@ import DailyTaskBoard from '../components/DailyTask/DailyTaskBoard';
 import { DailyTask as DailyTaskClass } from '../components/common/interface';
 import DailyTaskEditModal from '../components/DailyTask/DailyTaskEditModal';
 import Link from 'next/link';
+import {judgePcScreen} from '../components/util/Util';
 
 
 const DailyTask: React.FC = () => {
@@ -26,6 +27,8 @@ const DailyTask: React.FC = () => {
     // 削除済みタスクを含む
     const [includeDeleteFlg, setIncludeDeleteFlg] = useState<number>(0);
 
+    const isOnlyPcScreen = judgePcScreen();
+
     authentication();
 
     const showDailyTaskEditModal = (dailyTask: DailyTaskClass) => {
@@ -43,18 +46,18 @@ const DailyTask: React.FC = () => {
     }
 
     return (
-        <Layout title={"Daily Task : " + DatePickerUtil.curentDateStrYYYYMMDD() + "."}>
+        <Layout title={DatePickerUtil.curentDateStrYYYYMMDD() + "."}>
           <Button key="create" variant="primary" className="button_md margin_side_10" onClick={ () => showDailyTaskEditModal(null)}>Create Task</Button>
           <Link href="/DailyTaskHistory">
             <Button key="history" variant="success" className="button_md">History ＞</Button>
           </Link>
-          <div className="display_inline margin_side_10">Achievement: {doneTaskCount} of {totalTaskCount}</div>
+          {isOnlyPcScreen && (<React.Fragment><div className="display_inline margin_side_10">Achievement: {doneTaskCount} of {totalTaskCount}</div>
           <div className="display_inline margin_side_10">Total Done Time: {totalDoneTime}</div>
           <div className="display_inline margin_side_10">
             <label>
               <input type="checkbox" name="includeDeleteTask" id="includeDeleteTask" value={includeDeleteFlg} checked={includeDeleteFlg == 1} onChange={changeIncludeDeleteTask()} /> Include Delete Task
             </label>
-          </div>
+          </div></ React.Fragment>)}
 
           <DailyTaskBoard
             initDispFlg = {initDispFlg}
@@ -66,8 +69,8 @@ const DailyTask: React.FC = () => {
             showDailyTaskEditModal={showDailyTaskEditModal}
           />
 
-          {dailyTaskEditModalDispFlg && 
-            <DailyTaskEditModal 
+          {dailyTaskEditModalDispFlg &&
+            <DailyTaskEditModal
               close = {closeDailyTaskEditModal}
               setInitDispFlg = {setInitDispFlg}
               dailyTask = {targetDailyTask}
@@ -83,5 +86,5 @@ const DynamicTask = dynamic(
     },
     { ssr: false }
   );
-  
+
   export default DynamicTask;

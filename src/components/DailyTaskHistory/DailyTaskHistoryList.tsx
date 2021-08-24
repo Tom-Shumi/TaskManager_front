@@ -7,11 +7,11 @@ import DailyTaskHistoryItem from './DailyTaskHistoryItem';
 interface DailyTaskHistoryListProps {
     dailyTaskHistoryList: DailyTaskHistory[][];
     targetDate: Date;
-    showDailyTaskHistoryDetailModal: (dailyTaskHistoryList: DailyTaskHistory[]) => void;
+    showDailyTaskHistoryDetailModal: (dailyTaskHistoryList: DailyTaskHistory[], doneDate: Date) => void;
 }
 
 const DailyTaskHistoryList: React.FC<DailyTaskHistoryListProps> = (props) => {
- 
+
     return (
         <div className={styles.daily_task_history_list}>
             {

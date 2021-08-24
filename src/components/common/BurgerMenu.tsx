@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import {logout} from '../util/AuthenticationUtil';
 import { slide as Menu } from "react-burger-menu";
+import {judgePcScreen, judgeSpScreen} from '../util/Util';
 
 interface MenuProps {
     width: number;
@@ -9,11 +10,18 @@ interface MenuProps {
 
 const BurgerMenu: React.FC<MenuProps> = (props) => {
 
+    const isOnlyPcScreen = judgePcScreen();
+    const isOnlySpScreen = judgeSpScreen();
+
     return (
         <Menu {...props}>
-            <Link href="/Task">
+            {isOnlyPcScreen && <Link href="/Task">
                 <a className="burger_menu_link">Task page</a>
-            </Link>
+            </Link>}
+            {isOnlySpScreen &&
+                <a className="burger_menu_link">Task page(PC Only)</a>
+            }
+
             <Link href="/DailyTask">
                 <a className="burger_menu_link">Daily Task page</a>
             </Link>

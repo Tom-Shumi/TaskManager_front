@@ -20,7 +20,7 @@ interface DailyTaskBoardProps {
 const DailyTaskBoard: React.FC<DailyTaskBoardProps> = (props) => {
     // デイリータスク
     const [dailyTaskList, setDailyTaskList] = useState<DailyTask[]>([]);
- 
+
     useEffect(() => {
         props.setInitDispFlg(false);
         callGetDailyTaskList();
@@ -52,7 +52,7 @@ const DailyTaskBoard: React.FC<DailyTaskBoardProps> = (props) => {
     return (
         <div>
             <DndProvider backend={HTML5Backend}>
-                <DailyTaskList 
+                <DailyTaskList
                     key="DailyTaskList"
                     dailyTaskList={dailyTaskList}
                     setInitDispFlg={props.setInitDispFlg}
@@ -86,14 +86,15 @@ function createDailyTaskList(responseData: any[]): DailyTask[]{
 
     for (var i = 0 ; i < length ; i++) {
 
-        let dailyTask = new DailyTask(responseData[i]["id"], responseData[i]["username"], 
-        responseData[i]["title"], responseData[i]["description"], responseData[i]["priority"], 
+        let dailyTask = new DailyTask(responseData[i]["id"], responseData[i]["username"],
+        responseData[i]["title"], responseData[i]["description"], responseData[i]["priority"],
         responseData[i]["quota"], responseData[i]["deleteFlg"], responseData[i]["createDate"],
-        responseData[i]["deleteDate"], responseData[i]["doneDate"], responseData[i]["doneTime"]);
+        responseData[i]["deleteDate"], responseData[i]["doneDate"], responseData[i]["doneTime"], responseData[i]["dispOrder"]);
 
         dailyTaskList.push(dailyTask);
     }
 
+    console.log(responseData)
     return dailyTaskList;
 }
 

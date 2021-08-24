@@ -9,6 +9,8 @@ import { DailyTaskHistory as DailyTaskHistoryClass } from '../components/common/
 import dynamic from "next/dynamic";
 
 const DailyTaskHistory: React.FC = () => {
+  // 初期表示フラグ
+  const [initDispFlg, setInitDispFlg] = useState<Boolean>(true);
   // 基準日
   const [targetDate, setTargetDate] = useState<Date>(new Date());
   // 基準日からの差分
@@ -17,11 +19,14 @@ const DailyTaskHistory: React.FC = () => {
   const [dailyTaskHistoryDetailModalDispFlg, setDailyTaskHistoryDetailModalDispFlg] = useState<Boolean>(false);
   // 編集対象デイリータスク
   const [targetDailyTaskHistoryList, setTargetDailyTaskHistoryList] = useState<DailyTaskHistoryClass[]>([]);
+  // DoneTime登録漏れした際の応急措置処理用の日付
+  const [targetDoneDate, setTargetDoneDate] = useState<Date>(new Date());
 
   authentication();
 
-  const showDailyTaskHistoryDetailModal = (dailyTaskHistoryList: DailyTaskHistoryClass[]) => {
+  const showDailyTaskHistoryDetailModal = (dailyTaskHistoryList: DailyTaskHistoryClass[], doneDate: Date) => {
     setTargetDailyTaskHistoryList(dailyTaskHistoryList);
+    setTargetDoneDate(doneDate);
     setDailyTaskHistoryDetailModalDispFlg(true);
   }
 
@@ -35,6 +40,8 @@ const DailyTaskHistory: React.FC = () => {
           <Button key="dailyTaskBoard" variant="success" className="button_lg">＜ Daily Task Board</Button>
         </Link>
         <DailyTaskHistoryBoard
+          initDispFlg = {initDispFlg}
+          setInitDispFlg = {setInitDispFlg}
           targetDate= {targetDate}
           targetDateDiff= {targetDateDiff}
           setTargetDateDiff= {setTargetDateDiff}
@@ -45,6 +52,8 @@ const DailyTaskHistory: React.FC = () => {
           <DailyTaskHistoryDetailModal
             close = {closeDailyTaskHistoryDetailModal}
             dailyTaskHistoryList = {targetDailyTaskHistoryList}
+            doneDate = {targetDoneDate}
+            setInitDispFlg = {setInitDispFlg}
           />
         }
       </Layout>

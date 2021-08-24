@@ -62,9 +62,10 @@ export class DailyTask {
   deleteDate: string;
   doneDate: string;
   doneTime: number;
+  dispOrder: number;
 
   constructor(id: number, username: string, title: string, description: string,
-     priority: number, quota: number, deleteFlg: number, createDate: string, deleteDate: string, doneDate: string, doneTime: number) {
+    priority: number, quota: number, deleteFlg: number, createDate: string, deleteDate: string, doneDate: string, doneTime: number, dispOrder: number) {
     this.id = id;
     this.username = username;
     this.title = title;
@@ -76,6 +77,7 @@ export class DailyTask {
     this.deleteDate = deleteDate;
     this.doneDate = doneDate;
     this.doneTime = doneTime;
+    this.dispOrder = dispOrder
   }
 }
 
