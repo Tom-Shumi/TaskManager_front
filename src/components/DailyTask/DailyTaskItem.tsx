@@ -85,7 +85,7 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
             <Row className={styles.row}>
                 {isOnlyPcScreen && <Col md={2} className={styles.label}>Quota: {quota}</Col>}
                 <Col xs={12} md={2} className={styles.label}>Done: {done}</Col>
-                {isOnlyPcScreen && <Col md={3} className={styles.label}>Remaining: {remaining}</Col>}
+                <Col xs={12} md={3} className={styles.label}>Remaining: {remaining}</Col>
                 <Col xs={12} md={5}>
                     logged:
                     <Form.Control type="text" value={inputDoneTime} className={styles.done_time_textbox} onChange={handleChangeInputDoneTime()} disabled={props.dailyTask.deleteFlg == 1} /> m
