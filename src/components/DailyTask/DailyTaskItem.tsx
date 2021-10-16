@@ -52,7 +52,7 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
         .then(() => {
             props.setInitDispFlg(true);
         }).catch(() => {
-            Router.push('/Error?400');
+            Router.push('/');
         })
     }
 
@@ -68,7 +68,7 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
             .then( () => {
                 props.setInitDispFlg(true);
             }).catch(() => {
-                Router.push('/Error?400');
+                Router.push('/');
             })
         }
         e.stopPropagation();

@@ -59,7 +59,7 @@ async function getTaskList(){
         lisInProgress = createTaskList(resInProgress.data);
         listDone = createTaskList(resDone.data);
     } catch(error){
-        Router.push('/Error?400');
+        Router.push('/');
     }
     return [listNotStarted, lisInProgress, listDone];
 }

@@ -27,7 +27,7 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
 
     // cookieを使用するaxios生成
     let client = getApiClient();
-  
+
     const callGetTaskCommentList = () => {
         var res: Promise<TaskCommentClass[]> = getTaskCommentList(props.task.id);
         res.then(ret => setComments(ret));
@@ -48,7 +48,7 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
         .then( response => {
             setInitDispFlg(true);
         }).catch(() => {
-            Router.push('/Error?400');
+            Router.push('/');
         })
     }
 
@@ -65,7 +65,7 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
                     setComments([...comments, ...taskCommentList])
                 })
         } catch(error){
-            Router.push('/Error?400');
+            Router.push('/');
         }
     }
 
@@ -114,7 +114,7 @@ async function getTaskCommentList(taskId){
 
         taskCommentList = createTaskCommentList(res.data);
     } catch(error){
-        Router.push('/Error?400');
+        Router.push('/');
     }
     return taskCommentList;
 }

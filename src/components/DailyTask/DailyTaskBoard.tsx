@@ -75,7 +75,7 @@ async function getDailyTaskList(includeDeleteFlg: number){
         });
         dailyTaskList = createDailyTaskList(res.data);
     } catch(error){
-        Router.push('/Error?400');
+        Router.push('/');
     }
     return dailyTaskList;
 }

@@ -92,7 +92,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
             props.setInitDispFlg(true);
             props.close();
         }).catch(() => {
-            Router.push('/Error?400');
+            Router.push('/');
         })
     }
 
@@ -107,7 +107,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
             props.setInitDispFlg(true);
             props.close();
         }).catch(() => {
-            Router.push('/Error?400');
+            Router.push('/');
         })
     }
 

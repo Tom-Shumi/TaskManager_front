@@ -79,7 +79,7 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
             props.setInitDispFlg(true);
             props.close();
         }).catch(() => {
-            Router.push('/Error?400');
+            Router.push('/');
         })
     }
 
@@ -98,7 +98,7 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
             props.setInitDispFlg(true);
             props.close();
         }).catch(() => {
-            Router.push('/Error?400');
+            Router.push('/');
         })
     }
 
@@ -132,7 +132,7 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
                             <strong>Description</strong>
                         </Col>
                         <Col xs={8} className="modal_input">
-                                <Form.Control as="textarea" rows={2} cols={40} value={form.description} onChange={handleChange('description')} />
+                                <Form.Control as="textarea" rows={6} cols={40} value={form.description} onChange={handleChange('description')} />
                         </Col>
                         <hr />
                         <Col xs={4} className="modal_label">

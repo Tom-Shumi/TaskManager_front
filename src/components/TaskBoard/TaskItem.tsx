@@ -33,7 +33,7 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
     var priority_className = priority.className;
 
     const [isDragging, drag] = useDrag(() => ({
-        type: ItemTypes.TASK_ITEM, 
+        type: ItemTypes.TASK_ITEM,
         item: { id: props.task.id },
         collect: monitor => ({
             isDragging: !!monitor.isDragging(),
@@ -49,7 +49,7 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
             .then( response => {
                 props.setInitDispFlg(true);
             }).catch(() => {
-                Router.push('/Error?400');
+                Router.push('/');
             })
         }
         e.stopPropagation();
@@ -60,11 +60,11 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
             <div className={styles.task_item_title}>
                 [<span className={priority_className}>{priority_str}</span>]
                 {props.task.taskTitle}
-                <p className={styles.task_item_icon}><i onClick={deleteTask} className="fa fa-trash faa-wrench animated-hover" /></p> 
+                <p className={styles.task_item_icon}><i onClick={deleteTask} className="fa fa-trash faa-wrench animated-hover" /></p>
             </div>
             <div className={styles.task_item_date}>
                 [{dateTitleStr}] {date}
-                <p className={styles.task_item_icon}><i onClick={ (e) => {props.showTaskCommentModal(props.task); e.stopPropagation();}} className="fa fa-comment faa-wrench animated-hover" /></p> 
+                <p className={styles.task_item_icon}><i onClick={ (e) => {props.showTaskCommentModal(props.task); e.stopPropagation();}} className="fa fa-comment faa-wrench animated-hover" /></p>
             </div>
             <div className={styles.task_item_description}>{props.task.description}</div>
         </div>

@@ -48,7 +48,7 @@ const DailyTaskHistoryBoard: React.FC<DailyTaskHistoryBoardProps> = (props) => {
                 props.setTargetDateDiff(diff)
             })
         } catch(error){
-            Router.push('/Error?400');
+            Router.push('/');
         }
     }
 
@@ -78,7 +78,7 @@ async function getDailyTaskHistoryList(date: Date){
         });
         dailyTaskHistoryList = createDailyTaskHistoryList(res.data);
     } catch(error){
-        Router.push('/Error?400');
+        Router.push('/');
     }
     return dailyTaskHistoryList;
 }

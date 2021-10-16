@@ -57,7 +57,7 @@ const DailyTaskHistoryDetailItem: React.FC<DailyTaskHistoryDetailItemProps> = (p
             props.setInitDispFlg(true);
             props.close();
         }).catch(() => {
-            Router.push('/Error?400');
+            Router.push('/');
         })
     }
 

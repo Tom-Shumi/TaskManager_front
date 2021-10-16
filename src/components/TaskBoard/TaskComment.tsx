@@ -31,7 +31,7 @@ const TaskComment: React.FC<TaskCommentProps> = (props) => {
             .then( response => {
                 props.setInitDispFlg(true);
             }).catch(() => {
-                Router.push('/Error?400');
+                Router.push('/');
             })
         }
     }
@@ -50,7 +50,7 @@ const TaskComment: React.FC<TaskCommentProps> = (props) => {
                 props.setInitDispFlg(true);
                 setUpdateFlg(false);
             }).catch(() => {
-                Router.push('/Error?400');
+                Router.push('/');
             })
         } else {
             setUpdateFlg(true);
