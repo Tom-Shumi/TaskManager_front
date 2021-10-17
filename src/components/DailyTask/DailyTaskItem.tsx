@@ -1,12 +1,13 @@
-import React, { Dispatch, SetStateAction, useState} from 'react';
+import React, { Dispatch, SetStateAction, useState, useRef} from 'react';
 import styles from '../../styles/DailyTaskItem.module.css';
 import {Row, Col, Form, Button} from 'react-bootstrap';
-import { DailyTask } from '../common/interface';
+import { DailyItemTypes, DailyTask } from '../common/interface';
 import * as NumberUtil from '../util/NumberUtil';
 import * as ConversionUtil from '../util/ConversionUtil';
 import {getApiClient} from '../util/AuthenticationUtil';
 import Router from 'next/router';
 import {judgePcScreen} from '../util/Util';
+import { useDrag, useDrop } from 'react-dnd';
 
 interface DailyTaskItemProps {
     dailyTask: DailyTask;
@@ -74,8 +75,57 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
         e.stopPropagation();
     }
 
+    const [isDragging, drag] = useDrag(() => ({
+        type: DailyItemTypes.DAILY_TASK_ITEM,
+        item: { id: props.dailyTask.id,
+                dispOrder: props.dailyTask.dispOrder,
+                doneFlg: props.dailyTask.doneFlg(),
+                deleteFlg: props.dailyTask.deleteFlg },
+        collect: monitor => ({
+            isDragging: !!monitor.isDragging(),
+        }),
+    }))
+
+    const [{isOver}, drop] = useDrop({
+        accept: DailyItemTypes.DAILY_TASK_ITEM,
+        drop: (dragItem: any) => {
+
+            console.log("fromId:" + dragItem.id + ", toId:" + props.dailyTask.id)
+
+            if (dragItem.deleteFlg == 0 && props.dailyTask.deleteFlg == 0
+                && !dragItem.doneFlg && !props.dailyTask.doneFlg()) {
+                updatDailyTaskDispOrder(dragItem.dispOrder, props.dailyTask.dispOrder);
+            }
+        },
+        collect: monitor => ({
+            isOver: !!monitor.isOver()
+        })
+    })
+
+    const updatDailyTaskDispOrder = (fromDispOrder: number, toDispOrder: number) => {
+        var params = {
+            fromDispOrder: fromDispOrder,
+            toDispOrder: toDispOrder
+        }
+        var jsonParams = JSON.stringify(params);
+
+        console.log("from:" + fromDispOrder + ", to:" + toDispOrder)
+        client.put(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_DAILY_TASK + "/dispOrder?fromDispOrder=" + fromDispOrder + "&toDispOrder=" + toDispOrder
+            , jsonParams
+            , {headers: {'content-type': 'application/json'}}
+        ).then( response => {
+            props.setInitDispFlg(true);
+        }).catch(() => {
+            Router.push('/');
+        })
+    }
+
+    const ref = useRef(null);
+    drag(drop(ref));
+
+    var taskStatusColor = isOver ? "is_over_daily_task" : taskStatusColor;
     return (
-        <div className={styles.daily_task_item + " " + taskStatusColor}>
+        <div ref={ref} className={styles.daily_task_item + " " + taskStatusColor}>
             <div className={styles.title} onClick={ () => props.showDailyTaskEditModal(props.dailyTask)}>
                 {props.dailyTask.title}{taskStatusStr}
                 {props.dailyTask.deleteFlg == 1 &&

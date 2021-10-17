@@ -102,7 +102,6 @@ function createDailyTaskHistoryList(responseData: any[]): DailyTaskHistory[][]{
 
             dailyTaskHistoryList[i].push(dailyTaskHistory);
         }
-        console.log(dailyTaskHistoryList)
     }
     return dailyTaskHistoryList;
 }
