@@ -13,6 +13,7 @@ interface DailyTaskItemProps {
     dailyTask: DailyTask;
     setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
     showDailyTaskEditModal: (DailyTask) => void;
+    order: number;
 }
 
 const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
@@ -78,7 +79,6 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
     const [isDragging, drag] = useDrag(() => ({
         type: DailyItemTypes.DAILY_TASK_ITEM,
         item: { id: props.dailyTask.id,
-                dispOrder: props.dailyTask.dispOrder,
                 doneFlg: props.dailyTask.doneFlg(),
                 deleteFlg: props.dailyTask.deleteFlg },
         collect: monitor => ({
@@ -90,11 +90,9 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
         accept: DailyItemTypes.DAILY_TASK_ITEM,
         drop: (dragItem: any) => {
 
-            console.log("fromId:" + dragItem.id + ", toId:" + props.dailyTask.id)
-
             if (dragItem.deleteFlg == 0 && props.dailyTask.deleteFlg == 0
                 && !dragItem.doneFlg && !props.dailyTask.doneFlg()) {
-                updatDailyTaskDispOrder(dragItem.dispOrder, props.dailyTask.dispOrder);
+                updatDailyTaskDispOrder(dragItem.id, props.order);
             }
         },
         collect: monitor => ({
@@ -102,15 +100,14 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
         })
     })
 
-    const updatDailyTaskDispOrder = (fromDispOrder: number, toDispOrder: number) => {
+    const updatDailyTaskDispOrder = (id: number, newDispOrder: number) => {
         var params = {
-            fromDispOrder: fromDispOrder,
-            toDispOrder: toDispOrder
+            id: id,
+            newDispOrder: newDispOrder
         }
         var jsonParams = JSON.stringify(params);
 
-        console.log("from:" + fromDispOrder + ", to:" + toDispOrder)
-        client.put(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_DAILY_TASK + "/dispOrder?fromDispOrder=" + fromDispOrder + "&toDispOrder=" + toDispOrder
+        client.put(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_DAILY_TASK + "/dispOrder?id=" + id + "&newDispOrder=" + newDispOrder
             , jsonParams
             , {headers: {'content-type': 'application/json'}}
         ).then( response => {
