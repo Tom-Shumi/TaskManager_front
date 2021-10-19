@@ -94,7 +94,6 @@ function createDailyTaskList(responseData: any[]): DailyTask[]{
         dailyTaskList.push(dailyTask);
     }
 
-    console.log(responseData)
     return dailyTaskList;
 }
 
