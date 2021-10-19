@@ -13,7 +13,7 @@ interface DailyTaskEditModalProps {
 }
 
 const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
-    const [form, setForm] = useState({id: -1, title: "", description: "", priority: 1, quota: "", dispOrder: "", deleteFlg: 0});
+    const [form, setForm] = useState({id: -1, title: "", description: "", priority: 1, quota: "", deleteFlg: 0});
 　　
     // 初期表示処理
     useEffect(() => {
@@ -23,7 +23,6 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
                 , description: props.dailyTask.description
                 , priority: props.dailyTask.priority
                 , quota: props.dailyTask.quota.toString()
-                , dispOrder: props.dailyTask.dispOrder == undefined ? "" : props.dailyTask.dispOrder.toString()
                 , deleteFlg: props.dailyTask.deleteFlg});
         }
     }, []);
@@ -48,7 +47,6 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
             description: form.description,
             priority: form.priority,
             quota: form.quota,
-            dispOrder: form.dispOrder,
             deleteFlg: form.deleteFlg,
             createDate: props.dailyTask == null ? "": props.dailyTask.createDate,
             deleteDate: props.dailyTask == null ? "": props.dailyTask.deleteDate
@@ -59,7 +57,6 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
     const validate = () => {
         if (form.title == "") return false;
         if (form.quota == "" || !NumberUtil.isNumber(form.quota)) return false;
-        if (form.dispOrder != "" && !NumberUtil.isNumber(form.dispOrder)) return false;
 
         return true;
     }
@@ -132,7 +129,7 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
                             <strong>Description</strong>
                         </Col>
                         <Col xs={8} className="modal_input">
-                                <Form.Control as="textarea" rows={5} cols={40} value={form.description} onChange={handleChange('description')} />
+                                <Form.Control as="textarea" rows={7} cols={40} value={form.description} onChange={handleChange('description')} />
                         </Col>
                         <hr />
                         <Col xs={4} className="modal_label">
@@ -151,13 +148,6 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
                         </Col>
                         <Col xs={8} className="modal_input">
                                 <Form.Control type="text" className="modal_input_num display_inline" value={form.quota} onChange={handleChange('quota')} /> m
-                        </Col>
-                        <hr />
-                        <Col xs={4} className="modal_label">
-                            <strong>Display Order</strong>
-                        </Col>
-                        <Col xs={8} className="modal_input">
-                                <Form.Control type="text" className="modal_input_num display_inline" value={form.dispOrder} onChange={handleChange('dispOrder')} />
                         </Col>
                         <hr />
                         <Col xs={4} className="modal_label">

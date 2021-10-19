@@ -50,6 +50,10 @@ export const ItemTypes = {
   TASK_ITEM: 'task_item',
 }
 
+export const DailyItemTypes = {
+  DAILY_TASK_ITEM: 'daily_task_item',
+}
+
 export class DailyTask {
   id: number;
   username: string;
@@ -78,6 +82,11 @@ export class DailyTask {
     this.doneDate = doneDate;
     this.doneTime = doneTime;
     this.dispOrder = dispOrder
+  }
+
+  doneFlg = () => {
+    if (this.doneTime == null) return false;
+    return this.quota <= this.doneTime
   }
 }
 
