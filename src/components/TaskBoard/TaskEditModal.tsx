@@ -22,7 +22,7 @@ interface TaskEditModalProps {
 
 
 const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
-    const initDate = DatePickerUtil.toUtcIso8601str(moment())
+    const initDate = DatePickerUtil.toString(moment())
     const [form, setForm] = useState({id: -1, task: "", priority: 1, description: "", status: 1, date: initDate});
 　　
     // 初期表示処理
@@ -57,7 +57,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
             , priority: form.priority
             , description: form.description
             , status: form.status
-            , date: DatePickerUtil.toUtcIso8601str(moment(date))});
+            , date: DatePickerUtil.toString(moment(date))});
     }
 
     // cookieを使用するaxios生成

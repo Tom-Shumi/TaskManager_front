@@ -47,11 +47,11 @@ export class TaskGraph {
 }
 
 export const ItemTypes = {
-  TASK_ITEM: 'task_item',
+  TASK_ITEM: 'taskItem',
 }
 
 export const DailyItemTypes = {
-  DAILY_TASK_ITEM: 'daily_task_item',
+  DAILY_TASK_ITEM: 'dailyTaskItem',
 }
 
 export class DailyTask {

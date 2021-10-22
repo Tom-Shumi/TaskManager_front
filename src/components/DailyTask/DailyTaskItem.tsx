@@ -40,8 +40,8 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
         }
 
         var params = {
-            daily_task_id: props.dailyTask.id,
-            done_time: inputDoneTime,
+            dailyTaskId: props.dailyTask.id,
+            doneTime: inputDoneTime,
             quota: props.dailyTask.quota,
         }
         var jsonParams = JSON.stringify(params);

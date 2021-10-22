@@ -40,10 +40,10 @@ const DailyTaskHistoryDetailItem: React.FC<DailyTaskHistoryDetailItemProps> = (p
         }
 
         var params = {
-            daily_task_id: props.dailyTaskHistory.dailyTaskId,
-            done_time: inputDoneTime,
+            dailyTaskId: props.dailyTaskHistory.dailyTaskId,
+            doneTime: inputDoneTime,
             quota: props.dailyTaskHistory.quota,
-            done_date: props.doneDate
+            doneDate: props.doneDate
         }
         var jsonParams = JSON.stringify(params);
 
