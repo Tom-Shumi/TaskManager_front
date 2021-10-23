@@ -4,11 +4,11 @@ import {getApiClient} from '../util/AuthenticationUtil';
 import Router from 'next/router';
 import { Task } from '../common/interface';
 import DatePicker, { registerLocale } from "react-datepicker";
-import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
 import ja from 'date-fns/locale/ja';
 import * as DatePickerUtil from '../util/DatePickerUtil';
 import * as ConversionUtil from '../util/ConversionUtil';
+import moment from 'moment';
 
 registerLocale('ja', ja)
 
@@ -22,7 +22,7 @@ interface TaskEditModalProps {
 
 
 const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
-    const initDate = DatePickerUtil.toString(moment())
+    const initDate = DatePickerUtil.nowUnixDate();
     const [form, setForm] = useState({id: -1, task: "", priority: 1, description: "", status: 1, date: initDate});
 　　
     // 初期表示処理
@@ -35,12 +35,15 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
             } else {
                 dateStr = props.task.planDate
             }
+
+            console.log(DatePickerUtil.parseUnixDate(dateStr))
+
             setForm({id: props.task.id
                     , task: props.task.taskTitle
                     , priority: props.task.priority
                     , description: props.task.description
                     , status: props.task.status
-                    , date: DatePickerUtil.parseDate(dateStr)});
+                    , date: DatePickerUtil.parseUnixDate(dateStr)});
         }
     }, []);
 
@@ -52,12 +55,13 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
 
     // form入力（日付）のハンドリング
     const handleChangeDate = (date) => {
+
         setForm({id: form.id
             , task: form.task
             , priority: form.priority
             , description: form.description
             , status: form.status
-            , date: DatePickerUtil.toString(moment(date))});
+            , date: DatePickerUtil.parseUnixDate(date)});
     }
 
     // cookieを使用するaxios生成
@@ -70,12 +74,13 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
 
     // リクエスト用json取得
     const getJsonParams = () => {
+
         var params = {
             task: form.task,
             priority: form.priority,
             status: form.status,
             description: form.description,
-            date: form.date
+            date: DatePickerUtil.parseRequestString(form.date)
         }
 
         return JSON.stringify(params);
@@ -177,7 +182,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
                         <Col xs={8} className="modal_input">
                             <DatePicker
                                 locale="ja"
-                                selected={form.date == "" ? null : moment(form.date).toDate()}
+                                selected={moment(form.date).toDate()}
                                 onChange={handleChangeDate}
                                 dateFormat="yyyy-MM-dd"
                                 customInput={
