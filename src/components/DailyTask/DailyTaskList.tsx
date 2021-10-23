@@ -1,12 +1,12 @@
 import React, { Dispatch, SetStateAction} from 'react';
 import DailyTaskItem from './DailyTaskItem';
-import styles from '../../styles/DailyTaskList.module.css';
-import { DailyTask } from '../common/interface';
+import styles from '/styles/DailyTaskList.module.css';
+import {DailyTask} from 'components/type/DailyTask';
 
 interface DailyTaskListProps {
     dailyTaskList: DailyTask[];
     setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
-    showDailyTaskEditModal: (DailyTask) => void;
+    showDailyTaskEditModal: (dailyTask: DailyTask) => void;
 }
 
 const DailyTaskList: React.FC<DailyTaskListProps> = (props) => {

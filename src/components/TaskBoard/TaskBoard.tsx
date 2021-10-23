@@ -1,17 +1,17 @@
 import React, { Dispatch, SetStateAction, useState, useEffect} from 'react';
-import TaskList from './TaskList'
-import { Task } from '../common/interface';
+import TaskList from 'components/TaskBoard/TaskList'
+import { Task } from 'components/type/Task';
 import Router from 'next/router';
-import styles from '../../styles/TaskBoard.module.css';
+import styles from '/styles/TaskBoard.module.css';
 import { DndProvider } from 'react-dnd';
-import {HTML5Backend} from 'react-dnd-html5-backend';
-import {getApiClient} from '../util/AuthenticationUtil';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { getApiClient } from 'components/util/AuthenticationUtil';
 
 interface TaskBoardProps {
     initDispFlg: Boolean;
     setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
-    showTaskUpdateModal: (Task) => void;
-    showTaskCommentModal: (Task) => void;
+    showTaskUpdateModal: (task: Task) => void;
+    showTaskCommentModal: (task: Task) => void;
 }
 
 const TaskBoard: React.FC<TaskBoardProps> = (props) => {
@@ -51,9 +51,9 @@ async function getTaskList(){
     var lisInProgress :Task[] = [];
     var listDone :Task[] = [];
     try {
-        const resNotStarted = await getApiClient().get(process.env.NEXT_PUBLIC_API_TASK + "/1");
-        const resInProgress = await getApiClient().get(process.env.NEXT_PUBLIC_API_TASK + "/2");
-        const resDone = await getApiClient().get(process.env.NEXT_PUBLIC_API_TASK + "/3");
+        const resNotStarted = await getApiClient().get(`${process.env.NEXT_PUBLIC_API_TASK}/1`);
+        const resInProgress = await getApiClient().get(`${process.env.NEXT_PUBLIC_API_TASK}/2`);
+        const resDone = await getApiClient().get(`${process.env.NEXT_PUBLIC_API_TASK}/3`);
 
         listNotStarted = createTaskList(resNotStarted.data);
         lisInProgress = createTaskList(resInProgress.data);

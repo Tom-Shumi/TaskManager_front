@@ -1,10 +1,11 @@
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import {Modal, Button, Form, Row, Col} from 'react-bootstrap';
-import {getApiClient} from '../util/AuthenticationUtil';
+import {getApiClient} from 'components/util/AuthenticationUtil';
 import Router from 'next/router';
-import { DailyTask } from '../common/interface';
+import { DailyTask } from 'components/type/DailyTask';
 import "react-datepicker/dist/react-datepicker.css";
-import * as NumberUtil from '../util/NumberUtil';
+import * as NumberUtil from 'components/util/NumberUtil';
+import * as Util from 'components/util/Util';
 
 interface DailyTaskEditModalProps {
     close: () => void;
@@ -28,8 +29,8 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
     }, []);
 
     // form入力のハンドリング
-    const handleChange = (input) => {
-        return e => setForm({...form, [input]: e.target.value})
+    const handleChange = (input: string) => {
+        return (e: any) => setForm({...form, [input]: e.target.value})
     }
 
     // cookieを使用するaxios生成
@@ -48,8 +49,8 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
             priority: form.priority,
             quota: form.quota,
             deleteFlg: form.deleteFlg,
-            createDate: props.dailyTask == null ? "": props.dailyTask.createDate,
-            deleteDate: props.dailyTask == null ? "": props.dailyTask.deleteDate
+            createDate: props.dailyTask == null ? "" : props.dailyTask.createDate,
+            deleteDate: props.dailyTask == null ? "" : props.dailyTask.deleteDate
         }
         return JSON.stringify(params);
     }
@@ -62,14 +63,14 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
     }
 
     // task登録
-    const create = () => {
+    const create = (): void => {
         if (!validate()) {
-            return false;
+            return;
         }
 
         var jsonParams = getJsonParams();
 
-        client.post(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_DAILY_TASK
+        client.post(Util.env(process.env.NEXT_PUBLIC_API_SERVER) + Util.env(process.env.NEXT_PUBLIC_API_DAILY_TASK)
             , jsonParams
             , {headers: {'content-type': 'application/json'}})
         .then( () => {
@@ -81,14 +82,14 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
     }
 
     // task更新
-    const update = () => {
+    const update = (): void => {
         if (!validate()) {
-            return false;
+            return;
         }
 
         var jsonParams = getJsonParams();
 
-        client.put(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_DAILY_TASK + "/" + props.dailyTask.id
+        client.put(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_DAILY_TASK)}/${props.dailyTask.id}`
             , jsonParams
             , {headers: {'content-type': 'application/json'}})
         .then( () => {

@@ -1,18 +1,20 @@
 import React, { Dispatch, SetStateAction, useState, useRef} from 'react';
-import styles from '../../styles/DailyTaskItem.module.css';
+import styles from '/styles/DailyTaskItem.module.css';
 import {Row, Col, Form, Button} from 'react-bootstrap';
-import { DailyItemTypes, DailyTask } from '../common/interface';
-import * as NumberUtil from '../util/NumberUtil';
-import * as ConversionUtil from '../util/ConversionUtil';
-import {getApiClient} from '../util/AuthenticationUtil';
+import {DailyTask} from 'components/type/DailyTask';
+import {Constants} from 'components/Constants';
+import * as NumberUtil from 'components/util/NumberUtil';
+import * as ConversionUtil from 'components/util/ConversionUtil';
+import {getApiClient} from 'components/util/AuthenticationUtil';
 import Router from 'next/router';
-import {judgePcScreen} from '../util/Util';
+import {judgePcScreen} from 'components/util/Util';
 import { useDrag, useDrop } from 'react-dnd';
+import * as Util from 'components/util/Util';
 
 interface DailyTaskItemProps {
     dailyTask: DailyTask;
     setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
-    showDailyTaskEditModal: (DailyTask) => void;
+    showDailyTaskEditModal: (dailyTask: DailyTask) => void;
     order: number;
 }
 
@@ -24,7 +26,7 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
     const remaining = NumberUtil.convertRemaining(props.dailyTask.quota, props.dailyTask.doneTime);
 
     const taskStatus = ConversionUtil.conversionStatusByTime(props.dailyTask.quota, props.dailyTask.doneTime, props.dailyTask.deleteFlg);
-    var taskStatusStr = props.dailyTask.deleteFlg == 1 ? "【" + taskStatus.str + "】" : "";
+    var taskStatusStr = props.dailyTask.deleteFlg == 1 ? `【${taskStatus.str}】` : "";
     var taskStatusColor = taskStatus.color;
 
     const isOnlyPcScreen = judgePcScreen();
@@ -48,7 +50,7 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
 
         setInputDoneTime("")
 
-        client.post(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_DAILY_TASK_HISTORY
+        client.post(Util.env(process.env.NEXT_PUBLIC_API_SERVER) + Util.env(process.env.NEXT_PUBLIC_API_DAILY_TASK_HISTORY)
             , jsonParams
             , {headers: {'content-type': 'application/json'}})
         .then(() => {
@@ -59,14 +61,14 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
     }
 
     const handleChangeInputDoneTime = () => {
-        return e => {
+        return (e: any) => {
             setInputDoneTime(e.target.value);
         };
     }
 
-    const deleteDailyTask = (e) => {
+    const deleteDailyTask = (e: any) => {
         if(confirm("Do you want to delete it?")){
-            client.delete(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_DAILY_TASK + "/" + props.dailyTask.id)
+            client.delete(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_DAILY_TASK)}/${props.dailyTask.id}`)
             .then( () => {
                 props.setInitDispFlg(true);
             }).catch(() => {
@@ -76,8 +78,8 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
         e.stopPropagation();
     }
 
-    const [isDragging, drag] = useDrag(() => ({
-        type: DailyItemTypes.DAILY_TASK_ITEM,
+    const [_, drag] = useDrag(() => ({
+        type: Constants.DailyItemTypes.DAILY_TASK_ITEM,
         item: { id: props.dailyTask.id,
                 doneFlg: props.dailyTask.doneFlg(),
                 deleteFlg: props.dailyTask.deleteFlg },
@@ -87,7 +89,7 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
     }))
 
     const [{isOver}, drop] = useDrop({
-        accept: DailyItemTypes.DAILY_TASK_ITEM,
+        accept: Constants.DailyItemTypes.DAILY_TASK_ITEM,
         drop: (dragItem: any) => {
 
             if (dragItem.deleteFlg == 0 && props.dailyTask.deleteFlg == 0
@@ -107,10 +109,10 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
         }
         var jsonParams = JSON.stringify(params);
 
-        client.put(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_DAILY_TASK + "/dispOrder?id=" + id + "&newDispOrder=" + newDispOrder
+        client.put(`${process.env.NEXT_PUBLIC_API_SERVER}${process.env.NEXT_PUBLIC_API_DAILY_TASK}/dispOrder?id=${id}&newDispOrder=${newDispOrder}`
             , jsonParams
             , {headers: {'content-type': 'application/json'}}
-        ).then( response => {
+        ).then( _ => {
             props.setInitDispFlg(true);
         }).catch(() => {
             Router.push('/');
@@ -139,7 +141,6 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
                     <Button variant="primary" className={styles.done_time_button} onClick={saveDoneTime}>Done</Button>
                 </Col>
             </Row>
-
         </div>
     )
 }

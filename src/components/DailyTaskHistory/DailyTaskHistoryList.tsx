@@ -1,7 +1,7 @@
 import React from 'react';
-import { DailyTaskHistory } from '../common/interface';
-import styles from '../../styles/DailyTaskHistoryList.module.css';
-import DailyTaskHistoryItem from './DailyTaskHistoryItem';
+import { DailyTaskHistory } from 'components/type/DailyTaskHistory';
+import styles from '/styles/DailyTaskHistoryList.module.css';
+import DailyTaskHistoryItem from 'components/DailyTaskHistory/DailyTaskHistoryItem';
 
 
 interface DailyTaskHistoryListProps {

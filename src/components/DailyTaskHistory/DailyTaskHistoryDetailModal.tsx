@@ -1,9 +1,9 @@
 import React, { Dispatch, SetStateAction} from 'react';
 import {Modal, Button,} from 'react-bootstrap';
 import "react-datepicker/dist/react-datepicker.css";
-import { DailyTaskHistory } from '../common/interface';
-import DailyTaskHistoryDetailItem from './DailyTaskHistoryDetailItem';
-import * as DatePickerUtil from '../util/DatePickerUtil';
+import { DailyTaskHistory } from 'components/type/DailyTaskHistory';
+import DailyTaskHistoryDetailItem from 'components/DailyTaskHistory/DailyTaskHistoryDetailItem';
+import * as DatePickerUtil from 'components/util/DatePickerUtil';
 
 
 interface DailyTaskHistoryDetailModalProps {

@@ -1,10 +1,11 @@
 import React, { Dispatch, SetStateAction, useState, useEffect} from 'react';
-import DailyTaskHistoryList from './DailyTaskHistoryList';
-import { DailyTaskHistory } from '../common/interface';
-import {getApiClient} from '../util/AuthenticationUtil';
+import DailyTaskHistoryList from 'components/DailyTaskHistory/DailyTaskHistoryList';
+import { DailyTaskHistory } from 'components/type/DailyTaskHistory';
+import {getApiClient} from 'components/util/AuthenticationUtil';
 import Router from 'next/router';
-import * as DatePickerUtil from '../util/DatePickerUtil';
-import styles from '../../styles/DailyTaskHistoryBoard.module.css';
+import * as DatePickerUtil from 'components/util/DatePickerUtil';
+import styles from '/styles/DailyTaskHistoryBoard.module.css';
+import * as Util from 'components/util/Util';
 
 
 interface DailyTaskHistoryBoardProps {
@@ -38,7 +39,7 @@ const DailyTaskHistoryBoard: React.FC<DailyTaskHistoryBoardProps> = (props) => {
 
         try {
 
-            getApiClient().get(process.env.NEXT_PUBLIC_API_DAILY_TASK_HISTORY, {
+            getApiClient().get(Util.env(process.env.NEXT_PUBLIC_API_DAILY_TASK_HISTORY), {
                 params: {
                     nextTargetDate: DatePickerUtil.dateStrYYYYMMDD(nextTargetDate)
                 }
@@ -71,7 +72,7 @@ async function getDailyTaskHistoryList(date: Date){
     var dailyTaskHistoryList : DailyTaskHistory[][] = new Array();
 
     try {
-        const res = await getApiClient().get(process.env.NEXT_PUBLIC_API_DAILY_TASK_HISTORY, {
+        const res = await getApiClient().get(Util.env(process.env.NEXT_PUBLIC_API_DAILY_TASK_HISTORY), {
             params: {
                 nextTargetDate: dateStr
             }

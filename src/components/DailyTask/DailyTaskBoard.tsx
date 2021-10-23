@@ -1,11 +1,12 @@
 import React, { Dispatch, SetStateAction, useState, useEffect} from 'react';
-import DailyTaskList from './DailyTaskList';
+import DailyTaskList from 'components/DailyTask/DailyTaskList';
 import { DndProvider } from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
-import { DailyTask } from '../common/interface';
-import {getApiClient} from '../util/AuthenticationUtil';
+import { DailyTask } from 'components/type/DailyTask';
+import {getApiClient} from 'components/util/AuthenticationUtil';
 import Router from 'next/router';
-import * as NumberUtil from '../util/NumberUtil';
+import * as NumberUtil from 'components/util/NumberUtil';
+import * as Util from 'components/util/Util';
 
 interface DailyTaskBoardProps {
     initDispFlg: Boolean;
@@ -14,7 +15,7 @@ interface DailyTaskBoardProps {
     setTotalTaskCount: Dispatch<SetStateAction<number>>;
     setDoneTaskCount: Dispatch<SetStateAction<number>>;
     setTotalDoneTime: Dispatch<SetStateAction<string>>;
-    showDailyTaskEditModal: (DailyTask) => void;
+    showDailyTaskEditModal: (dailyTask: DailyTask) => void;
 }
 
 const DailyTaskBoard: React.FC<DailyTaskBoardProps> = (props) => {
@@ -68,7 +69,7 @@ async function getDailyTaskList(includeDeleteFlg: number){
     var dailyTaskList : DailyTask[] = [];
 
     try {
-        const res = await getApiClient().get(process.env.NEXT_PUBLIC_API_DAILY_TASK, {
+        const res = await getApiClient().get(Util.env(process.env.NEXT_PUBLIC_API_DAILY_TASK), {
             params: {
                 includeDeleteFlg: includeDeleteFlg
             }
