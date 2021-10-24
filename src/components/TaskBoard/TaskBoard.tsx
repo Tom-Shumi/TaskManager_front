@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useState, useEffect} from 'react';
 import TaskList from 'components/TaskBoard/TaskList'
 import { Task } from 'components/type/Task';
 import Router from 'next/router';
-import styles from '/styles/TaskBoard.module.css';
+import styles from 'styles/TaskBoard.module.css';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { getApiClient } from 'components/util/AuthenticationUtil';

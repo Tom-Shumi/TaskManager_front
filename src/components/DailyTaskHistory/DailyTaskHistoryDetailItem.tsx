@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useState} from 'react';
-import styles from '/styles/DailyTaskHistoryDetailItem.module.css';
+import styles from 'styles/DailyTaskHistoryDetailItem.module.css';
 import {Row, Col, Form, Button} from 'react-bootstrap';
 import * as NumberUtil from 'components/util/NumberUtil';
 import { DailyTaskHistory } from 'components/type/DailyTaskHistory';

@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useState, useRef} from 'react';
-import styles from '/styles/DailyTaskItem.module.css';
+import styles from 'styles/DailyTaskItem.module.css';
 import {Row, Col, Form, Button} from 'react-bootstrap';
 import {DailyTask} from 'components/type/DailyTask';
 import {Constants} from 'components/Constants';

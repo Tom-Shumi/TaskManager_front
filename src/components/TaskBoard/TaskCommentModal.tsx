@@ -5,7 +5,7 @@ import Router from 'next/router';
 import { Task } from 'components/type/Task';
 import "react-datepicker/dist/react-datepicker.css";
 import TaskComment from 'components/TaskBoard/TaskComment';
-import styles from '/styles/TaskComment.module.css';
+import styles from 'styles/TaskComment.module.css';
 import { TaskComment as TaskCommentClass } from 'components/type/TaskComment';
 import * as Util from 'components/util/Util';
 

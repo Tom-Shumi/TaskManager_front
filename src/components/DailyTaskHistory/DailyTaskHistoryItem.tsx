@@ -1,6 +1,6 @@
 import React from 'react';
 import { DailyTaskHistory } from 'components/type/DailyTaskHistory';
-import styles from '/styles/DailyTaskHistoryItem.module.css';
+import styles from 'styles/DailyTaskHistoryItem.module.css';
 import {Row, Col} from 'react-bootstrap';
 import * as DatePickerUtil from 'components/util/DatePickerUtil';
 import * as NumberUtil from 'components/util/NumberUtil';

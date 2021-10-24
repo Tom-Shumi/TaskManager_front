@@ -1,6 +1,6 @@
 import React from 'react';
 import { DailyTaskHistory } from 'components/type/DailyTaskHistory';
-import styles from '/styles/DailyTaskHistoryList.module.css';
+import styles from 'styles/DailyTaskHistoryList.module.css';
 import DailyTaskHistoryItem from 'components/DailyTaskHistory/DailyTaskHistoryItem';
 
 

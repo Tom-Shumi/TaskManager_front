@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import styles from '../../styles/TaskComment.module.css';
+import styles from 'styles/TaskComment.module.css';
 import { TaskComment as TaskCommentClass } from 'components/type/TaskComment';
 import {Form} from 'react-bootstrap';
 import Router from 'next/router';

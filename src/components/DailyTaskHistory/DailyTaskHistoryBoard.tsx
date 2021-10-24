@@ -4,7 +4,7 @@ import { DailyTaskHistory } from 'components/type/DailyTaskHistory';
 import {getApiClient} from 'components/util/AuthenticationUtil';
 import Router from 'next/router';
 import * as DatePickerUtil from 'components/util/DatePickerUtil';
-import styles from '/styles/DailyTaskHistoryBoard.module.css';
+import styles from 'styles/DailyTaskHistoryBoard.module.css';
 import * as Util from 'components/util/Util';
 
 

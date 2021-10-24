@@ -1,5 +1,5 @@
 import React , { Dispatch, SetStateAction } from 'react';
-import styles from '/styles/TaskItem.module.css';
+import styles from 'styles/TaskItem.module.css';
 import { Task } from 'components/type/Task';
 import {Constants} from 'components/Constants';
 import {getApiClient} from 'components/util/AuthenticationUtil';

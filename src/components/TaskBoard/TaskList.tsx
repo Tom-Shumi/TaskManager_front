@@ -1,6 +1,6 @@
 import React , { Dispatch, SetStateAction } from 'react';
 import TaskItem from 'components/TaskBoard/TaskItem';
-import styles from '/styles/TaskList.module.css';
+import styles from 'styles/TaskList.module.css';
 import { Task } from 'components/type/Task';
 import {Constants} from 'components/Constants';
 import { useDrop } from 'react-dnd';
