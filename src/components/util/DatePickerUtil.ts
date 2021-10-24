@@ -6,7 +6,7 @@ const nowUnixDate = (): number => {
       .unix() * 1000
 }
 
-const parseUnixDate = (dateStr): number => {
+const parseUnixDate = (dateStr: string): number => {
   if (!dateStr) {
     return -1
   } else {

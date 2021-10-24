@@ -1,18 +1,20 @@
 import React , { Dispatch, SetStateAction } from 'react';
-import TaskItem from './TaskItem';
-import styles from '../../styles/TaskList.module.css';
-import { ItemTypes, Task } from '../common/interface';
+import TaskItem from 'components/TaskBoard/TaskItem';
+import styles from '/styles/TaskList.module.css';
+import { Task } from 'components/type/Task';
+import {Constants} from 'components/Constants';
 import { useDrop } from 'react-dnd';
-import {getApiClient} from '../util/AuthenticationUtil';
+import {getApiClient} from 'components/util/AuthenticationUtil';
 import Router from 'next/router';
-import * as ConversionUtil from '../util/ConversionUtil';
+import * as ConversionUtil from 'components/util/ConversionUtil';
+import * as Util from 'components/util/Util';
 
 interface TaskListProps {
     taskList: Task[];
     status: number;
     setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
-    showTaskUpdateModal: (Task) => void;
-    showTaskCommentModal: (Task) => void;
+    showTaskUpdateModal: (task: Task) => void;
+    showTaskCommentModal: (task: Task) => void;
 }
 
 const TaskList: React.FC<TaskListProps> = (props) => {
@@ -26,10 +28,10 @@ const TaskList: React.FC<TaskListProps> = (props) => {
         }
         var jsonParams = JSON.stringify(params);
 
-        client.put(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK + "/status/" + id
+        client.put(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_TASK)}/status/${id}`
             , jsonParams
             , {headers: {'content-type': 'application/json'}}
-        ).then( response => {
+        ).then( _ => {
             props.setInitDispFlg(true);
         }).catch(() => {
             Router.push('/');
@@ -37,7 +39,7 @@ const TaskList: React.FC<TaskListProps> = (props) => {
     }
 
     const [{isOver}, drop] = useDrop({
-        accept: ItemTypes.TASK_ITEM,
+        accept: Constants.ItemTypes.TASK_ITEM,
         drop: (dragItem: any) => {
             updateTaskStatus(dragItem.id, props.status);
         },

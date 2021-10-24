@@ -1,6 +1,6 @@
 
 const conversionStatus = (status: number) => {
-    var str: string;
+    var str: string = "";
     switch(status) {
         case 1:
             str = 'Not Started';
@@ -35,8 +35,8 @@ const conversionStatusByTime = (quota: number, doneTime: number, deleteFlg: numb
 }
 
 const conversionPriority = (priority: number) => {
-    var str: string;
-    var className: string;
+    var str: string = "";
+    var className: string = "";
     switch(priority) {
         case 1:
             str = 'LOW';
@@ -56,7 +56,7 @@ const conversionPriority = (priority: number) => {
 
 const conversionDateStr = (status: number) => {
     // 日付表示文字列設定
-    let dateStr: string;
+    let dateStr: string = "";
     switch(status){
         case 1:
         case 2:

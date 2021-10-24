@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import Router from 'next/router';
 import {Container, Button, Form} from 'react-bootstrap';
-import styles from '../styles/Index.module.css';
+import styles from '/styles/Index.module.css';
 import Axios from "axios";
 import getConfig from "next/config";
 const { publicRuntimeConfig }= getConfig();
+import * as Util from 'components/util/Util';
 
 const index: React.FC = () => {
 
@@ -14,12 +15,12 @@ const index: React.FC = () => {
     let client = Axios.create({withCredentials: true});
 
     // ログイン処理
-    const login = () => {
+    const login = (): void => {
         if (username == "" || password == "") {
-            return false;
+            return;
         }
 
-        client.post(`${publicRuntimeConfig.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_LOGIN}`, createParams())
+        client.post(`${publicRuntimeConfig.NEXT_PUBLIC_API_SERVER}${process.env.NEXT_PUBLIC_API_LOGIN}`, createParams())
         .then(() => {
             console.log('login success');
             // セッションにログイン情報保持
@@ -34,12 +35,12 @@ const index: React.FC = () => {
         })
     }
 
-    const createUser = () => {
+    const createUser = (): void => {
         if (username == "" || password == "") {
-            return false;
+            return;
         }
 
-        client.post(`${process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_USER_NOAUTH}`
+        client.post(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${process.env.NEXT_PUBLIC_API_USER_NOAUTH}`
                     , createJsonParams()
                     , {headers: {'content-type': 'application/json'}})
         .then(() => {

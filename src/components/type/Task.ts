@@ -1,4 +1,4 @@
-
+import { TaskComment } from 'components/type/TaskComment';
 
 export class Task {
   id: number;

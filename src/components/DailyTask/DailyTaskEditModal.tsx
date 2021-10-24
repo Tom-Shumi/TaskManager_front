@@ -10,7 +10,7 @@ import * as Util from 'components/util/Util';
 interface DailyTaskEditModalProps {
     close: () => void;
     setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
-    dailyTask: DailyTask;
+    dailyTask: DailyTask | null;
 }
 
 const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
@@ -89,7 +89,7 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
 
         var jsonParams = getJsonParams();
 
-        client.put(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_DAILY_TASK)}/${props.dailyTask.id}`
+        client.put(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_DAILY_TASK)}/${props.dailyTask!.id}`
             , jsonParams
             , {headers: {'content-type': 'application/json'}})
         .then( () => {

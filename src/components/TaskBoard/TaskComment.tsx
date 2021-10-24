@@ -3,7 +3,8 @@ import styles from '../../styles/TaskComment.module.css';
 import { TaskComment as TaskCommentClass } from 'components/type/TaskComment';
 import {Form} from 'react-bootstrap';
 import Router from 'next/router';
-import {getApiClient} from '../util/AuthenticationUtil';
+import {getApiClient} from 'components/util/AuthenticationUtil';
+import * as Util from 'components/util/Util';
 
 interface TaskCommentProps {
     taskComment: TaskCommentClass;
@@ -18,7 +19,7 @@ const TaskComment: React.FC<TaskCommentProps> = (props) => {
     let client = getApiClient();
 
     const handleChangeInputComment = () => {
-        return e => setInputComment(e.target.value);
+        return (e: any) => setInputComment(e.target.value);
     }
 
     const cancelTaskCommentEdit = () => {
@@ -27,8 +28,8 @@ const TaskComment: React.FC<TaskCommentProps> = (props) => {
 
     const deleteTaskComment = () => {
         if(confirm("Do you want to delete it?")){
-            client.delete(`${process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK_COMMENT}/${props.taskComment.taskId}/${props.taskComment.id}`)
-            .then( response => {
+            client.delete(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_TASK_COMMENT)}/${props.taskComment.taskId}/${props.taskComment.id}`)
+            .then( _ => {
                 props.setInitDispFlg(true);
             }).catch(() => {
                 Router.push('/');
@@ -43,10 +44,10 @@ const TaskComment: React.FC<TaskCommentProps> = (props) => {
             }
             var jsonParams = JSON.stringify(params);
 
-            client.put(`${process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK_COMMENT}/${props.taskComment.taskId}/${props.taskComment.id}`
+            client.put(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_TASK_COMMENT)}/${props.taskComment.taskId}/${props.taskComment.id}`
                 , jsonParams
                 , {headers: {'content-type': 'application/json'}})
-            .then( response => {
+            .then( _ => {
                 props.setInitDispFlg(true);
                 setUpdateFlg(false);
             }).catch(() => {

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import {Modal, Button, Form, Row, Col} from 'react-bootstrap';
-import {getApiClient} from '../util/AuthenticationUtil';
+import {getApiClient} from 'components/util/AuthenticationUtil';
 import Router from 'next/router';
-import { Task } from '../common/interface';
+import { Task } from 'components/type/Task';
 import "react-datepicker/dist/react-datepicker.css";
-import TaskComment from './TaskComment';
-import styles from '../../styles/TaskComment.module.css';
-import { TaskComment as TaskCommentClass } from '../common/interface';
+import TaskComment from 'components/TaskBoard/TaskComment';
+import styles from '/styles/TaskComment.module.css';
+import { TaskComment as TaskCommentClass } from 'components/type/TaskComment';
+import * as Util from 'components/util/Util';
 
 interface TaskCommentModalProps {
     close: () => void;
@@ -34,7 +35,7 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
     }
 
     const handleChangeInputComment = () => {
-        return e => setInputComment(e.target.value);
+        return (e:any) => setInputComment(e.target.value);
     }
 
     const saveComment = () => {
@@ -42,10 +43,10 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
             comment: inputComment
         }
         var jsonParams = JSON.stringify(params);
-        client.post(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK_COMMENT + '/' + props.task.id
+        client.post(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_TASK_COMMENT)}/${props.task.id}`
             , jsonParams
             , {headers: {'content-type': 'application/json'}})
-        .then( response => {
+        .then( _ => {
             setInitDispFlg(true);
         }).catch(() => {
             Router.push('/');
@@ -59,7 +60,7 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
     const loadNextComment = () => {
         let maxCommentId = comments[comments.length - 1].id
         try {
-            client.get(`${process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK_COMMENT}/${props.task.id}?nextKey=${maxCommentId}`)
+            client.get(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_TASK_COMMENT)}/${props.task.id}?nextKey=${maxCommentId}`)
                 .then(res => {
                     let taskCommentList = createTaskCommentList(res.data);
                     setComments([...comments, ...taskCommentList])
@@ -106,11 +107,11 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
 }
 
 // 各apiを呼び出しタスクコメントリストを取得する
-async function getTaskCommentList(taskId){
+async function getTaskCommentList(taskId: number){
     let client = getApiClient();
     var taskCommentList :TaskCommentClass[] = [];
     try {
-        const res = await client.get(`${process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK_COMMENT}/${taskId}`);
+        const res = await client.get(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_TASK_COMMENT)}/${taskId}`);
 
         taskCommentList = createTaskCommentList(res.data);
     } catch(error){

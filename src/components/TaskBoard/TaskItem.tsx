@@ -1,23 +1,25 @@
 import React , { Dispatch, SetStateAction } from 'react';
-import styles from '../../styles/TaskItem.module.css';
-import { Task, ItemTypes } from '../common/interface';
-import {getApiClient} from '../util/AuthenticationUtil';
+import styles from '/styles/TaskItem.module.css';
+import { Task } from 'components/type/Task';
+import {Constants} from 'components/Constants';
+import {getApiClient} from 'components/util/AuthenticationUtil';
 import Router from 'next/router';
 import { useDrag } from 'react-dnd';
-import * as ConversionUtil from '../util/ConversionUtil';
+import * as ConversionUtil from 'components/util/ConversionUtil';
+import * as Util from 'components/util/Util';
 
 interface TaskItemProps {
     task: Task;
     setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
-    showTaskUpdateModal: (Task) => void;
-    showTaskCommentModal: (Task) => void;
+    showTaskUpdateModal: (task: Task) => void;
+    showTaskCommentModal: (task: Task) => void;
 }
 
 const TaskItem: React.FC<TaskItemProps> = (props) => {
 
     // 日付表示文字列設定
     let dateTitleStr = ConversionUtil.conversionDateStr(props.task.status);
-    var date: string;
+    var date: string = "";
     switch(props.task.status){
         case 1:
         case 2:
@@ -32,8 +34,8 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
     var priority_str = priority.str;
     var priority_className = priority.className;
 
-    const [isDragging, drag] = useDrag(() => ({
-        type: ItemTypes.TASK_ITEM,
+    const [_, drag] = useDrag(() => ({
+        type: Constants.ItemTypes.TASK_ITEM,
         item: { id: props.task.id },
         collect: monitor => ({
             isDragging: !!monitor.isDragging(),
@@ -43,10 +45,10 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
     // cookieを使用するaxios生成
     let client = getApiClient();
 
-    const deleteTask = (e) => {
+    const deleteTask = (e: any) => {
         if(confirm("Do you want to delete it?")){
-            client.delete(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK + "/" + props.task.id)
-            .then( response => {
+            client.delete(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_TASK)}/${props.task.id}`)
+            .then( _ => {
                 props.setInitDispFlg(true);
             }).catch(() => {
                 Router.push('/');
