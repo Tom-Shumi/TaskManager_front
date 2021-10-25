@@ -78,12 +78,12 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
             <Modal.Body>
             <Form>
                 <Row>
-                    <Col xs={12} className="modal_input">
+                    <Col xs={12} className="modalInput">
                         <Form.Control as="textarea" rows={2} value={inputComment} onChange={handleChangeInputComment()}/>
                     </Col>
-                    <div className={styles.task_comment_button_frame}>
-                        <div className={styles.task_comment_button}><Button variant="primary" className="button_sm" onClick={saveComment} >save</Button></div>
-                        <div className={styles.task_comment_button}><Button variant="outline-dark" className="button_sm" onClick={clearInputComment} >clear</Button></div>
+                    <div className={styles.taskCommentButtonFrame}>
+                        <div className={styles.taskCommentButton}><Button variant="primary" className="buttonSm" onClick={saveComment} >save</Button></div>
+                        <div className={styles.taskCommentButton}><Button variant="outline-dark" className="buttonSm" onClick={clearInputComment} >clear</Button></div>
                     </div>
                     <hr />
                 </Row>
@@ -97,10 +97,10 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
                     />
                 ))
             }
-            <div className={styles.task_comment_load} onClick={loadNextComment}><i className="fa fa-arrow-circle-down faa-wrench animated-hover" /></div>
+            <div className={styles.taskCommentLoad} onClick={loadNextComment}><i className="fa fa-arrow-circle-down faa-wrench animated-hover" /></div>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="dark" onClick={props.close} className="button_sm" >close</Button>
+                <Button variant="dark" onClick={props.close} className="buttonSm" >close</Button>
             </Modal.Footer>
         </Modal>
     )

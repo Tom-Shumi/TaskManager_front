@@ -1,4 +1,4 @@
-.task_item {
+.taskItem {
     border: 1px solid rgb(127, 182, 255);
     margin: 12px;
     border-radius: 4px;
@@ -9,7 +9,7 @@
     cursor : pointer;
 }
 
-.task_item_title {
+.taskItemTitle {
     font-size: 18px;
     margin: 0 8px 4px;
     border-bottom: 1px solid #333;
@@ -19,7 +19,7 @@
     width: 90%;
 }
 
-.task_item_date {
+.taskItemDate {
     font-size: 12px;
     margin: 0 8px 4px;
     border-bottom: 1px solid #333;
@@ -29,17 +29,17 @@
     width: 90%;
 }
 
-.task_item_description {
+.taskItemDescription {
     word-wrap: break-word;
     padding: 8px 8px 0px 8px;
     margin: 0 8px 4px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
-.task_item_icon{
+.taskItemIcon{
     display: table-cell;
     text-align: left;
     cursor : pointer;

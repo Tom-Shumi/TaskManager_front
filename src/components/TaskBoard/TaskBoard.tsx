@@ -35,7 +35,7 @@ const TaskBoard: React.FC<TaskBoardProps> = (props) => {
     }
 
     return (
-        <div className={styles.task_board}>
+        <div className={styles.taskBoard}>
             <DndProvider backend={HTML5Backend}>
                 <TaskList taskList={taskListNotStarted} status={1} setInitDispFlg={props.setInitDispFlg} showTaskUpdateModal={props.showTaskUpdateModal} showTaskCommentModal={props.showTaskCommentModal} key="TaskList1"/>
                 <TaskList taskList={taskListInProgress} status={2} setInitDispFlg={props.setInitDispFlg} showTaskUpdateModal={props.showTaskUpdateModal} showTaskCommentModal={props.showTaskCommentModal} key="TaskList2" />

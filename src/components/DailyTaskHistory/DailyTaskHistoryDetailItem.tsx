@@ -69,12 +69,12 @@ const DailyTaskHistoryDetailItem: React.FC<DailyTaskHistoryDetailItemProps> = (p
     }
 
     return (
-        <div className={styles.daily_task_history_detail_item + statusColor}>
+        <div className={styles.dailyTaskHistoryDetailItem + statusColor}>
             <div className={styles.title}>
                 {props.dailyTaskHistory.title} {taskStatusStr}
                 <div>[logged]
-                    <Form.Control type="text" value={inputDoneTime} className={styles.done_time_textbox} onChange={handleChangeInputDoneTime()} /> m
-                    <Button variant="primary" className={styles.done_time_button}  onClick={saveDoneTime}>Done</Button>
+                    <Form.Control type="text" value={inputDoneTime} className={styles.doneTimeTextbox} onChange={handleChangeInputDoneTime()} /> m
+                    <Button variant="primary" className={styles.doneTimeButton}  onClick={saveDoneTime}>Done</Button>
                 </div>
             </div>
             <Row className={styles.row}>

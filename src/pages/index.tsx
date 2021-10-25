@@ -72,10 +72,10 @@ const index: React.FC = () => {
     }
 
     return (
-        <div className="form_frame">
+        <div className="formFrame">
             <Container>
                 <Form>
-                    <p className={styles.login_str}>Task Manager</p>
+                    <p className={styles.loginStr}>Task Manager</p>
                     <hr />
                     <Form.Label>User Name</Form.Label>
                     <Form.Control type="text" placeholder="User Name" onChange={(e: any) => setUsername(e.target.value)} value={username} />

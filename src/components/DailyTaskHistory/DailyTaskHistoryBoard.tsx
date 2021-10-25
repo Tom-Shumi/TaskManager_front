@@ -62,7 +62,7 @@ const DailyTaskHistoryBoard: React.FC<DailyTaskHistoryBoardProps> = (props) => {
                 showDailyTaskHistoryDetailModal={props.showDailyTaskHistoryDetailModal}
             />
 
-            <div className={styles.daily_task_history_load} onClick={loadNextHistory}><i className="fa fa-arrow-circle-down faa-wrench animated-hover" /></div>
+            <div className={styles.dailyTaskHistoryLoad} onClick={loadNextHistory}><i className="fa fa-arrow-circle-down faa-wrench animated-hover" /></div>
         </div>
     )
 }

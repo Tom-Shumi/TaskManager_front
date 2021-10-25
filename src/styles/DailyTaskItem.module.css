@@ -1,4 +1,4 @@
-.daily_task_item {
+.dailyTaskItem {
     border: 1px solid rgb(127, 182, 255);
     margin: 12px;
     border-radius: 4px;
@@ -17,13 +17,13 @@
     cursor : pointer;
 }
 
-.done_time_textbox{
+.doneTimeTextbox{
     width: 60px;
     display: inline;
     margin-left: 10px;
 }
 
-.done_time_button{
+.doneTimeButton{
     width: 65px;
     display: inline;
     margin-left: 10px;

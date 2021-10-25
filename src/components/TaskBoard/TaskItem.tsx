@@ -31,8 +31,8 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
     }
 
     var priority = ConversionUtil.conversionPriority(props.task.priority);
-    var priority_str = priority.str;
-    var priority_className = priority.className;
+    var priorityStr = priority.str;
+    var priorityClassName = priority.className;
 
     const [_, drag] = useDrag(() => ({
         type: Constants.ItemTypes.TASK_ITEM,
@@ -58,17 +58,17 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
     }
 
     return (
-        <div ref={drag} className={styles.task_item} onClick={ () => props.showTaskUpdateModal(props.task)}>
-            <div className={styles.task_item_title}>
-                [<span className={priority_className}>{priority_str}</span>]
+        <div ref={drag} className={styles.taskItem} onClick={ () => props.showTaskUpdateModal(props.task)}>
+            <div className={styles.taskItemTitle}>
+                [<span className={priorityClassName}>{priorityStr}</span>]
                 {props.task.taskTitle}
-                <p className={styles.task_item_icon}><i onClick={deleteTask} className="fa fa-trash faa-wrench animated-hover" /></p>
+                <p className={styles.taskItemIcon}><i onClick={deleteTask} className="fa fa-trash faa-wrench animated-hover" /></p>
             </div>
-            <div className={styles.task_item_date}>
+            <div className={styles.taskItemDate}>
                 [{dateTitleStr}] {date}
-                <p className={styles.task_item_icon}><i onClick={ (e) => {props.showTaskCommentModal(props.task); e.stopPropagation();}} className="fa fa-comment faa-wrench animated-hover" /></p>
+                <p className={styles.taskItemIcon}><i onClick={ (e) => {props.showTaskCommentModal(props.task); e.stopPropagation();}} className="fa fa-comment faa-wrench animated-hover" /></p>
             </div>
-            <div className={styles.task_item_description}>{props.task.description}</div>
+            <div className={styles.taskItemDescription}>{props.task.description}</div>
         </div>
     )
 }

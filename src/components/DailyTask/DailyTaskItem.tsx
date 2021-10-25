@@ -122,9 +122,9 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
     const ref = useRef(null);
     drag(drop(ref));
 
-    var taskStatusColor = isOver ? "is_over_daily_task" : taskStatusColor;
+    var taskStatusColor = isOver ? "isOverDailyTask" : taskStatusColor;
     return (
-        <div ref={ref} className={styles.daily_task_item + " " + taskStatusColor}>
+        <div ref={ref} className={styles.dailyTaskItem + " " + taskStatusColor}>
             <div className={styles.title} onClick={ () => props.showDailyTaskEditModal(props.dailyTask)}>
                 {props.dailyTask.title}{taskStatusStr}
                 {props.dailyTask.deleteFlg == 1 &&
@@ -137,8 +137,8 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
                 <Col xs={12} md={3} className={styles.label}>Remaining: {remaining}</Col>
                 <Col xs={12} md={5}>
                     logged:
-                    <Form.Control type="text" value={inputDoneTime} className={styles.done_time_textbox} onChange={handleChangeInputDoneTime()} disabled={props.dailyTask.deleteFlg == 1} /> m
-                    <Button variant="primary" className={styles.done_time_button} onClick={saveDoneTime}>Done</Button>
+                    <Form.Control type="text" value={inputDoneTime} className={styles.doneTimeTextbox} onChange={handleChangeInputDoneTime()} disabled={props.dailyTask.deleteFlg == 1} /> m
+                    <Button variant="primary" className={styles.doneTimeButton} onClick={saveDoneTime}>Done</Button>
                 </Col>
             </Row>
         </div>

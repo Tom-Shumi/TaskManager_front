@@ -119,24 +119,24 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
             <Modal.Body>
                 <Form>
                     <Row>
-                        <Col xs={4} className="modal_label">
+                        <Col xs={4} className="modalLabel">
                             <strong>Title</strong>
                         </Col>
-                        <Col xs={8} className="modal_input">
+                        <Col xs={8} className="modalInput">
                                 <Form.Control type="text" value={form.title} onChange={handleChange('title')} />
                         </Col>
                         <hr />
-                        <Col xs={4} className="modal_label">
+                        <Col xs={4} className="modalLabel">
                             <strong>Description</strong>
                         </Col>
-                        <Col xs={8} className="modal_input">
+                        <Col xs={8} className="modalInput">
                                 <Form.Control as="textarea" rows={7} cols={40} value={form.description} onChange={handleChange('description')} />
                         </Col>
                         <hr />
-                        <Col xs={4} className="modal_label">
+                        <Col xs={4} className="modalLabel">
                             <strong>Priority</strong>
                         </Col>
-                        <Col xs={8} className="modal_input">
+                        <Col xs={8} className="modalInput">
                             <Form.Control as="select" value={form.priority} onChange={handleChange('priority')}>
                                 <option key="priority1" value="1">LOW</option>
                                 <option key="priority2" value="2">MEDIUM</option>
@@ -144,34 +144,34 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
                             </Form.Control>
                         </Col>
                         <hr />
-                        <Col xs={4} className="modal_label">
+                        <Col xs={4} className="modalLabel">
                             <strong>Quota</strong>
                         </Col>
-                        <Col xs={8} className="modal_input">
-                                <Form.Control type="text" className="modal_input_num display_inline" value={form.quota} onChange={handleChange('quota')} /> m
+                        <Col xs={8} className="modalInput">
+                                <Form.Control type="text" className="modalInputNum displayInline" value={form.quota} onChange={handleChange('quota')} /> m
                         </Col>
                         <hr />
-                        <Col xs={4} className="modal_label">
+                        <Col xs={4} className="modalLabel">
                             <strong>Delete Flg</strong>
                         </Col>
-                        <Col xs={8} className="modal_input padding_top_10">
-                            <Form.Check inline type="radio" id="deleteFlg_ON" name="deleteFlg" checked={form.deleteFlg == 1} value="1" label="ON" onChange={handleChange('deleteFlg')} />
-                            <Form.Check inline type="radio" id="deleteFlg_OFF" name="deleteFlg" checked={form.deleteFlg == 0} value="0" label="OFF" onChange={handleChange('deleteFlg')} />
+                        <Col xs={8} className="modalInput paddingTop10">
+                            <Form.Check inline type="radio" id="deleteFlgON" name="deleteFlg" checked={form.deleteFlg == 1} value="1" label="ON" onChange={handleChange('deleteFlg')} />
+                            <Form.Check inline type="radio" id="deleteFlgFFF" name="deleteFlg" checked={form.deleteFlg == 0} value="0" label="OFF" onChange={handleChange('deleteFlg')} />
                         </Col>
                         {props.dailyTask != null &&
                         <React.Fragment>
                             <hr />
-                            <Col xs={4} className="modal_label">
+                            <Col xs={4} className="modalLabel">
                                 <strong>Create Date</strong>
                             </Col>
-                            <Col xs={8} className="modal_input padding_top_10">
+                            <Col xs={8} className="modalInput paddingTop10">
                                 {props.dailyTask.createDate}
                             </Col>
                             <hr />
-                            <Col xs={4} className="modal_label">
+                            <Col xs={4} className="modalLabel">
                                 <strong>Delete Date</strong>
                             </Col>
-                            <Col xs={8} className="modal_input padding_top_10">
+                            <Col xs={8} className="modalInput paddingTop10">
                                 {props.dailyTask.deleteDate != "" ? props.dailyTask.deleteDate : "-"}
                             </Col>
                         </React.Fragment>
@@ -180,8 +180,8 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="primary" onClick={clickExecute} className="button_sm" >execute</Button>
-                <Button variant="dark" onClick={props.close} className="button_sm" >close</Button>
+                <Button variant="primary" onClick={clickExecute} className="buttonSm" >execute</Button>
+                <Button variant="dark" onClick={props.close} className="buttonSm" >close</Button>
             </Modal.Footer>
         </Modal>
     )

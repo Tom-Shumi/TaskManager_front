@@ -51,7 +51,7 @@ const Task: React.FC = () => {
 
     return (
         <Layout title="Task Board.">
-            <Button key="create" variant="primary" className="button_md" onClick={ () => showTaskCreateModal(null)}>Create Task</Button>
+            <Button key="create" variant="primary" className="buttonMd" onClick={ () => showTaskCreateModal(null)}>Create Task</Button>
             <TaskBoard
                 initDispFlg = {initDispFlg}
                 setInitDispFlg = {setInitDispFlg}

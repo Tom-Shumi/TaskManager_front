@@ -60,19 +60,19 @@ const TaskComment: React.FC<TaskCommentProps> = (props) => {
 
     let comment = [];
     if (updateFlg) {
-        comment.push(<div className={styles.task_comment_cancel_icon}　key={"commentCancel" + props.taskComment.id}><i onClick={cancelTaskCommentEdit} className="fa fa-times faa-wrench animated-hover" /></div>);
+        comment.push(<div className={styles.taskCommentCancelIcon}　key={"commentCancel" + props.taskComment.id}><i onClick={cancelTaskCommentEdit} className="fa fa-times faa-wrench animated-hover" /></div>);
         comment.push(<Form.Control as="textarea" rows={2} cols={40} value={inputComment} onChange={handleChangeInputComment()} key={"comment" + props.taskComment.id} />);
     } else {
         comment.push(props.taskComment.comment);
     }
 
     return (
-        <div className={styles.task_comment}>
+        <div className={styles.taskComment}>
             <div>
                 {comment}
-                <div className={styles.task_comment_icons}>
-                    <div className={styles.task_comment_icon}><i onClick={updateTaskComment} className="fa fa-edit faa-wrench animated-hover" /></div>
-                    <div className={styles.task_comment_icon}><i onClick={deleteTaskComment} className="fa fa-trash faa-wrench animated-hover" /></div>
+                <div className={styles.taskCommentIcons}>
+                    <div className={styles.taskCommentIcon}><i onClick={updateTaskComment} className="fa fa-edit faa-wrench animated-hover" /></div>
+                    <div className={styles.taskCommentIcon}><i onClick={deleteTaskComment} className="fa fa-trash faa-wrench animated-hover" /></div>
                 </div>
             </div>
         </div>

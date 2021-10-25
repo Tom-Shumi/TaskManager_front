@@ -60,7 +60,7 @@ h1 {
     background: gainsboro;
 }
 
-.form_frame{
+.formFrame{
     padding: 1em 1em 0.5em 1em;
     margin: 0 1rem 0 1rem;
     background: white;
@@ -68,120 +68,120 @@ h1 {
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
 }
 
-.button_lg {
+.buttonLg {
     width: 180px;
 }
 
-.button_md {
+.buttonMd {
     width: 120px;
 }
 
-.button_sm {
+.buttonSm {
     width: 80px;
 }
 
-.modal_label{
+.modalLabel{
     font-size: 20px;
     padding-top: 1%;
     margin-top: 1%;
     margin-bottom: 1%;
 }
 
-.modal_input{
+.modalInput{
     margin-top: 1%;
     margin-bottom: 1%;
 }
 
-.modal_input_year{
+.modalInputYear{
     width: 85px;
 }
 
-.modal_input_month{
+.modalInputMonth{
     width: 65px;
 }
 
-.modal_input_day{
+.modalInputDay{
     width: 65px;
     margin-left: 10px;
 }
 
-.modal_input_num{
+.modalInputNum{
     width: 70px;
 }
 
-.modal_input_date_delimiter{
+.modalInputDateDelimiter{
     margin-top: 5px;
     margin-left: 10px;
 }
 
-.burger_menu_link{
+.burgerMenuLink{
     display: block;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
-.burger_menu_link_logout{
+.burgerMenuLinkLogout{
     display: block;
     margin-top: 50px;
 }
 
-.display_flex{
+.displayFlex{
     display: flex;
 }
 
-.display_inline{
+.displayInline{
     display: inline;
 }
 
-.is_over {
+.isOver {
     border: 1px solid #ffff00;
     background-color: #ffffe0;
 }
 
-.is_over_daily_task {
+.isOverDailyTask {
     border: 1px solid lightskyblue;
     background-color: lightblue;
 }
 
-.is_not_over {
+.isNotOver {
     border: 1px solid rgb(165, 181, 201);
     background-color: rgb(241, 241, 241);
 }
 
-.div_link {
+.divLink {
     position: relative;
     margin-bottom: 50px;
 }
 
-.div_link_left {
+.divLinkLeft {
     position: absolute;
     left: 0;
 }
 
-.div_link_right {
+.divLinkRight {
     display: initial;
     text-align: right;
     padding: 0px;
 }
 
-.margin_top_5 {
+.marginTop5 {
     margin-top: 5px;
 }
 
-.padding_top_10 {
+.paddingTop10 {
     padding-top: 10px;
 }
 
-.margin_side_10 {
+.marginSide10 {
     margin-left: 10px;
     margin-right: 10px;
 }
 
-.cursor_pointer {
+.cursorPointer {
     cursor : pointer;
 }
 
-.bm-burger-button {
+.bmBurgerButton {
     position: fixed;
     width: 36px;
     height: 30px;
@@ -189,49 +189,49 @@ h1 {
     top: 36px;
 }
 
-.bm-burger-bars {
+.bmBurgerBars {
     background: #373a47;
 }
 
-.bm-burger-bars-hover {
+.bmBurgerBarsHover {
     background: #005b99;
 }
 
-.bm-cross-button {
+.bmCrossButton {
     height: 24px;
     width: 24px;
 }
 
-.bm-cross {
+.bmCross {
     background: #bdc3c7;
 }
 
-.bm-menu-wrap {
+.bmMenuWrap {
     position: fixed;
     height: 100%;
 }
 
-.bm-menu {
+.bmMenu {
     background: white;
     padding: 2.5em 1.5em 0;
     font-size: 1.15em;
 }
 
-.bm-morph-shape {
+.bmMorphShape {
     fill: #373a47;
 }
 
-.bm-item-list {
+.bmItemList {
     color: #b8b7ad;
     padding: 0.8em;
 }
 
-.bm-item {
+.bmItem {
     display: inline-block;
     text-decoration: none;
     outline: none;
 }
 
-.bm-overlay {
+.bmOverlay {
     background: rgba(0, 0, 0, 0.3);
 }

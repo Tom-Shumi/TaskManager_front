@@ -26,7 +26,7 @@ const Error: React.FC = () => {
         <Layout title="Error.">
             {errorMsg}
             <br /><br />
-            <a onClick={logout} className="cursor_pointer">＜＜ Back to login page</a>
+            <a onClick={logout} className="cursorPointer">＜＜ Back to login page</a>
         </Layout>
     )
 }

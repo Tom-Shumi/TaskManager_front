@@ -13,7 +13,7 @@ const DailyTaskList: React.FC<DailyTaskListProps> = (props) => {
 
     let count = 0;
     return (
-        <div className={styles.daily_task_list}>
+        <div className={styles.dailyTaskList}>
                         {
                 props.dailyTaskList.map(dailyTask => {
                     count += 1;

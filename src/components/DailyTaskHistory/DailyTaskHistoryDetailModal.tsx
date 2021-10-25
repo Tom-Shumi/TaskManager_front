@@ -35,7 +35,7 @@ const DailyTaskHistoryDetailModal: React.FC<DailyTaskHistoryDetailModalProps> = 
             }
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="dark" onClick={props.close} className="button_sm" >close</Button>
+                <Button variant="dark" onClick={props.close} className="buttonSm" >close</Button>
             </Modal.Footer>
         </Modal>
     )

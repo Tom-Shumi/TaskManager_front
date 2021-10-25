@@ -31,7 +31,7 @@ const DailyTaskHistoryItem: React.FC<DailyTaskHistoryItemProps> = (props) => {
     }
 
     return (
-        <div className={styles.daily_task_history_item + statusColor} onClick={ () => props.showDailyTaskHistoryDetailModal(props.dailyTaskHistoryList, props.date)}>
+        <div className={styles.dailyTaskHistoryItem + statusColor} onClick={ () => props.showDailyTaskHistoryDetailModal(props.dailyTaskHistoryList, props.date)}>
             <Row className={styles.row}>
                 <Col md={3} >{DatePickerUtil.dateStrDelimiterYYYYMMDD(props.date)}</Col>
                 <Col md={3} >Achievement: {doneTaskCount} of {props.dailyTaskHistoryList.length}</Col>

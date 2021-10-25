@@ -47,13 +47,13 @@ const DailyTask: React.FC = () => {
 
     return (
         <Layout title={DatePickerUtil.curentDateStrYYYYMMDD() + "."}>
-          <Button key="create" variant="primary" className="button_md margin_side_10" onClick={ () => showDailyTaskEditModal(null)}>Create Task</Button>
+          <Button key="create" variant="primary" className="buttonMd marginSide10" onClick={ () => showDailyTaskEditModal(null)}>Create Task</Button>
           <Link href="/DailyTaskHistory">
-            <Button key="history" variant="success" className="button_md">History ＞</Button>
+            <Button key="history" variant="success" className="buttonMd">History ＞</Button>
           </Link>
-          {isOnlyPcScreen && (<React.Fragment><div className="display_inline margin_side_10">Achievement: {doneTaskCount} of {totalTaskCount}</div>
-          <div className="display_inline margin_side_10">Total Done Time: {totalDoneTime}</div>
-          <div className="display_inline margin_side_10">
+          {isOnlyPcScreen && (<React.Fragment><div className="displayInline marginSide10">Achievement: {doneTaskCount} of {totalTaskCount}</div>
+          <div className="displayInline marginSide10">Total Done Time: {totalDoneTime}</div>
+          <div className="displayInline marginSide10">
             <label>
               <input type="checkbox" name="includeDeleteTask" id="includeDeleteTask" value={includeDeleteFlg} checked={includeDeleteFlg == 1} onChange={changeIncludeDeleteTask()} />
               Include Delete Task

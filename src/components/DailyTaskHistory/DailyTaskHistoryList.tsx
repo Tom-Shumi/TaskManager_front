@@ -13,7 +13,7 @@ interface DailyTaskHistoryListProps {
 const DailyTaskHistoryList: React.FC<DailyTaskHistoryListProps> = (props) => {
 
     return (
-        <div className={styles.daily_task_history_list}>
+        <div className={styles.dailyTaskHistoryList}>
             {
                 props.dailyTaskHistoryList.map((dailyTaskHistoryList, index) => {
                     let date = new Date(props.targetDate)

@@ -138,17 +138,17 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
             <Modal.Body>
                 <Form>
                     <Row>
-                        <Col xs={4} className="modal_label">
+                        <Col xs={4} className="modalLabel">
                             <strong>Task</strong>
                         </Col>
-                        <Col xs={8} className="modal_input">
+                        <Col xs={8} className="modalInput">
                                 <Form.Control type="text" value={form.task} onChange={handleChange('task')} />
                         </Col>
                         <hr />
-                        <Col xs={4} className="modal_label">
+                        <Col xs={4} className="modalLabel">
                             <strong>Status</strong>
                         </Col>
-                        <Col xs={8} className="modal_input">
+                        <Col xs={8} className="modalInput">
                             <Form.Control as="select" value={form.status} onChange={handleChange('status')}>
                                 <option key="status1" value="1">NOT STARTED</option>
                                 <option key="status2" value="2">IN PROGRESS</option>
@@ -156,10 +156,10 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
                             </Form.Control>
                         </Col>
                         <hr />
-                        <Col xs={4} className="modal_label">
+                        <Col xs={4} className="modalLabel">
                             <strong>Priority</strong>
                         </Col>
-                        <Col xs={8} className="modal_input">
+                        <Col xs={8} className="modalInput">
                             <Form.Control as="select" value={form.priority} onChange={handleChange('priority')}>
                                 <option key="priority1" value="1">LOW</option>
                                 <option key="priority2" value="2">MEDIUM</option>
@@ -167,10 +167,10 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
                             </Form.Control>
                         </Col>
                         <hr />
-                        <Col xs={4} className="modal_label">
+                        <Col xs={4} className="modalLabel">
                             <strong>{form.status == 3 ? "Done Date" : "Plan Date"}</strong>
                         </Col>
-                        <Col xs={8} className="modal_input">
+                        <Col xs={8} className="modalInput">
                             <DatePicker
                                 locale="ja"
                                 selected={moment(form.date).toDate()}
@@ -180,18 +180,18 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
                             />
                         </Col>
                         <hr />
-                        <Col xs={4} className="modal_label">
+                        <Col xs={4} className="modalLabel">
                             <strong>Description</strong>
                         </Col>
-                        <Col xs={8} className="modal_input">
+                        <Col xs={8} className="modalInput">
                                 <Form.Control as="textarea" rows={2} cols={40} value={form.description} onChange={handleChange('description')} />
                         </Col>
                     </Row>
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="primary" onClick={clickExecute} className="button_sm" >execute</Button>
-                <Button variant="dark" onClick={props.close} className="button_sm" >close</Button>
+                <Button variant="primary" onClick={clickExecute} className="buttonSm" >execute</Button>
+                <Button variant="dark" onClick={props.close} className="buttonSm" >close</Button>
             </Modal.Footer>
         </Modal>
     )
