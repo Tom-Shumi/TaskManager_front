@@ -48,17 +48,26 @@ const DailyTask: React.FC = () => {
     return (
         <Layout title={DatePickerUtil.curentDateStrYYYYMMDD() + "."}>
           <Button key="create" variant="primary" className="buttonMd marginSide10" onClick={ () => showDailyTaskEditModal(null)}>Create Task</Button>
+          {isOnlyPcScreen && (
+            <Link href="/DailyTaskChangeOrder">
+              <Button key="changeOrder" variant="info" className="buttonLg marginSide10">Change Task's Order</Button>
+            </Link>)
+          }
           <Link href="/DailyTaskHistory">
-            <Button key="history" variant="success" className="buttonMd">History ＞</Button>
+            <Button key="history" variant="success" className="buttonMd marginSide10">History ＞</Button>
           </Link>
-          {isOnlyPcScreen && (<React.Fragment><div className="displayInline marginSide10">Achievement: {doneTaskCount} of {totalTaskCount}</div>
-          <div className="displayInline marginSide10">Total Done Time: {totalDoneTime}</div>
-          <div className="displayInline marginSide10">
-            <label>
-              <input type="checkbox" name="includeDeleteTask" id="includeDeleteTask" value={includeDeleteFlg} checked={includeDeleteFlg == 1} onChange={changeIncludeDeleteTask()} />
-              Include Delete Task
-            </label>
-          </div></ React.Fragment>)}
+          {isOnlyPcScreen && (
+            <React.Fragment>
+              <div className="displayInline marginSide10">Achievement: {doneTaskCount} of {totalTaskCount}</div>
+              <div className="displayInline marginSide10">Total Done Time: {totalDoneTime}</div>
+              <div className="displayInline marginSide10">
+                <label>
+                  <input type="checkbox" name="includeDeleteTask" id="includeDeleteTask" value={includeDeleteFlg} checked={includeDeleteFlg == 1} onChange={changeIncludeDeleteTask()} />
+                  :Include Delete Task
+                </label>
+              </div>
+            </ React.Fragment>)
+          }
 
           <DailyTaskBoard
             initDispFlg = {initDispFlg}
