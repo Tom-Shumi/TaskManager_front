@@ -3,6 +3,7 @@ import DailyTaskList from 'components/DailyTask/DailyTaskList';
 import { DndProvider } from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import { DailyTask } from 'components/type/DailyTask';
+import * as DailyTaskUtil from 'components/type/DailyTask';
 import {getApiClient} from 'components/util/AuthenticationUtil';
 import Router from 'next/router';
 import * as NumberUtil from 'components/util/NumberUtil';
@@ -86,13 +87,7 @@ function createDailyTaskList(responseData: any[]): DailyTask[]{
     var dailyTaskList :DailyTask[] = [];
 
     for (var i = 0 ; i < length ; i++) {
-
-        let dailyTask = new DailyTask(responseData[i]["id"], responseData[i]["username"],
-        responseData[i]["title"], responseData[i]["description"], responseData[i]["priority"],
-        responseData[i]["quota"], responseData[i]["deleteFlg"], responseData[i]["createDate"],
-        responseData[i]["deleteDate"], responseData[i]["doneDate"], responseData[i]["doneTime"], responseData[i]["dispOrder"]);
-
-        dailyTaskList.push(dailyTask);
+        dailyTaskList.push(DailyTaskUtil.of(responseData[i]));
     }
 
     return dailyTaskList;

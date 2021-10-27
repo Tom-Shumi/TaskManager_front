@@ -28,8 +28,22 @@ export class DailyTask {
     this.dispOrder = dispOrder
   }
 
+  of = (responseData: any): DailyTask => {
+    return new DailyTask(responseData["id"], responseData["username"],
+    responseData["title"], responseData["description"], responseData["priority"],
+    responseData["quota"], responseData["deleteFlg"], responseData["createDate"],
+    responseData["deleteDate"], responseData["doneDate"], responseData["doneTime"], responseData["dispOrder"]);
+  }
+
   doneFlg = () => {
     if (this.doneTime == null) return false;
     return this.quota <= this.doneTime
   }
+}
+
+export const of = (responseData: any): DailyTask => {
+  return new DailyTask(responseData["id"], responseData["username"],
+  responseData["title"], responseData["description"], responseData["priority"],
+  responseData["quota"], responseData["deleteFlg"], responseData["createDate"],
+  responseData["deleteDate"], responseData["doneDate"], responseData["doneTime"], responseData["dispOrder"]);
 }
