@@ -26,8 +26,8 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
     const remaining = NumberUtil.convertRemaining(props.dailyTask.quota, props.dailyTask.doneTime);
 
     const taskStatus = ConversionUtil.conversionStatusByTime(props.dailyTask.quota, props.dailyTask.doneTime, props.dailyTask.deleteFlg);
-    var taskStatusStr = props.dailyTask.deleteFlg == 1 ? `【${taskStatus.str}】` : "";
-    var taskStatusColor = taskStatus.color;
+    let taskStatusStr = props.dailyTask.deleteFlg == 1 ? `【${taskStatus.str}】` : "";
+    let taskStatusColor = taskStatus.color;
 
     const isOnlyPcScreen = judgePcScreen();
 
@@ -122,7 +122,7 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
     const ref = useRef(null);
     drag(drop(ref));
 
-    var taskStatusColor = isOver ? "isOverDailyTask" : taskStatusColor;
+    taskStatusColor = isOver ? "isOverDailyTask" : taskStatusColor;
     return (
         <div ref={ref} className={styles.dailyTaskItem + " " + taskStatusColor}>
             <div className={styles.title} onClick={ () => props.showDailyTaskEditModal(props.dailyTask)}>
