@@ -34,31 +34,27 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
   const [{isOver}, drop] = useDrop({
     accept: Constants.DailyItemTypes.DAILY_TASK_ITEM,
     drop: (dragItem: any) => {
-
-        if (dragItem.deleteFlg == 0 && props.dailyTask.deleteFlg == 0
-            && !dragItem.doneFlg && !props.dailyTask.doneFlg()) {
-            updatDailyTaskDispOrder(dragItem.id, props.order);
-        }
+      updatDailyTaskDispOrder(dragItem.id, props.order);
     },
     collect: monitor => ({
-        isOver: !!monitor.isOver()
+      isOver: !!monitor.isOver()
     })
   })
 
   const updatDailyTaskDispOrder = (id: number, newDispOrder: number) => {
-    var params = {
-        id: id,
-        newDispOrder: newDispOrder
+    let params = {
+      id: id,
+      newDispOrder: newDispOrder
     }
-    var jsonParams = JSON.stringify(params);
+    let jsonParams = JSON.stringify(params);
 
     client.put(`${process.env.NEXT_PUBLIC_API_SERVER}${process.env.NEXT_PUBLIC_API_DAILY_TASK}/dispOrder?id=${id}&newDispOrder=${newDispOrder}`
-        , jsonParams
-        , {headers: {'content-type': 'application/json'}}
+      , jsonParams
+      , {headers: {'content-type': 'application/json'}}
     ).then( _ => {
-        props.setInitDispFlg(true);
+      props.setInitDispFlg(true);
     }).catch(() => {
-        Router.push('/');
+      Router.push('/');
     })
   }
 
@@ -68,16 +64,16 @@ const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
   const quota = NumberUtil.convertHourMinute(props.dailyTask.quota);
   let taskStatusColor = isOver ? "isOverDailyTask" : "white";
   return (
-      <>
-        <div ref={ref} className={styles.dailyTaskItem + " " + taskStatusColor}>
-            <div className={styles.title}>
-                {props.dailyTask.title}
-            </div>
-            <Row className={styles.row}>
-                <Col md={2} className={styles.label}>Quota: {quota}</Col>
-            </Row>
-        </div>
-      </>
+    <>
+      <div ref={ref} className={styles.dailyTaskItem + " " + taskStatusColor}>
+          <div className={styles.title}>
+              {props.dailyTask.title}
+          </div>
+          <Row className={styles.row}>
+              <Col md={2} className={styles.label}>Quota: {quota}</Col>
+          </Row>
+      </div>
+    </>
   )
 }
 

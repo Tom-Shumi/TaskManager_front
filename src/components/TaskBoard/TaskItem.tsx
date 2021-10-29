@@ -19,7 +19,7 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
 
     // 日付表示文字列設定
     let dateTitleStr = ConversionUtil.conversionDateStr(props.task.status);
-    var date: string = "";
+    let date: string = "";
     switch(props.task.status){
         case 1:
         case 2:
@@ -30,9 +30,9 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
             break;
     }
 
-    var priority = ConversionUtil.conversionPriority(props.task.priority);
-    var priorityStr = priority.str;
-    var priorityClassName = priority.className;
+    let priority = ConversionUtil.conversionPriority(props.task.priority);
+    let priorityStr = priority.str;
+    let priorityClassName = priority.className;
 
     const [_, drag] = useDrag(() => ({
         type: Constants.ItemTypes.TASK_ITEM,

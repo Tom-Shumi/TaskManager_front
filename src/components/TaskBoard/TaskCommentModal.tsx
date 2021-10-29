@@ -30,7 +30,7 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
     let client = getApiClient();
 
     const callGetTaskCommentList = () => {
-        var res: Promise<TaskCommentClass[]> = getTaskCommentList(props.task.id);
+        let res: Promise<TaskCommentClass[]> = getTaskCommentList(props.task.id);
         res.then(ret => setComments(ret));
     }
 
@@ -39,10 +39,10 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
     }
 
     const saveComment = () => {
-        var params = {
+        let params = {
             comment: inputComment
         }
-        var jsonParams = JSON.stringify(params);
+        let jsonParams = JSON.stringify(params);
         client.post(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_TASK_COMMENT)}/${props.task.id}`
             , jsonParams
             , {headers: {'content-type': 'application/json'}})
@@ -109,7 +109,7 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
 // 各apiを呼び出しタスクコメントリストを取得する
 async function getTaskCommentList(taskId: number){
     let client = getApiClient();
-    var taskCommentList :TaskCommentClass[] = [];
+    let taskCommentList :TaskCommentClass[] = [];
     try {
         const res = await client.get(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_TASK_COMMENT)}/${taskId}`);
 
@@ -121,11 +121,11 @@ async function getTaskCommentList(taskId: number){
 }
 
 function createTaskCommentList(commentList: any[]): TaskCommentClass[] {
-    var taskCommentList :TaskCommentClass[] = [];
+    let taskCommentList :TaskCommentClass[] = [];
     if (commentList == null) {
         return taskCommentList;
     }
-    for (var i = 0 ; i < commentList.length ; i++) {
+    for (let i = 0 ; i < commentList.length ; i++) {
         taskCommentList.push(new TaskCommentClass(commentList[i]["id"], commentList[i]["taskId"], commentList[i]["username"], commentList[i]["comment"], commentList[i]["createDate"]))
     }
     return taskCommentList;

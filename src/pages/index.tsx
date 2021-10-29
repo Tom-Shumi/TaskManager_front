@@ -53,7 +53,7 @@ const index: React.FC = () => {
     }
 
     const createParams = () => {
-        var params = new URLSearchParams();
+        let params = new URLSearchParams();
         params.append('username', username);
         params.append('password', password);
 
@@ -61,7 +61,7 @@ const index: React.FC = () => {
     }
 
     const createJsonParams = () => {
-        var params = {
+        let params = {
             username: username,
             password: password,
             enabledflg: 1,

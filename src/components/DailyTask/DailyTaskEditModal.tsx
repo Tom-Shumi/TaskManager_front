@@ -43,7 +43,7 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
 
     // リクエスト用json取得
     const getJsonParams = () => {
-        var params = {
+        let params = {
             title: form.title,
             description: form.description,
             priority: form.priority,
@@ -68,7 +68,7 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
             return;
         }
 
-        var jsonParams = getJsonParams();
+        let jsonParams = getJsonParams();
 
         client.post(Util.env(process.env.NEXT_PUBLIC_API_SERVER) + Util.env(process.env.NEXT_PUBLIC_API_DAILY_TASK)
             , jsonParams
@@ -87,7 +87,7 @@ const DailyTaskEditModal: React.FC<DailyTaskEditModalProps> = (props) => {
             return;
         }
 
-        var jsonParams = getJsonParams();
+        let jsonParams = getJsonParams();
 
         client.put(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_DAILY_TASK)}/${props.dailyTask!.id}`
             , jsonParams

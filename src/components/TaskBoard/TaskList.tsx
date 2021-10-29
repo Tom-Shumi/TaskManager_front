@@ -23,10 +23,10 @@ const TaskList: React.FC<TaskListProps> = (props) => {
     let client = getApiClient();
 
     const updateTaskStatus = (id: number, status: number) => {
-        var params = {
+        let params = {
             status: status
         }
-        var jsonParams = JSON.stringify(params);
+        let jsonParams = JSON.stringify(params);
 
         client.put(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_TASK)}/status/${id}`
             , jsonParams
@@ -48,8 +48,8 @@ const TaskList: React.FC<TaskListProps> = (props) => {
         })
     })
 
-    var statusStr = ConversionUtil.conversionStatus(props.status);
-    var styleIsOver = isOver ? "isOver" : "isNotOver";
+    let statusStr = ConversionUtil.conversionStatus(props.status);
+    let styleIsOver = isOver ? "isOver" : "isNotOver";
     return (
         <div className={styles.taskList + " " +  styleIsOver} ref={drop}>
             <p className={styles.taskStatus}>{statusStr} [ {Object.keys(props.taskList).length} ]</p>

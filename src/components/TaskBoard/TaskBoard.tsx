@@ -28,7 +28,7 @@ const TaskBoard: React.FC<TaskBoardProps> = (props) => {
     }, [props.initDispFlg]);
 
     const callGetTaskList = () => {
-        var res: Promise<Task[][]> = getTaskList();
+        let res: Promise<Task[][]> = getTaskList();
         res.then(ret => setTaskListNotStarted(ret[0]));
         res.then(ret => setTaskListInProgress(ret[1]));
         res.then(ret => setTaskListDone(ret[2]));
@@ -47,9 +47,9 @@ const TaskBoard: React.FC<TaskBoardProps> = (props) => {
 
 // 各apiを呼び出しタスクリストを取得する
 async function getTaskList(){
-    var listNotStarted :Task[] = [];
-    var lisInProgress :Task[] = [];
-    var listDone :Task[] = [];
+    let listNotStarted :Task[] = [];
+    let lisInProgress :Task[] = [];
+    let listDone :Task[] = [];
     try {
         const resNotStarted = await getApiClient().get(`${process.env.NEXT_PUBLIC_API_TASK}/1`);
         const resInProgress = await getApiClient().get(`${process.env.NEXT_PUBLIC_API_TASK}/2`);
@@ -67,8 +67,8 @@ async function getTaskList(){
 // apiレスポンスからタスクリストを生成する
 function createTaskList(responseData: any[]): Task[]{
     let length: number = responseData.length;
-    var taskList :Task[] = [];
-    for (var i = 0 ; i < length ; i++) {
+    let taskList :Task[] = [];
+    for (let i = 0 ; i < length ; i++) {
         let task = new Task(responseData[i]["id"], responseData[i]["task"], responseData[i]["description"], responseData[i]["priority"], responseData[i]["status"], responseData[i]["planDate"], responseData[i]["doneDate"], []);
         taskList.push(task);
     }

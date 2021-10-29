@@ -17,7 +17,7 @@ const DailyTaskList: React.FC = () => {
   }, [initDispFlg]);
 
   const callGetDailyTaskList = () => {
-    var res: Promise<DailyTask[]> = fetchDailyTaskList();
+    let res: Promise<DailyTask[]> = fetchDailyTaskList();
     res.then(ret => {
         setDailyTaskList(ret);
     });
@@ -55,9 +55,9 @@ async function fetchDailyTaskList() {
 
 function createDailyTaskList(responseData: any[]): DailyTask[]{
   let length: number = responseData.length;
-  var dailyTaskList :DailyTask[] = [];
+  let dailyTaskList :DailyTask[] = [];
 
-  for (var i = 0 ; i < length ; i++) {
+  for (let i = 0 ; i < length ; i++) {
     dailyTaskList.push(DailyTaskUtil.of(responseData[i]));
   }
 

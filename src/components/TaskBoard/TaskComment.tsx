@@ -39,10 +39,10 @@ const TaskComment: React.FC<TaskCommentProps> = (props) => {
 
     const updateTaskComment = () => {
         if (updateFlg) {
-            var params = {
+            let params = {
                 comment: inputComment
             }
-            var jsonParams = JSON.stringify(params);
+            let jsonParams = JSON.stringify(params);
 
             client.put(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_TASK_COMMENT)}/${props.taskComment.taskId}/${props.taskComment.id}`
                 , jsonParams

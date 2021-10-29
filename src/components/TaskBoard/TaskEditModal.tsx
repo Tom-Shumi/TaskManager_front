@@ -75,7 +75,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
     // リクエスト用json取得
     const getJsonParams = () => {
 
-        var params = {
+        let params = {
             task: form.task,
             priority: form.priority,
             status: form.status,
@@ -88,7 +88,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
 
     // task登録
     const create = () => {
-        var jsonParams = getJsonParams();
+        let jsonParams = getJsonParams();
 
         client.post(Util.env(process.env.NEXT_PUBLIC_API_SERVER) + Util.env(process.env.NEXT_PUBLIC_API_TASK)
             , jsonParams
@@ -103,7 +103,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
 
     // task更新
     const update = () => {
-        var jsonParams = getJsonParams();
+        let jsonParams = getJsonParams();
 
         client.put(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_TASK)}/${props.task!.id}`
             , jsonParams

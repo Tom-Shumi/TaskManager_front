@@ -1,6 +1,6 @@
 
 const conversionStatus = (status: number) => {
-    var str: string = "";
+    let str: string = "";
     switch(status) {
         case 1:
             str = 'Not Started';
@@ -35,8 +35,8 @@ const conversionStatusByTime = (quota: number, doneTime: number, deleteFlg: numb
 }
 
 const conversionPriority = (priority: number) => {
-    var str: string = "";
-    var className: string = "";
+    let str: string = "";
+    let className: string = "";
     switch(priority) {
         case 1:
             str = 'LOW';

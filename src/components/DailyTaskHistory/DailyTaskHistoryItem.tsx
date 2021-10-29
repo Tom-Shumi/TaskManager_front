@@ -18,7 +18,7 @@ const DailyTaskHistoryItem: React.FC<DailyTaskHistoryItemProps> = (props) => {
     let doneTaskCount = 0;
     let totalDoneTime = 0;
 
-    for (var i = 0 ; i < props.dailyTaskHistoryList.length ; i++) {
+    for (let i = 0 ; i < props.dailyTaskHistoryList.length ; i++) {
         if (props.dailyTaskHistoryList[i].doneFlg == 1) {
             doneTaskCount++;
         }

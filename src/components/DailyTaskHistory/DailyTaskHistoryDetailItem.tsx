@@ -39,13 +39,13 @@ const DailyTaskHistoryDetailItem: React.FC<DailyTaskHistoryDetailItemProps> = (p
             return;
         }
 
-        var params = {
+        let params = {
             dailyTaskId: props.dailyTaskHistory.dailyTaskId,
             doneTime: inputDoneTime,
             quota: props.dailyTaskHistory.quota,
             doneDate: props.doneDate
         }
-        var jsonParams = JSON.stringify(params);
+        let jsonParams = JSON.stringify(params);
 
         setInputDoneTime("")
 
@@ -61,7 +61,7 @@ const DailyTaskHistoryDetailItem: React.FC<DailyTaskHistoryDetailItemProps> = (p
         })
     }
 
-    var taskStatusStr = props.dailyTaskHistory.doneFlg == 1 ? "【 DONE 】" : "";
+    let taskStatusStr = props.dailyTaskHistory.doneFlg == 1 ? "【 DONE 】" : "";
 
     let statusColor = "";
     if (props.dailyTaskHistory.doneFlg == 1) {

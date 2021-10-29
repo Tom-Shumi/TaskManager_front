@@ -26,7 +26,7 @@ const DailyTaskHistoryBoard: React.FC<DailyTaskHistoryBoardProps> = (props) => {
     }, [props.initDispFlg]);
 
     const callGetDailyTaskHistoryList = () => {
-        var res: Promise<DailyTaskHistory[][]> = getDailyTaskHistoryList(props.targetDate);
+        let res: Promise<DailyTaskHistory[][]> = getDailyTaskHistoryList(props.targetDate);
         res.then(ret => {
             setDailyTaskHistoryList(ret);
         });
@@ -69,7 +69,7 @@ const DailyTaskHistoryBoard: React.FC<DailyTaskHistoryBoardProps> = (props) => {
 
 async function getDailyTaskHistoryList(date: Date){
     let dateStr = DatePickerUtil.dateStrYYYYMMDD(date)
-    var dailyTaskHistoryList : DailyTaskHistory[][] = new Array();
+    let dailyTaskHistoryList : DailyTaskHistory[][] = new Array();
 
     try {
         const res = await getApiClient().get(Util.env(process.env.NEXT_PUBLIC_API_DAILY_TASK_HISTORY), {
@@ -87,16 +87,16 @@ async function getDailyTaskHistoryList(date: Date){
 function createDailyTaskHistoryList(responseData: any[]): DailyTaskHistory[][]{
 
     let outerLength: number = responseData.length;
-    var dailyTaskHistoryList :DailyTaskHistory[][] = [];
+    let dailyTaskHistoryList :DailyTaskHistory[][] = [];
 
-    for (var i = 0; i < outerLength; i++) {
+    for (let i = 0; i < outerLength; i++) {
 
         let tempList = responseData[i]
         let innerLength = tempList.length;
 
         dailyTaskHistoryList[i] = new Array();
 
-        for (var j = 0; j < innerLength; j++) {
+        for (let j = 0; j < innerLength; j++) {
 
             let dailyTaskHistory = new DailyTaskHistory(responseData[i][j]["dailyTaskId"], responseData[i][j]["title"],
             responseData[i][j]["doneDate"], responseData[i][j]["doneTime"], responseData[i][j]["quota"], responseData[i][j]["doneFlg"]);
