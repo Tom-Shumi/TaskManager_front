@@ -1,11 +1,11 @@
 import React, { Dispatch, SetStateAction, useState, useEffect} from 'react';
-import DailyTaskList from './DailyTaskList';
-import { DndProvider } from 'react-dnd';
-import {HTML5Backend} from 'react-dnd-html5-backend';
-import { DailyTask } from '../common/interface';
-import {getApiClient} from '../util/AuthenticationUtil';
+import DailyTaskList from 'components/DailyTask/DailyTaskList';
+import { DailyTask } from 'components/type/DailyTask';
+import * as DailyTaskUtil from 'components/type/DailyTask';
+import {getApiClient} from 'components/util/AuthenticationUtil';
 import Router from 'next/router';
-import * as NumberUtil from '../util/NumberUtil';
+import * as NumberUtil from 'components/util/NumberUtil';
+import * as Util from 'components/util/Util';
 
 interface DailyTaskBoardProps {
     initDispFlg: Boolean;
@@ -14,7 +14,7 @@ interface DailyTaskBoardProps {
     setTotalTaskCount: Dispatch<SetStateAction<number>>;
     setDoneTaskCount: Dispatch<SetStateAction<number>>;
     setTotalDoneTime: Dispatch<SetStateAction<string>>;
-    showDailyTaskEditModal: (DailyTask) => void;
+    showDailyTaskEditModal: (dailyTask: DailyTask) => void;
 }
 
 const DailyTaskBoard: React.FC<DailyTaskBoardProps> = (props) => {
@@ -27,13 +27,13 @@ const DailyTaskBoard: React.FC<DailyTaskBoardProps> = (props) => {
     }, [props.initDispFlg, props.includeDeleteFlg]);
 
     const callGetDailyTaskList = () => {
-        var res: Promise<DailyTask[]> = getDailyTaskList(props.includeDeleteFlg);
+        let res: Promise<DailyTask[]> = getDailyTaskList(props.includeDeleteFlg);
         res.then(ret => {
             setDailyTaskList(ret);
             let doneTaskCount = 0;
             let totalDoneTime = 0;
             let deleteTaskCount = 0;
-            for (var i = 0 ; i < ret.length ; i++) {
+            for (let i = 0 ; i < ret.length ; i++) {
                 if (ret[i].deleteFlg == 1) {
                     deleteTaskCount++;
                     continue;
@@ -51,24 +51,22 @@ const DailyTaskBoard: React.FC<DailyTaskBoardProps> = (props) => {
 
     return (
         <div>
-            <DndProvider backend={HTML5Backend}>
-                <DailyTaskList
-                    key="DailyTaskList"
-                    dailyTaskList={dailyTaskList}
-                    setInitDispFlg={props.setInitDispFlg}
-                    showDailyTaskEditModal={props.showDailyTaskEditModal}
-                />
-            </DndProvider>
+            <DailyTaskList
+                key="DailyTaskList"
+                dailyTaskList={dailyTaskList}
+                setInitDispFlg={props.setInitDispFlg}
+                showDailyTaskEditModal={props.showDailyTaskEditModal}
+            />
         </div>
     )
 }
 
 async function getDailyTaskList(includeDeleteFlg: number){
 
-    var dailyTaskList : DailyTask[] = [];
+    let dailyTaskList : DailyTask[] = [];
 
     try {
-        const res = await getApiClient().get(process.env.NEXT_PUBLIC_API_DAILY_TASK, {
+        const res = await getApiClient().get(Util.env(process.env.NEXT_PUBLIC_API_DAILY_TASK), {
             params: {
                 includeDeleteFlg: includeDeleteFlg
             }
@@ -82,16 +80,10 @@ async function getDailyTaskList(includeDeleteFlg: number){
 
 function createDailyTaskList(responseData: any[]): DailyTask[]{
     let length: number = responseData.length;
-    var dailyTaskList :DailyTask[] = [];
+    let dailyTaskList :DailyTask[] = [];
 
-    for (var i = 0 ; i < length ; i++) {
-
-        let dailyTask = new DailyTask(responseData[i]["id"], responseData[i]["username"],
-        responseData[i]["title"], responseData[i]["description"], responseData[i]["priority"],
-        responseData[i]["quota"], responseData[i]["deleteFlg"], responseData[i]["createDate"],
-        responseData[i]["deleteDate"], responseData[i]["doneDate"], responseData[i]["doneTime"], responseData[i]["dispOrder"]);
-
-        dailyTaskList.push(dailyTask);
+    for (let i = 0 ; i < length ; i++) {
+        dailyTaskList.push(DailyTaskUtil.of(responseData[i]));
     }
 
     return dailyTaskList;

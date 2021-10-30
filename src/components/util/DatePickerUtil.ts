@@ -1,45 +1,35 @@
 import moment from 'moment';
 
-/**
- * JST基準に変換して返す
- * @param {string} dateTimeStr YYYY-MM-DDTHH:mm:00Z
- * @returns {moment.Moment}
- */
-const parseAsMoment = (dateTimeStr) => {
-    return moment.utc(dateTimeStr, 'YYYY-MM-DDTHH:mm:00Z', 'ja').utcOffset(9)
-}
-
-  /**
-   * 日付形式に変換して返す
-   * @param {moment.Moment} momentInstance
-   * @returns {string}
-   */
-const toUtcIso8601str = (momentInstance) => {
-    return momentInstance
+const nowUnixDate = (): number => {
+    return moment()
       .clone()
-      .utc()
-      .format('YYYY-MM-DDTHH:mm:00Z')
+      .unix() * 1000
 }
 
-const parseDate = (dateStr) => {
+const parseUnixDate = (dateStr: string): number => {
   if (!dateStr) {
-    return ""
+    return -1
   } else {
     return Date.parse(dateStr);
   }
 }
 
-const curentDateStrYYYYMMDD = () => {
+const parseRequestString = (unixDate: number): String => {
+  let date = new Date(unixDate);
+  return dateStrDelimiterYYYYMMDD(date);
+}
+
+const curentDateStrYYYYMMDD = (): String => {
   let today = new Date();
   return today.getFullYear() + "-" + String((today.getMonth() + 1)).padStart(2, '0') + "-" + String(today.getDate()).padStart(2, '0');
 }
 
-const dateStrDelimiterYYYYMMDD = (date: Date) => {
+const dateStrDelimiterYYYYMMDD = (date: Date): String => {
   return date.getFullYear() + "-" + String((date.getMonth() + 1)).padStart(2, '0') + "-" + String(date.getDate()).padStart(2, '0');
 }
 
-const dateStrYYYYMMDD = (date: Date) => {
+const dateStrYYYYMMDD = (date: Date): String => {
   return String(date.getFullYear()) + String((date.getMonth() + 1)).padStart(2, '0') + String(date.getDate()).padStart(2, '0');
 }
 
-export {parseAsMoment, toUtcIso8601str, parseDate, curentDateStrYYYYMMDD, dateStrDelimiterYYYYMMDD, dateStrYYYYMMDD};
+export {nowUnixDate, parseUnixDate, parseRequestString, curentDateStrYYYYMMDD, dateStrDelimiterYYYYMMDD, dateStrYYYYMMDD};

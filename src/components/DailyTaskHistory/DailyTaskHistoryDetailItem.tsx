@@ -1,11 +1,11 @@
 import React, { Dispatch, SetStateAction, useState} from 'react';
-import styles from '../../styles/DailyTaskHistoryDetailItem.module.css';
+import styles from 'styles/DailyTaskHistoryDetailItem.module.css';
 import {Row, Col, Form, Button} from 'react-bootstrap';
-import * as NumberUtil from '../util/NumberUtil';
-import { DailyTaskHistory } from '../common/interface';
-import {getApiClient} from '../util/AuthenticationUtil';
+import * as NumberUtil from 'components/util/NumberUtil';
+import { DailyTaskHistory } from 'components/type/DailyTaskHistory';
+import {getApiClient} from 'components/util/AuthenticationUtil';
 import Router from 'next/router';
-import {judgePcScreen} from '../util/Util';
+import * as Util from 'components/util/Util';
 
 interface DailyTaskHistoryDetailItemProps {
     dailyTaskHistory: DailyTaskHistory;
@@ -17,7 +17,7 @@ interface DailyTaskHistoryDetailItemProps {
 const DailyTaskHistoryDetailItem: React.FC<DailyTaskHistoryDetailItemProps> = (props) => {
     const [inputDoneTime, setInputDoneTime] = useState<string>("");
 
-    const isOnlyPcScreen = judgePcScreen();
+    const isOnlyPcScreen = Util.judgePcScreen();
 
     const quota = NumberUtil.convertHourMinute(props.dailyTaskHistory.quota);
     const done = NumberUtil.convertHourMinute(props.dailyTaskHistory.doneTime);
@@ -27,7 +27,7 @@ const DailyTaskHistoryDetailItem: React.FC<DailyTaskHistoryDetailItemProps> = (p
     let client = getApiClient();
 
     const handleChangeInputDoneTime = () => {
-        return e => {
+        return (e: any) => {
             setInputDoneTime(e.target.value);
         };
     }
@@ -39,18 +39,18 @@ const DailyTaskHistoryDetailItem: React.FC<DailyTaskHistoryDetailItemProps> = (p
             return;
         }
 
-        var params = {
-            daily_task_id: props.dailyTaskHistory.dailyTaskId,
-            done_time: inputDoneTime,
+        let params = {
+            dailyTaskId: props.dailyTaskHistory.dailyTaskId,
+            doneTime: inputDoneTime,
             quota: props.dailyTaskHistory.quota,
-            done_date: props.doneDate
+            doneDate: props.doneDate
         }
-        var jsonParams = JSON.stringify(params);
+        let jsonParams = JSON.stringify(params);
 
         setInputDoneTime("")
 
         // TODO post先変更すること！
-        client.post(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_DAILY_TASK_HISTORY_REGISTER_LATER
+        client.post(Util.env(process.env.NEXT_PUBLIC_API_SERVER) +Util.env(process.env.NEXT_PUBLIC_API_DAILY_TASK_HISTORY_REGISTER_LATER)
             , jsonParams
             , {headers: {'content-type': 'application/json'}})
         .then(() => {
@@ -61,7 +61,7 @@ const DailyTaskHistoryDetailItem: React.FC<DailyTaskHistoryDetailItemProps> = (p
         })
     }
 
-    var taskStatusStr = props.dailyTaskHistory.doneFlg == 1 ? "【 DONE 】" : "";
+    let taskStatusStr = props.dailyTaskHistory.doneFlg == 1 ? "【 DONE 】" : "";
 
     let statusColor = "";
     if (props.dailyTaskHistory.doneFlg == 1) {
@@ -69,12 +69,12 @@ const DailyTaskHistoryDetailItem: React.FC<DailyTaskHistoryDetailItemProps> = (p
     }
 
     return (
-        <div className={styles.daily_task_history_detail_item + statusColor}>
+        <div className={styles.dailyTaskHistoryDetailItem + statusColor}>
             <div className={styles.title}>
                 {props.dailyTaskHistory.title} {taskStatusStr}
                 <div>[logged]
-                    <Form.Control type="text" value={inputDoneTime} className={styles.done_time_textbox} onChange={handleChangeInputDoneTime()} /> m
-                    <Button variant="primary" className={styles.done_time_button}  onClick={saveDoneTime}>Done</Button>
+                    <Form.Control type="text" value={inputDoneTime} className={styles.doneTimeTextbox} onChange={handleChangeInputDoneTime()} /> m
+                    <Button variant="primary" className={styles.doneTimeButton}  onClick={saveDoneTime}>Done</Button>
                 </div>
             </div>
             <Row className={styles.row}>

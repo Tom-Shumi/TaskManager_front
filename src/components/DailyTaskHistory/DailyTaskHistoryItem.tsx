@@ -1,9 +1,9 @@
 import React from 'react';
-import { DailyTaskHistory } from '../common/interface';
-import styles from '../../styles/DailyTaskHistoryItem.module.css';
+import { DailyTaskHistory } from 'components/type/DailyTaskHistory';
+import styles from 'styles/DailyTaskHistoryItem.module.css';
 import {Row, Col} from 'react-bootstrap';
-import * as DatePickerUtil from '../util/DatePickerUtil';
-import * as NumberUtil from '../util/NumberUtil';
+import * as DatePickerUtil from 'components/util/DatePickerUtil';
+import * as NumberUtil from 'components/util/NumberUtil';
 
 
 
@@ -18,7 +18,7 @@ const DailyTaskHistoryItem: React.FC<DailyTaskHistoryItemProps> = (props) => {
     let doneTaskCount = 0;
     let totalDoneTime = 0;
 
-    for (var i = 0 ; i < props.dailyTaskHistoryList.length ; i++) {
+    for (let i = 0 ; i < props.dailyTaskHistoryList.length ; i++) {
         if (props.dailyTaskHistoryList[i].doneFlg == 1) {
             doneTaskCount++;
         }
@@ -31,7 +31,7 @@ const DailyTaskHistoryItem: React.FC<DailyTaskHistoryItemProps> = (props) => {
     }
 
     return (
-        <div className={styles.daily_task_history_item + statusColor} onClick={ () => props.showDailyTaskHistoryDetailModal(props.dailyTaskHistoryList, props.date)}>
+        <div className={styles.dailyTaskHistoryItem + statusColor} onClick={ () => props.showDailyTaskHistoryDetailModal(props.dailyTaskHistoryList, props.date)}>
             <Row className={styles.row}>
                 <Col md={3} >{DatePickerUtil.dateStrDelimiterYYYYMMDD(props.date)}</Col>
                 <Col md={3} >Achievement: {doneTaskCount} of {props.dailyTaskHistoryList.length}</Col>

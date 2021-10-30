@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import Layout from '../components/common/Layout';
-import {authentication} from '../components/util/AuthenticationUtil';
+import Layout from 'components/common/Layout';
+import {authentication} from 'components/util/AuthenticationUtil';
 import {Button} from 'react-bootstrap';
-import DailyTaskHistoryBoard from '../components/DailyTaskHistory/DailyTaskHistoryBoard';
-import DailyTaskHistoryDetailModal from '../components/DailyTaskHistory/DailyTaskHistoryDetailModal';
+import DailyTaskHistoryBoard from 'components/DailyTaskHistory/DailyTaskHistoryBoard';
+import DailyTaskHistoryDetailModal from 'components/DailyTaskHistory/DailyTaskHistoryDetailModal';
 import Link from 'next/link';
-import { DailyTaskHistory as DailyTaskHistoryClass } from '../components/common/interface';
+import { DailyTaskHistory as DailyTaskHistoryClass } from 'components/type/DailyTaskHistory';
 import dynamic from "next/dynamic";
 
 const DailyTaskHistory: React.FC = () => {
   // 初期表示フラグ
   const [initDispFlg, setInitDispFlg] = useState<Boolean>(true);
   // 基準日
-  const [targetDate, setTargetDate] = useState<Date>(new Date());
+  const [targetDate, _] = useState<Date>(new Date());
   // 基準日からの差分
   const [targetDateDiff, setTargetDateDiff] = useState<number>(0);
   // デイリータスク履歴詳細モーダル表示フラグ
@@ -37,7 +37,7 @@ const DailyTaskHistory: React.FC = () => {
   return (
       <Layout title="Daily Task History.">
         <Link href="/DailyTask">
-          <Button key="dailyTaskBoard" variant="success" className="button_lg">＜ Daily Task Board</Button>
+          <Button key="dailyTaskBoard" variant="success" className="buttonLg">＜ Daily Task Board</Button>
         </Link>
         <DailyTaskHistoryBoard
           initDispFlg = {initDispFlg}

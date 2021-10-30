@@ -1,7 +1,7 @@
 import React from 'react';
-import { DailyTaskHistory } from '../common/interface';
-import styles from '../../styles/DailyTaskHistoryList.module.css';
-import DailyTaskHistoryItem from './DailyTaskHistoryItem';
+import { DailyTaskHistory } from 'components/type/DailyTaskHistory';
+import styles from 'styles/DailyTaskHistoryList.module.css';
+import DailyTaskHistoryItem from 'components/DailyTaskHistory/DailyTaskHistoryItem';
 
 
 interface DailyTaskHistoryListProps {
@@ -13,7 +13,7 @@ interface DailyTaskHistoryListProps {
 const DailyTaskHistoryList: React.FC<DailyTaskHistoryListProps> = (props) => {
 
     return (
-        <div className={styles.daily_task_history_list}>
+        <div className={styles.dailyTaskHistoryList}>
             {
                 props.dailyTaskHistoryList.map((dailyTaskHistoryList, index) => {
                     let date = new Date(props.targetDate)

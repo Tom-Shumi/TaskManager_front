@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import Layout from '../components/common/Layout';
-import {authentication} from '../components/util/AuthenticationUtil';
+import Layout from 'components/common/Layout';
+import {authentication} from 'components/util/AuthenticationUtil';
 import dynamic from "next/dynamic";
 import {Button} from 'react-bootstrap';
-import * as DatePickerUtil from '../components/util/DatePickerUtil';
-import DailyTaskBoard from '../components/DailyTask/DailyTaskBoard';
-import { DailyTask as DailyTaskClass } from '../components/common/interface';
-import DailyTaskEditModal from '../components/DailyTask/DailyTaskEditModal';
+import * as DatePickerUtil from 'components/util/DatePickerUtil';
+import DailyTaskBoard from 'components/DailyTask/DailyTaskBoard';
+import { DailyTask as DailyTaskClass } from 'components/type/DailyTask';
+import DailyTaskEditModal from 'components/DailyTask/DailyTaskEditModal';
 import Link from 'next/link';
-import {judgePcScreen} from '../components/util/Util';
+import {judgePcScreen} from 'components/util/Util';
 
 
 const DailyTask: React.FC = () => {
@@ -23,7 +23,7 @@ const DailyTask: React.FC = () => {
     // デイリータスク登録モーダル表示フラグ
     const [dailyTaskEditModalDispFlg, setDailyTaskEditModalDispFlg] = useState<Boolean>(false);
     // 編集対象デイリータスク
-    const [targetDailyTask, setTargetDailyTask] = useState<DailyTaskClass>(null);
+    const [targetDailyTask, setTargetDailyTask] = useState<DailyTaskClass | null>(null);
     // 削除済みタスクを含む
     const [includeDeleteFlg, setIncludeDeleteFlg] = useState<number>(0);
 
@@ -31,7 +31,7 @@ const DailyTask: React.FC = () => {
 
     authentication();
 
-    const showDailyTaskEditModal = (dailyTask: DailyTaskClass) => {
+    const showDailyTaskEditModal = (dailyTask: DailyTaskClass | null) => {
       setTargetDailyTask(dailyTask);
       setDailyTaskEditModalDispFlg(true);
     }
@@ -47,17 +47,27 @@ const DailyTask: React.FC = () => {
 
     return (
         <Layout title={DatePickerUtil.curentDateStrYYYYMMDD() + "."}>
-          <Button key="create" variant="primary" className="button_md margin_side_10" onClick={ () => showDailyTaskEditModal(null)}>Create Task</Button>
+          <Button key="create" variant="primary" className="buttonMd marginSide10" onClick={ () => showDailyTaskEditModal(null)}>Create Task</Button>
+          {isOnlyPcScreen && (
+            <Link href="/DailyTaskChangeOrder">
+              <Button key="changeOrder" variant="info" className="buttonLg marginSide10">Change Task's Order</Button>
+            </Link>)
+          }
           <Link href="/DailyTaskHistory">
-            <Button key="history" variant="success" className="button_md">History ＞</Button>
+            <Button key="history" variant="success" className="buttonMd marginSide10">History ＞</Button>
           </Link>
-          {isOnlyPcScreen && (<React.Fragment><div className="display_inline margin_side_10">Achievement: {doneTaskCount} of {totalTaskCount}</div>
-          <div className="display_inline margin_side_10">Total Done Time: {totalDoneTime}</div>
-          <div className="display_inline margin_side_10">
-            <label>
-              <input type="checkbox" name="includeDeleteTask" id="includeDeleteTask" value={includeDeleteFlg} checked={includeDeleteFlg == 1} onChange={changeIncludeDeleteTask()} /> Include Delete Task
-            </label>
-          </div></ React.Fragment>)}
+          {isOnlyPcScreen && (
+            <React.Fragment>
+              <div className="displayInline marginSide10">Achievement: {doneTaskCount} of {totalTaskCount}</div>
+              <div className="displayInline marginSide10">Total Done Time: {totalDoneTime}</div>
+              <div className="displayInline marginSide10">
+                <label>
+                  <input type="checkbox" name="includeDeleteTask" id="includeDeleteTask" value={includeDeleteFlg} checked={includeDeleteFlg == 1} onChange={changeIncludeDeleteTask()} />
+                  :Include Delete Task
+                </label>
+              </div>
+            </ React.Fragment>)
+          }
 
           <DailyTaskBoard
             initDispFlg = {initDispFlg}

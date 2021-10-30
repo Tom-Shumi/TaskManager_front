@@ -1,19 +1,19 @@
 import React, { Dispatch, SetStateAction} from 'react';
 import DailyTaskItem from './DailyTaskItem';
-import styles from '../../styles/DailyTaskList.module.css';
-import { DailyTask } from '../common/interface';
+import styles from 'styles/DailyTaskList.module.css';
+import {DailyTask} from 'components/type/DailyTask';
 
 interface DailyTaskListProps {
     dailyTaskList: DailyTask[];
     setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
-    showDailyTaskEditModal: (DailyTask) => void;
+    showDailyTaskEditModal: (dailyTask: DailyTask) => void;
 }
 
 const DailyTaskList: React.FC<DailyTaskListProps> = (props) => {
 
     let count = 0;
     return (
-        <div className={styles.daily_task_list}>
+        <div className={styles.dailyTaskList}>
                         {
                 props.dailyTaskList.map(dailyTask => {
                     count += 1;

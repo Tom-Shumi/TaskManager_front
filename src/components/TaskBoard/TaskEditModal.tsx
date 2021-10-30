@@ -1,14 +1,14 @@
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import {Modal, Button, Form, Row, Col} from 'react-bootstrap';
-import {getApiClient} from '../util/AuthenticationUtil';
+import {getApiClient} from 'components/util/AuthenticationUtil';
 import Router from 'next/router';
-import { Task } from '../common/interface';
+import { Task } from 'components/type/Task';
 import DatePicker, { registerLocale } from "react-datepicker";
-import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
 import ja from 'date-fns/locale/ja';
-import * as DatePickerUtil from '../util/DatePickerUtil';
-import * as ConversionUtil from '../util/ConversionUtil';
+import * as DatePickerUtil from 'components/util/DatePickerUtil';
+import moment from 'moment';
+import * as Util from 'components/util/Util';
 
 registerLocale('ja', ja)
 
@@ -17,12 +17,12 @@ interface TaskEditModalProps {
     close: () => void;
     execSbt: string;
     setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
-    task: Task;
+    task: Task | null;
 }
 
 
 const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
-    const initDate = DatePickerUtil.toUtcIso8601str(moment())
+    const initDate = DatePickerUtil.nowUnixDate();
     const [form, setForm] = useState({id: -1, task: "", priority: 1, description: "", status: 1, date: initDate});
 　　
     // 初期表示処理
@@ -35,29 +35,33 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
             } else {
                 dateStr = props.task.planDate
             }
+
+            console.log(DatePickerUtil.parseUnixDate(dateStr))
+
             setForm({id: props.task.id
                     , task: props.task.taskTitle
                     , priority: props.task.priority
                     , description: props.task.description
                     , status: props.task.status
-                    , date: DatePickerUtil.parseDate(dateStr)});
+                    , date: DatePickerUtil.parseUnixDate(dateStr)});
         }
     }, []);
 
     // form入力のハンドリング
     // 日付を空欄には更新不可
-    const handleChange = (input) => {
-        return e => setForm({...form, [input]: e.target.value})
+    const handleChange = (input: string) => {
+        return (e: any) => setForm({...form, [input]: e.target.value})
     }
 
     // form入力（日付）のハンドリング
-    const handleChangeDate = (date) => {
+    const handleChangeDate = (date: any) => {
+
         setForm({id: form.id
             , task: form.task
             , priority: form.priority
             , description: form.description
             , status: form.status
-            , date: DatePickerUtil.toUtcIso8601str(moment(date))});
+            , date: DatePickerUtil.parseUnixDate(date)});
     }
 
     // cookieを使用するaxios生成
@@ -70,12 +74,13 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
 
     // リクエスト用json取得
     const getJsonParams = () => {
-        var params = {
+
+        let params = {
             task: form.task,
             priority: form.priority,
             status: form.status,
             description: form.description,
-            date: form.date
+            date: DatePickerUtil.parseRequestString(form.date)
         }
 
         return JSON.stringify(params);
@@ -83,12 +88,12 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
 
     // task登録
     const create = () => {
-        var jsonParams = getJsonParams();
+        let jsonParams = getJsonParams();
 
-        client.post(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK
+        client.post(Util.env(process.env.NEXT_PUBLIC_API_SERVER) + Util.env(process.env.NEXT_PUBLIC_API_TASK)
             , jsonParams
             , {headers: {'content-type': 'application/json'}})
-        .then( response => {
+        .then( _ => {
             props.setInitDispFlg(true);
             props.close();
         }).catch(() => {
@@ -98,12 +103,12 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
 
     // task更新
     const update = () => {
-        var jsonParams = getJsonParams();
+        let jsonParams = getJsonParams();
 
-        client.put(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK + "/" + props.task.id
+        client.put(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_TASK)}/${props.task!.id}`
             , jsonParams
             , {headers: {'content-type': 'application/json'}})
-        .then( response => {
+        .then( _ => {
             props.setInitDispFlg(true);
             props.close();
         }).catch(() => {
@@ -112,7 +117,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
     }
 
     // タイトル表示文字列設定
-    let title: string;
+    let title: string = "";
     let execute: () => void;
     switch(props.execSbt) {
         case "1":
@@ -125,9 +130,6 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
             break;
     }
 
-    // 日付表示文字列設定
-    let dateTitleStr = ConversionUtil.conversionDateStr(form.status);
-
     return (
         <Modal show={true} onHide={props.close} key='taskEditModal'>
             <Modal.Header closeButton>
@@ -136,17 +138,17 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
             <Modal.Body>
                 <Form>
                     <Row>
-                        <Col xs={4} className="modal_label">
+                        <Col xs={4} className="modalLabel">
                             <strong>Task</strong>
                         </Col>
-                        <Col xs={8} className="modal_input">
+                        <Col xs={8} className="modalInput">
                                 <Form.Control type="text" value={form.task} onChange={handleChange('task')} />
                         </Col>
                         <hr />
-                        <Col xs={4} className="modal_label">
+                        <Col xs={4} className="modalLabel">
                             <strong>Status</strong>
                         </Col>
-                        <Col xs={8} className="modal_input">
+                        <Col xs={8} className="modalInput">
                             <Form.Control as="select" value={form.status} onChange={handleChange('status')}>
                                 <option key="status1" value="1">NOT STARTED</option>
                                 <option key="status2" value="2">IN PROGRESS</option>
@@ -154,10 +156,10 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
                             </Form.Control>
                         </Col>
                         <hr />
-                        <Col xs={4} className="modal_label">
+                        <Col xs={4} className="modalLabel">
                             <strong>Priority</strong>
                         </Col>
-                        <Col xs={8} className="modal_input">
+                        <Col xs={8} className="modalInput">
                             <Form.Control as="select" value={form.priority} onChange={handleChange('priority')}>
                                 <option key="priority1" value="1">LOW</option>
                                 <option key="priority2" value="2">MEDIUM</option>
@@ -165,39 +167,31 @@ const TaskEditModal: React.FC<TaskEditModalProps> = (props) => {
                             </Form.Control>
                         </Col>
                         <hr />
-                        <Col xs={4} className="modal_label">
-                            <strong>
-                                {
-                                    form.status == 3 ?
-                                        ("Done Date")
-                                        : ("Plan Date")
-                                }
-                            </strong>
+                        <Col xs={4} className="modalLabel">
+                            <strong>{form.status == 3 ? "Done Date" : "Plan Date"}</strong>
                         </Col>
-                        <Col xs={8} className="modal_input">
+                        <Col xs={8} className="modalInput">
                             <DatePicker
                                 locale="ja"
-                                selected={form.date == "" ? null : moment(form.date).toDate()}
+                                selected={moment(form.date).toDate()}
                                 onChange={handleChangeDate}
                                 dateFormat="yyyy-MM-dd"
-                                customInput={
-                                    <Form.Control type="text"/>
-                                }
+                                customInput={<Form.Control type="text"/>}
                             />
                         </Col>
                         <hr />
-                        <Col xs={4} className="modal_label">
+                        <Col xs={4} className="modalLabel">
                             <strong>Description</strong>
                         </Col>
-                        <Col xs={8} className="modal_input">
+                        <Col xs={8} className="modalInput">
                                 <Form.Control as="textarea" rows={2} cols={40} value={form.description} onChange={handleChange('description')} />
                         </Col>
                     </Row>
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="primary" onClick={clickExecute} className="button_sm" >execute</Button>
-                <Button variant="dark" onClick={props.close} className="button_sm" >close</Button>
+                <Button variant="primary" onClick={clickExecute} className="buttonSm" >execute</Button>
+                <Button variant="dark" onClick={props.close} className="buttonSm" >close</Button>
             </Modal.Footer>
         </Modal>
     )

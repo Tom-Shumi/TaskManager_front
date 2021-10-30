@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import {Modal, Button, Form, Row, Col} from 'react-bootstrap';
-import {getApiClient} from '../util/AuthenticationUtil';
+import {getApiClient} from 'components/util/AuthenticationUtil';
 import Router from 'next/router';
-import { Task } from '../common/interface';
+import { Task } from 'components/type/Task';
 import "react-datepicker/dist/react-datepicker.css";
-import TaskComment from './TaskComment';
-import styles from '../../styles/TaskComment.module.css';
-import { TaskComment as TaskCommentClass } from '../common/interface';
+import TaskComment from 'components/TaskBoard/TaskComment';
+import styles from 'styles/TaskComment.module.css';
+import { TaskComment as TaskCommentClass } from 'components/type/TaskComment';
+import * as Util from 'components/util/Util';
 
 interface TaskCommentModalProps {
     close: () => void;
@@ -29,23 +30,23 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
     let client = getApiClient();
 
     const callGetTaskCommentList = () => {
-        var res: Promise<TaskCommentClass[]> = getTaskCommentList(props.task.id);
+        let res: Promise<TaskCommentClass[]> = getTaskCommentList(props.task.id);
         res.then(ret => setComments(ret));
     }
 
     const handleChangeInputComment = () => {
-        return e => setInputComment(e.target.value);
+        return (e:any) => setInputComment(e.target.value);
     }
 
     const saveComment = () => {
-        var params = {
+        let params = {
             comment: inputComment
         }
-        var jsonParams = JSON.stringify(params);
-        client.post(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK_COMMENT + '/' + props.task.id
+        let jsonParams = JSON.stringify(params);
+        client.post(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_TASK_COMMENT)}/${props.task.id}`
             , jsonParams
             , {headers: {'content-type': 'application/json'}})
-        .then( response => {
+        .then( _ => {
             setInitDispFlg(true);
         }).catch(() => {
             Router.push('/');
@@ -59,7 +60,7 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
     const loadNextComment = () => {
         let maxCommentId = comments[comments.length - 1].id
         try {
-            client.get(`${process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK_COMMENT}/${props.task.id}?nextKey=${maxCommentId}`)
+            client.get(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_TASK_COMMENT)}/${props.task.id}?nextKey=${maxCommentId}`)
                 .then(res => {
                     let taskCommentList = createTaskCommentList(res.data);
                     setComments([...comments, ...taskCommentList])
@@ -77,12 +78,12 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
             <Modal.Body>
             <Form>
                 <Row>
-                    <Col xs={12} className="modal_input">
+                    <Col xs={12} className="modalInput">
                         <Form.Control as="textarea" rows={2} value={inputComment} onChange={handleChangeInputComment()}/>
                     </Col>
-                    <div className={styles.task_comment_button_frame}>
-                        <div className={styles.task_comment_button}><Button variant="primary" className="button_sm" onClick={saveComment} >save</Button></div>
-                        <div className={styles.task_comment_button}><Button variant="outline-dark" className="button_sm" onClick={clearInputComment} >clear</Button></div>
+                    <div className={styles.taskCommentButtonFrame}>
+                        <div className={styles.taskCommentButton}><Button variant="primary" className="buttonSm" onClick={saveComment} >save</Button></div>
+                        <div className={styles.taskCommentButton}><Button variant="outline-dark" className="buttonSm" onClick={clearInputComment} >clear</Button></div>
                     </div>
                     <hr />
                 </Row>
@@ -96,21 +97,21 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
                     />
                 ))
             }
-            <div className={styles.task_comment_load} onClick={loadNextComment}><i className="fa fa-arrow-circle-down faa-wrench animated-hover" /></div>
+            <div className={styles.taskCommentLoad} onClick={loadNextComment}><i className="fa fa-arrow-circle-down faa-wrench animated-hover" /></div>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="dark" onClick={props.close} className="button_sm" >close</Button>
+                <Button variant="dark" onClick={props.close} className="buttonSm" >close</Button>
             </Modal.Footer>
         </Modal>
     )
 }
 
 // 各apiを呼び出しタスクコメントリストを取得する
-async function getTaskCommentList(taskId){
+async function getTaskCommentList(taskId: number){
     let client = getApiClient();
-    var taskCommentList :TaskCommentClass[] = [];
+    let taskCommentList :TaskCommentClass[] = [];
     try {
-        const res = await client.get(`${process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK_COMMENT}/${taskId}`);
+        const res = await client.get(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_TASK_COMMENT)}/${taskId}`);
 
         taskCommentList = createTaskCommentList(res.data);
     } catch(error){
@@ -120,11 +121,11 @@ async function getTaskCommentList(taskId){
 }
 
 function createTaskCommentList(commentList: any[]): TaskCommentClass[] {
-    var taskCommentList :TaskCommentClass[] = [];
+    let taskCommentList :TaskCommentClass[] = [];
     if (commentList == null) {
         return taskCommentList;
     }
-    for (var i = 0 ; i < commentList.length ; i++) {
+    for (let i = 0 ; i < commentList.length ; i++) {
         taskCommentList.push(new TaskCommentClass(commentList[i]["id"], commentList[i]["taskId"], commentList[i]["username"], commentList[i]["comment"], commentList[i]["createDate"]))
     }
     return taskCommentList;

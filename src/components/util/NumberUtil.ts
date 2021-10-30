@@ -29,7 +29,7 @@ export const convertRemaining = (quota: number, doneTime: number) => {
 
 export const isNumber = (str: string) => {
     // チェック条件パターン
-    var pattern = /^[+,-]?([1-9]\d*|0)$/;
+    let pattern = /^[+,-]?([1-9]\d*|0)$/;
     // 数値チェック
     return pattern.test(str);
 }

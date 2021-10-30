@@ -1,4 +1,4 @@
-.task_comment{
+.taskComment{
     padding: 0.5em 1em;
     margin: 1em 0;
     background: #fafbfd;
@@ -6,38 +6,38 @@
     box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.33);
 }
 
-.task_comment_icon{
+.taskCommentIcon{
     display: table-cell;
     text-align: left;
     cursor : pointer;
 }
 
-.task_comment_cancel_icon{
+.taskCommentCancelIcon{
     float: right;
     cursor : pointer;
 }
 
-.task_comment_icons{
+.taskCommentIcons{
     margin-left: 85%;
 }
 
-.task_comment_icon{
+.taskCommentIcon{
     padding-left: 10px;
     padding-right: 10px;
 }
 
-.task_comment_button_frame{
+.taskCommentButtonFrame{
     margin-left: 60%;
     margin-top: 2%;
     display: flex;
 }
 
-.task_comment_button{
+.taskCommentButton{
     margin-left: 5%;
     margin-right: 5%;
 }
 
-.task_comment_load{
+.taskCommentLoad{
     text-align: center;
     cursor : pointer;
 }

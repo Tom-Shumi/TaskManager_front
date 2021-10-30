@@ -1,18 +1,20 @@
 import React , { Dispatch, SetStateAction } from 'react';
-import TaskItem from './TaskItem';
-import styles from '../../styles/TaskList.module.css';
-import { ItemTypes, Task } from '../common/interface';
+import TaskItem from 'components/TaskBoard/TaskItem';
+import styles from 'styles/TaskList.module.css';
+import { Task } from 'components/type/Task';
+import {Constants} from 'components/Constants';
 import { useDrop } from 'react-dnd';
-import {getApiClient} from '../util/AuthenticationUtil';
+import {getApiClient} from 'components/util/AuthenticationUtil';
 import Router from 'next/router';
-import * as ConversionUtil from '../util/ConversionUtil';
+import * as ConversionUtil from 'components/util/ConversionUtil';
+import * as Util from 'components/util/Util';
 
 interface TaskListProps {
     taskList: Task[];
     status: number;
     setInitDispFlg: Dispatch<SetStateAction<Boolean>>;
-    showTaskUpdateModal: (Task) => void;
-    showTaskCommentModal: (Task) => void;
+    showTaskUpdateModal: (task: Task) => void;
+    showTaskCommentModal: (task: Task) => void;
 }
 
 const TaskList: React.FC<TaskListProps> = (props) => {
@@ -21,15 +23,15 @@ const TaskList: React.FC<TaskListProps> = (props) => {
     let client = getApiClient();
 
     const updateTaskStatus = (id: number, status: number) => {
-        var params = {
+        let params = {
             status: status
         }
-        var jsonParams = JSON.stringify(params);
+        let jsonParams = JSON.stringify(params);
 
-        client.put(process.env.NEXT_PUBLIC_API_SERVER + process.env.NEXT_PUBLIC_API_TASK + "/status/" + id
+        client.put(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_TASK)}/status/${id}`
             , jsonParams
             , {headers: {'content-type': 'application/json'}}
-        ).then( response => {
+        ).then( _ => {
             props.setInitDispFlg(true);
         }).catch(() => {
             Router.push('/');
@@ -37,7 +39,7 @@ const TaskList: React.FC<TaskListProps> = (props) => {
     }
 
     const [{isOver}, drop] = useDrop({
-        accept: ItemTypes.TASK_ITEM,
+        accept: Constants.ItemTypes.TASK_ITEM,
         drop: (dragItem: any) => {
             updateTaskStatus(dragItem.id, props.status);
         },
@@ -46,11 +48,11 @@ const TaskList: React.FC<TaskListProps> = (props) => {
         })
     })
 
-    var status_str = ConversionUtil.conversionStatus(props.status);
-    var style_is_over = isOver ? "is_over" : "is_not_over";
+    let statusStr = ConversionUtil.conversionStatus(props.status);
+    let styleIsOver = isOver ? "isOver" : "isNotOver";
     return (
-        <div className={styles.task_list + " " +  style_is_over} ref={drop}>
-            <p className={styles.task_status}>{status_str} [ {Object.keys(props.taskList).length} ]</p>
+        <div className={styles.taskList + " " +  styleIsOver} ref={drop}>
+            <p className={styles.taskStatus}>{statusStr} [ {Object.keys(props.taskList).length} ]</p>
             {
                 props.taskList.map(taskItem => (
                     <TaskItem

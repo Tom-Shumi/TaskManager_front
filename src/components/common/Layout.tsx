@@ -1,8 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
-import Header from './Header';
-import Footer from './Footer';
-import BurgerMenu from './BurgerMenu';
+import Header from 'components/common/Header';
+import Footer from 'components/common/Footer';
+import BurgerMenu from 'components/common/BurgerMenu';
 
 interface LayoutProps {
     title: string;

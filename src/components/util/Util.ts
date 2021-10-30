@@ -7,3 +7,7 @@ export const judgePcScreen = () => {
 export const judgeSpScreen = () => {
   return useMedia({maxWidth: '400px'});
 }
+
+export const env = (envValue: string | undefined) => {
+  return envValue == null ? "" : envValue;
+}
