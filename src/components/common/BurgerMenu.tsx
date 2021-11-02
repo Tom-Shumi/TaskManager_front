@@ -24,9 +24,11 @@ const BurgerMenu: React.FC<MenuProps> = (props) => {
             <Link href="/DailyTask">
                 <a className="burgerMenuLink">Daily Task page</a>
             </Link>
-            {/* <Link href="/WeeklyTask">
-                <a className="burgerMenuLink">Weekly Tasks page</a>
-            </Link> */}
+
+            <Link href="/ZeroSecondThinkingList">
+                <a className="burgerMenuLink">0秒思考</a>
+            </Link>
+
             <a className="burgerMenuLinkLogout" onClick={logout} href="#">Logout</a>
         </Menu>
     )
