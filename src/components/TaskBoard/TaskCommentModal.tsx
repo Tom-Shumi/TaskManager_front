@@ -58,6 +58,10 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
     }
 
     const loadNextComment = () => {
+        if (comments.length == 0) {
+            return;
+        }
+
         let maxCommentId = comments[comments.length - 1].id
         try {
             client.get(`${Util.env(process.env.NEXT_PUBLIC_API_SERVER)}${Util.env(process.env.NEXT_PUBLIC_API_TASK_COMMENT)}/${props.task.id}?nextKey=${maxCommentId}`)

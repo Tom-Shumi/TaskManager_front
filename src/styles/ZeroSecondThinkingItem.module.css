@@ -1,0 +1,17 @@
+.item {
+  border: 1px solid rgb(127, 182, 255);
+  margin: 12px;
+  border-radius: 4px;
+  box-shadow: 1px 2px 5px 3px rgba(0,0,0,.1);
+  padding: 4px 2px;
+  cursor : pointer;
+}
+
+.doneDate{
+  padding: 10px 10px 0px 10px;
+}
+
+.theme{
+  padding: 10px 10px 0px 10px;
+  font-size: 18px;
+}
