@@ -8,4 +8,6 @@ export namespace Constants {
   }
 
   export const CSS_JOIN = " ";
+
+  export const WHY_JOIN = "[なぜ？]";
 }

@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import {useState} from 'react';
 import styles from 'styles/ZeroSecondThinkingItem.module.css';
 import Content from 'components/ZeroSecondThinkingList/Content';
 
