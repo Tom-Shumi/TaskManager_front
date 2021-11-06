@@ -1,16 +1,19 @@
 import Item from 'components/ZeroSecondThinkingList/Item';
-import styles from 'styles/ZeroSecondThinkingList.module.css';
+import {ZeroSecondThinking} from 'components/type/ZeroSecondThinking';
 
-const List: React.FC = () => {
-
-  const loadNext = () => {
-    alert("TODO");
+interface ListProps {
+  zeroSecondThinkingList: ZeroSecondThinking[];
 }
+
+const List: React.FC<ListProps> = (props) => {
 
   return (
     <>
-      <Item />
-      <div className={styles.nextLoadIcon} onClick={loadNext}><i className="fa fa-arrow-circle-down faa-wrench animated-hover" /></div>
+      {
+        props.zeroSecondThinkingList.map((zeroSecondThinking) => (
+          <Item zeroSecondThinking={zeroSecondThinking} key={"zeroSecondThinking" + zeroSecondThinking.id}/>
+        ))
+      }
     </>
   )
 }

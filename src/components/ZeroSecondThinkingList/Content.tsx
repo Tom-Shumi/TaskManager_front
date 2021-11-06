@@ -1,14 +1,15 @@
 import {useState} from 'react';
 import styles from 'styles/ZeroSecondThinkingContent.module.css';
 import {Constants} from 'components/Constants';
+import { ZeroSecondThinkingContent } from 'components/type/ZeroSecondThinkingContent';
 
 
 interface ContentProps {
-  content: string;
+  content: ZeroSecondThinkingContent;
 }
 
 const Content: React.FC<ContentProps> = (props) => {
-  const contentAry = props.content.split(Constants.WHY_JOIN);
+  const contentAry = props.content.content.split(Constants.WHY_JOIN);
   let prev;
   let body;
 

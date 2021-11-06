@@ -101,7 +101,7 @@ const TaskCommentModal: React.FC<TaskCommentModalProps> = (props) => {
                     />
                 ))
             }
-            <div className={styles.taskCommentLoad} onClick={loadNextComment}><i className="fa fa-arrow-circle-down faa-wrench animated-hover" /></div>
+            <div className="nextLoadIcon" onClick={loadNextComment}><i className="fa fa-arrow-circle-down faa-wrench animated-hover" /></div>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="dark" onClick={props.close} className="buttonSm" >close</Button>
