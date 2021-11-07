@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import Layout from 'components/common/Layout';
 import {Button} from 'react-bootstrap';
 import Link from 'next/link';
@@ -12,22 +12,24 @@ import * as Util from 'components/util/Util';
 const ZeroSecondThinkingList: React.FC = () => {
   const [searchText, setSearchText] = useState<string>("");
   const [zeroSecondThinkingList, setZeroSecondThinkingList] = useState<ZeroSecondThinking[]>([]);
+  const searchedText = useRef("");
 
     // 初期表示用
   useEffect(() => {
     callFetchZeroSecondThinkingList()
   }, []);
 
-  const callFetchZeroSecondThinkingList = () => {
-    const res: Promise<ZeroSecondThinking[]> = fetchZeroSecondThinkingList();
+  const callFetchZeroSecondThinkingList = (searchText: string = "") => {
+    const res: Promise<ZeroSecondThinking[]> = fetchZeroSecondThinkingList(searchText);
     res.then(ret => {
       setZeroSecondThinkingList(ret);
     });
   }
 
-  async function fetchZeroSecondThinkingList(): Promise<ZeroSecondThinking[]> {
+  async function fetchZeroSecondThinkingList(searchText: string): Promise<ZeroSecondThinking[]> {
+    let condition = createSearchCondition(searchText);
     try {
-      const res = await getApiClient().get(Util.env(`${process.env.NEXT_PUBLIC_API_ZERO_SECOND_THINKING}`));
+      const res = await getApiClient().get(Util.env(`${process.env.NEXT_PUBLIC_API_ZERO_SECOND_THINKING}?${condition}`));
       return createZeroSecondThinkingList(res.data);
     } catch(error){
       Router.push('/');
@@ -35,6 +37,9 @@ const ZeroSecondThinkingList: React.FC = () => {
     }
   }
 
+  const search = () => {
+    callFetchZeroSecondThinkingList(searchText);
+  }
 
   const loadNext = () => {
     if (zeroSecondThinkingList.length == 0) {
@@ -42,8 +47,10 @@ const ZeroSecondThinkingList: React.FC = () => {
     }
 
     let maxId = zeroSecondThinkingList[zeroSecondThinkingList.length - 1].id
+    let condition = createSearchCondition(searchText);
+    condition = condition == "" ? "" : `&${condition}`
     try {
-      getApiClient().get(Util.env(`${process.env.NEXT_PUBLIC_API_ZERO_SECOND_THINKING}?nextKey=${maxId}`))
+      getApiClient().get(Util.env(`${process.env.NEXT_PUBLIC_API_ZERO_SECOND_THINKING}?nextKey=${maxId}${condition}`))
       .then(res => {
         let addList = createZeroSecondThinkingList(res.data);
         setZeroSecondThinkingList([...zeroSecondThinkingList, ...addList])
@@ -53,11 +60,16 @@ const ZeroSecondThinkingList: React.FC = () => {
     }
   }
 
-  const handleChangeSearchText = () => (e: any) => setSearchText(e.target.value);
-
-  const search = () => {
-    alert("TODO:" + searchText)
+  const createSearchCondition = (searchText: string) => {
+    let condition = "";
+    if (searchText != "") {
+      searchedText.current = searchText;
+      condition = `search=${searchText}`;
+    }
+    return condition;
   }
+
+  const handleChangeSearchText = () => (e: any) => setSearchText(e.target.value);
 
   return (
     <Layout title="0秒思考">
