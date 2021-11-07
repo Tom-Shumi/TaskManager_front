@@ -1,6 +1,8 @@
 import Layout from 'components/common/Layout';
 import {Button} from 'react-bootstrap';
 import Link from 'next/link';
+import Timer from 'components/ZeroSecondThinking/Timer';
+import Form from 'components/ZeroSecondThinking/Form';
 
 const ZeroSecondThinking: React.FC = () => {
 
@@ -9,7 +11,8 @@ const ZeroSecondThinking: React.FC = () => {
       <Link href="/ZeroSecondThinkingList">
         <Button key="ZeroSecondThinkingList" variant="success" className="buttonLg">過去の0秒思考一覧</Button>
       </Link>
-      0秒思考実施
+      <Timer timerSecond={5}/>
+      <Form />
     </Layout>
   )
 }
