@@ -1,17 +1,29 @@
-.textDiv {
-  text-align: center;
-  width: 100%;
-  padding-top: 20px;
-  padding-left: 60px;
+.formDiv{
+  padding: 20px;
 }
 
 .themeDiv {
-  text-align: center;
+  border-bottom: solid 1px;
   width: 100%;
   padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .textTheme {
   width: 800px;
+  display: inline;
+}
+
+.contentDiv {
+  padding-left: 65px;
+}
+
+.textDiv {
+  width: 100%;
+  padding-top: 20px;
+}
+
+.textContent {
+  width: 600px;
   display: inline;
 }
