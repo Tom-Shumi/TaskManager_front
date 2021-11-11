@@ -1,5 +1,6 @@
 import {Modal, Button, Form as FormBootstrap, Row, Col} from 'react-bootstrap';
 import styles from 'styles/ZeroSecondThinkingForm.module.css';
+import { ZeroSecondThinkingWriting } from 'components/type/ZeroSecondThinkingWriting';
 
 interface FormProps {
 }
