@@ -1,0 +1,13 @@
+.contentDiv {
+  padding-left: 65px;
+}
+
+.textDiv {
+  width: 100%;
+  padding-top: 20px;
+}
+
+.textContent {
+  width: 600px;
+  display: inline;
+}
