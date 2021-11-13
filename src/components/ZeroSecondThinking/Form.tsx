@@ -10,12 +10,14 @@ interface FormProps {
 const Form: React.FC<FormProps> = (props) => {
   const [content, setContent] = useState<ZeroSecondThinkingWriting[]>([new ZeroSecondThinkingWriting("", [])]);
 
-  const addContent = () => {
-    // TODO
+  const addContent = (index: number) => {
+    content[index].why.push("");
+    setContent([...content, new ZeroSecondThinkingWriting("", [])]);
   }
 
-  const addWhy = () => {
-    // TODO
+  const addWhy = (index: number) => {
+    content[index].why.push("");
+    setContent([...content]);
   }
 
 
@@ -28,8 +30,8 @@ const Form: React.FC<FormProps> = (props) => {
               テーマ：<FormBootstrap.Control className={styles.textTheme} type="text" />
             </div>
             {
-              content.map(content => (
-                <Writing content={content} />
+              content.map((content,  index) => (
+                <Writing content={content} index={index} addContent={addContent} addWhy={addWhy} key={`writing${index}`}/>
               ))
             }
           </Row>
