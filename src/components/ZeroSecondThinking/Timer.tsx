@@ -2,26 +2,28 @@ import { useTimer } from "react-timer-hook";
 import styles from 'styles/ZeroSecondThinkingTimer.module.css';
 import {Button} from 'react-bootstrap';
 import { useRecoilState } from "recoil";
-import {isRunningState} from "components/ZeroSecondThinking/TimerAtom";
+import {isRunningState, isFinishedState} from "components/ZeroSecondThinking/TimerAtom";
 
 interface TimerProps {
   timerSecond: number;
 }
 
 const Timer: React.FC<TimerProps> = (props) => {
-  const [_, setIsRunning] = useRecoilState(isRunningState);
-
-  const time = new Date();
-  time.setSeconds(time.getSeconds() + props.timerSecond);
+  const [, setIsRunning] = useRecoilState(isRunningState);
+  const [, setIsFinished] = useRecoilState(isFinishedState);
 
   const {
     seconds,
     start,
     pause,
+    restart,
     isRunning
   } = useTimer({
-    expiryTimestamp: time,
-    onExpire: () => alert("onExpire called"),
+    expiryTimestamp: getTime(props.timerSecond),
+    onExpire: () => {
+      alert("Time Up")
+      setIsFinished(true);
+    },
     autoStart: false
   });
 
@@ -34,8 +36,16 @@ const Timer: React.FC<TimerProps> = (props) => {
       </div>
       <Button variant="info" className="buttonSm marginSide10" onClick={start}>Start</Button>
       <Button variant="warning" className="buttonSm marginSide10" onClick={pause}>Stop</Button>
+      <Button variant="outline-info" className="buttonSm marginSide10" onClick={() => {restart(getTime(props.timerSecond))}}>Restart</Button>
+
     </div>
   );
+}
+
+const getTime = (second: number) => {
+  const time = new Date();
+  time.setSeconds(time.getSeconds() + second);
+  return time;
 }
 
 export default Timer;

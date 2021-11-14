@@ -3,12 +3,13 @@ import {Button, Form as FormBootstrap, Row} from 'react-bootstrap';
 import styles from 'styles/ZeroSecondThinkingForm.module.css';
 import { ZeroSecondThinkingWriting } from 'components/type/ZeroSecondThinkingWriting';
 import Writing from 'components/ZeroSecondThinking/Writing';
+import {useRecoilState} from "recoil";
+import {isFinishedState} from "components/ZeroSecondThinking/TimerAtom";
 
-interface FormProps {
-}
-
-const Form: React.FC<FormProps> = (props) => {
+const Form: React.FC = () => {
+  const [theme, setTheme] = useState<string>("");
   const [content, setContent] = useState<ZeroSecondThinkingWriting[]>([new ZeroSecondThinkingWriting("", [])]);
+  const [isFinished, _] = useRecoilState(isFinishedState);
 
   const addContent = (index: number) => {
     content[index].why.push("");
@@ -20,6 +21,15 @@ const Form: React.FC<FormProps> = (props) => {
     setContent([...content]);
   }
 
+  const handleChangeTheme = () => (e: any) => setTheme(e.target.value);
+  const handleChangeContent = () => (contentIndex: number, e: any) => {
+    content[contentIndex].content = e.target.value;
+    setContent([...content]);
+  }
+  const handleChangeWhy = () => (contentIndex: number, whyIndex: number, e: any) => {
+    content[contentIndex].why[whyIndex] = e.target.value;
+    setContent([...content]);
+  }
 
   return (
     <>
@@ -27,7 +37,7 @@ const Form: React.FC<FormProps> = (props) => {
         <FormBootstrap>
           <Row>
             <div className={styles.themeDiv}>
-              テーマ：<FormBootstrap.Control className={styles.textTheme} type="text" />
+              テーマ：<FormBootstrap.Control value={theme} onChange={handleChangeTheme()} className={styles.textTheme} type="text" />
             </div>
             {
               content.map((content,  index) => (
@@ -37,6 +47,7 @@ const Form: React.FC<FormProps> = (props) => {
           </Row>
         </FormBootstrap>
       </div>
+      {isFinished && <Button variant="primary" className="buttonLg" >登録</Button>}
     </>
   );
 }
