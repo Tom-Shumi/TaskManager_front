@@ -22,12 +22,14 @@ const Form: React.FC = () => {
   }
 
   const handleChangeTheme = () => (e: any) => setTheme(e.target.value);
-  const handleChangeContent = () => (contentIndex: number, e: any) => {
-    content[contentIndex].content = e.target.value;
+
+  const handleChangeContent = (contentIndex: number, value: any) => {
+    content[contentIndex].content = value;
     setContent([...content]);
   }
-  const handleChangeWhy = () => (contentIndex: number, whyIndex: number, e: any) => {
-    content[contentIndex].why[whyIndex] = e.target.value;
+
+  const handleChangeWhy = (contentIndex: number, whyIndex: number, value: any) => {
+    content[contentIndex].why[whyIndex] = value;
     setContent([...content]);
   }
 
@@ -40,8 +42,9 @@ const Form: React.FC = () => {
               テーマ：<FormBootstrap.Control value={theme} onChange={handleChangeTheme()} className={styles.textTheme} type="text" />
             </div>
             {
-              content.map((content,  index) => (
-                <Writing content={content} index={index} addContent={addContent} addWhy={addWhy} key={`writing${index}`}/>
+              content.map((content, index) => (
+                <Writing content={content} index={index} addContent={addContent} addWhy={addWhy}
+                  handleChangeContent={handleChangeContent} handleChangeWhy={handleChangeWhy} key={`writing${index}`}/>
               ))
             }
           </Row>
