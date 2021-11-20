@@ -4,12 +4,20 @@ import styles from 'styles/ZeroSecondThinkingForm.module.css';
 import { ZeroSecondThinkingWriting } from 'components/type/ZeroSecondThinkingWriting';
 import Writing from 'components/ZeroSecondThinking/Writing';
 import {useRecoilState} from "recoil";
-import {isFinishedState} from "components/ZeroSecondThinking/TimerAtom";
+import {isFinishedState, isRunningState} from "components/ZeroSecondThinking/TimerAtom";
+import {Constants} from 'components/Constants';
+import Router from 'next/router';
+import * as Util from 'components/util/Util';
+import {getApiClient} from 'components/util/AuthenticationUtil';
 
 const Form: React.FC = () => {
   const [theme, setTheme] = useState<string>("");
   const [content, setContent] = useState<ZeroSecondThinkingWriting[]>([new ZeroSecondThinkingWriting("", [])]);
-  const [isFinished, _] = useRecoilState(isFinishedState);
+  const [isFinished,] = useRecoilState(isFinishedState);
+  const [isRunning,] = useRecoilState(isRunningState);
+
+  // cookieを使用するaxios生成
+  let client = getApiClient();
 
   const addContent = (index: number) => {
     content[index].why.push("");
@@ -33,6 +41,43 @@ const Form: React.FC = () => {
     setContent([...content]);
   }
 
+  // 登録
+  const register = (): void => {
+
+    let jsonParams = getJsonParams();
+
+    client.post(Util.env(process.env.NEXT_PUBLIC_API_ZERO_SECOND_THINKING), jsonParams
+    ).then( () => {
+      setContent([new ZeroSecondThinkingWriting("", [])]);
+      setTheme("");
+    }).catch(() => {
+      Router.push('/');
+    })
+  }
+
+  // リクエスト用json取得
+  const getJsonParams = () => {
+    let params = {
+      theme: theme,
+      contentList: createContentList()
+    }
+    return JSON.stringify(params);
+  }
+
+  const createContentList = () => {
+    let contentList :String[] = [];
+
+    for (let i = 0 ; i < content.length ; i++) {
+      contentList.push(`・${content[i].content}`);
+
+      for(let j = 0 ; j < content[i].why.length; j++) {
+        contentList.push(`　　${Constants.WHY_JOIN}${content[i].why[j]}`);
+      }
+    }
+
+    return contentList;
+  }
+
   return (
     <>
       <div className={styles.formDiv}>
@@ -50,7 +95,8 @@ const Form: React.FC = () => {
           </Row>
         </FormBootstrap>
       </div>
-      {isFinished && <Button variant="primary" className="buttonLg" >登録</Button>}
+      {isRunning || isFinished &&
+        <Button variant="primary" className="buttonLg" onClick={register}>登録</Button>}
     </>
   );
 }

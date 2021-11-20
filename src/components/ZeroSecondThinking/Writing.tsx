@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import {Button, Form} from 'react-bootstrap';
 import styles from 'styles/ZeroSecondThinkingWriting.module.css';
 import {ZeroSecondThinkingWriting} from 'components/type/ZeroSecondThinkingWriting';
@@ -34,13 +33,13 @@ const Writing: React.FC<WritingProps> = (props) => {
     <>
       <div className={styles.contentDiv}>
         <div className={styles.textDiv}>
-          <Form.Control className={styles.textContent} type="text" onChange={handleChangeContent()} value={props.content.content} disabled={!isRunning} />
+          <Form.Control className={styles.textContent} type="text" onChange={handleChangeContent()} value={props.content.content} disabled={!isRunning} key={`content${props.index}`} />
           <Button variant="danger" className="buttonSm marginSide10" onClick={ () => props.addContent(props.index)} disabled={!isRunning}>＋</Button>
         </div>
         {
           props.content.why.map((why, whyIndex) => (
             <div className={styles.textDiv}>
-              　　[なぜ？]　<Form.Control className={styles.textContent} type="text" onChange={handleChangeWhy(whyIndex)} value={why} disabled={!isRunning} />
+              　　[なぜ？]　<Form.Control className={styles.textContent} type="text" onChange={handleChangeWhy(whyIndex)} value={why} disabled={!isRunning} key={`why_${props.index}_${whyIndex}`} />
               <Button variant="danger" className="buttonSm marginSide10" onClick={ () => props.addWhy(props.index)} disabled={!isRunning} >＋</Button>
             </div>
           ))

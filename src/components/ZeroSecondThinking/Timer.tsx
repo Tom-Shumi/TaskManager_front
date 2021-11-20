@@ -1,7 +1,8 @@
-import { useTimer } from "react-timer-hook";
+import {useEffect} from 'react';
+import {useTimer} from "react-timer-hook";
 import styles from 'styles/ZeroSecondThinkingTimer.module.css';
 import {Button} from 'react-bootstrap';
-import { useRecoilState } from "recoil";
+import {useRecoilState} from "recoil";
 import {isRunningState, isFinishedState} from "components/ZeroSecondThinking/TimerAtom";
 
 interface TimerProps {
@@ -27,7 +28,10 @@ const Timer: React.FC<TimerProps> = (props) => {
     autoStart: false
   });
 
-  setIsRunning(isRunning);
+  useEffect(
+    () => setIsRunning(isRunning),
+    [isRunning]
+  );
 
   return (
     <div className={styles.timerDiv}>
