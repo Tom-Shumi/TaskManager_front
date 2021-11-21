@@ -43,6 +43,10 @@ const Form: React.FC = () => {
 
   // 登録
   const register = (): void => {
+    if (theme == "") {
+      alert("Please enter a theme.")
+      return;
+    }
 
     let jsonParams = getJsonParams();
 

@@ -8,16 +8,21 @@ import * as ZeroSecondThinkingUtil from 'components/type/ZeroSecondThinking';
 import Router from 'next/router';
 import {getApiClient} from 'components/util/AuthenticationUtil';
 import * as Util from 'components/util/Util';
+import {useRecoilState} from "recoil";
+import {initDispFlgState} from "components/ZeroSecondThinkingList/Atom";
 
 const ZeroSecondThinkingList: React.FC = () => {
   const [searchText, setSearchText] = useState<string>("");
   const [zeroSecondThinkingList, setZeroSecondThinkingList] = useState<ZeroSecondThinking[]>([]);
   const searchedText = useRef("");
 
+  const [initDispFlg, setInitDispFlg] = useRecoilState(initDispFlgState);
+
     // 初期表示用
   useEffect(() => {
+    setInitDispFlg(false);
     callFetchZeroSecondThinkingList()
-  }, []);
+  }, [initDispFlg]);
 
   const callFetchZeroSecondThinkingList = (searchText: string = "") => {
     const res: Promise<ZeroSecondThinking[]> = fetchZeroSecondThinkingList(searchText);

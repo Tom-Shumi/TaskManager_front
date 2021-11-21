@@ -31,15 +31,15 @@ const Writing: React.FC<WritingProps> = (props) => {
 
   return (
     <>
-      <div className={styles.contentDiv}>
-        <div className={styles.textDiv}>
-          <Form.Control className={styles.textContent} type="text" onChange={handleChangeContent()} value={props.content.content} disabled={!isRunning} key={`content${props.index}`} />
+      <div className={styles.contentDiv} key={`writing${props.index}`}>
+        <div className={styles.textDiv} key={`content${props.index}`}>
+          <Form.Control className={styles.textContent} type="text" onChange={handleChangeContent()} value={props.content.content} disabled={!isRunning}/>
           <Button variant="danger" className="buttonSm marginSide10" onClick={ () => props.addContent(props.index)} disabled={!isRunning}>＋</Button>
         </div>
         {
           props.content.why.map((why, whyIndex) => (
-            <div className={styles.textDiv}>
-              　　[なぜ？]　<Form.Control className={styles.textContent} type="text" onChange={handleChangeWhy(whyIndex)} value={why} disabled={!isRunning} key={`why_${props.index}_${whyIndex}`} />
+            <div className={styles.textDiv} key={`whyC${props.index}W${whyIndex}`}>
+              　　[なぜ？]　<Form.Control className={styles.textContent} type="text" onChange={handleChangeWhy(whyIndex)} value={why} disabled={!isRunning}/>
               <Button variant="danger" className="buttonSm marginSide10" onClick={ () => props.addWhy(props.index)} disabled={!isRunning} >＋</Button>
             </div>
           ))

@@ -9,6 +9,7 @@
 
 .doneDate{
   padding: 10px 10px 0px 10px;
+  display: inline-block;
 }
 
 .theme{
@@ -18,4 +19,10 @@
 
 .themeText {
   width: 75%;
+}
+
+.icon{
+  display: inline;
+  text-align: left;
+  cursor : pointer;
 }
