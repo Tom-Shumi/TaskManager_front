@@ -2,6 +2,11 @@ import {useState} from 'react';
 import styles from 'styles/ZeroSecondThinkingContent.module.css';
 import {Constants} from 'components/Constants';
 import { ZeroSecondThinkingContent } from 'components/type/ZeroSecondThinkingContent';
+import {getApiClient} from 'components/util/AuthenticationUtil';
+import Router from 'next/router';
+import * as Util from 'components/util/Util';
+import {useRecoilState} from "recoil";
+import {initDispFlgState} from "components/ZeroSecondThinkingList/Atom";
 
 
 interface ContentProps {
@@ -23,6 +28,10 @@ const Content: React.FC<ContentProps> = (props) => {
 
   const [isEdit, setIsEdit] = useState<Boolean>(false);
   const [content, setContent] = useState<string>(body);
+  const [, setInitDispFlg] = useRecoilState(initDispFlgState);
+
+  // cookieを使用するaxios生成
+  let client = getApiClient();
 
   const handleChangeContentText = () => (e: any) => setContent(e.target.value);
 
@@ -32,7 +41,18 @@ const Content: React.FC<ContentProps> = (props) => {
   }
 
   const updateContent = (e: any) => {
-    alert(content);
+    let params = {
+      updateText: content
+    }
+    let jsonParams = JSON.stringify(params);
+
+    client.post(`${Util.env(process.env.NEXT_PUBLIC_API_ZERO_SECOND_THINKING)}/${props.content.themeId}/${props.content.id}`, jsonParams)
+    .then( () => {
+      setInitDispFlg(true);
+    }).catch(() => {
+        Router.push('/');
+    })
+
     e.stopPropagation();
   }
 

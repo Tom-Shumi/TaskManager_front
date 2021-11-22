@@ -33,7 +33,18 @@ const Item: React.FC<ItemProps> = (props) => {
   const handleChangeThemeText = () => (e: any) => setTheme(e.target.value);
 
   const updateTheme = (e: any) => {
-    alert(theme);
+    let params = {
+      updateText: theme
+    }
+    let jsonParams = JSON.stringify(params);
+
+    client.post(`${Util.env(process.env.NEXT_PUBLIC_API_ZERO_SECOND_THINKING)}/${props.zeroSecondThinking.id}`, jsonParams)
+    .then( () => {
+      setInitDispFlg(true);
+    }).catch(() => {
+        Router.push('/');
+    })
+
     e.stopPropagation();
   }
 
