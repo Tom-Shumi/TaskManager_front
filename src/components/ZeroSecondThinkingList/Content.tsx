@@ -18,12 +18,15 @@ const Content: React.FC<ContentProps> = (props) => {
   let prev;
   let body;
 
+  let isWhyText = false;
+
   if (contentAry.length == 1) {
     prev = "・";
     body = contentAry[0].slice(1);
   } else {
     prev = contentAry[0] + Constants.WHY_JOIN;
     body = contentAry[1];
+    isWhyText = true;
   }
 
   const [isEdit, setIsEdit] = useState<Boolean>(false);
@@ -42,7 +45,8 @@ const Content: React.FC<ContentProps> = (props) => {
 
   const updateContent = (e: any) => {
     let params = {
-      updateText: content
+      updateText: content,
+      isWhyText: isWhyText
     }
     let jsonParams = JSON.stringify(params);
 
