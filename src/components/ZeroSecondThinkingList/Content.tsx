@@ -14,6 +14,7 @@ interface ContentProps {
 }
 
 const Content: React.FC<ContentProps> = (props) => {
+
   const contentAry = props.content.content.split(Constants.WHY_JOIN);
   let prev;
   let body;
@@ -52,6 +53,7 @@ const Content: React.FC<ContentProps> = (props) => {
 
     client.post(`${Util.env(process.env.NEXT_PUBLIC_API_ZERO_SECOND_THINKING)}/${props.content.themeId}/${props.content.id}`, jsonParams)
     .then( () => {
+      setIsEdit((isEdit) => !isEdit);
       setInitDispFlg(true);
     }).catch(() => {
         Router.push('/');

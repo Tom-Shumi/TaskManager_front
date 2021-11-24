@@ -40,6 +40,7 @@ const Item: React.FC<ItemProps> = (props) => {
 
     client.post(`${Util.env(process.env.NEXT_PUBLIC_API_ZERO_SECOND_THINKING)}/${props.zeroSecondThinking.id}`, jsonParams)
     .then( () => {
+      setIsEdit((isEdit) => !isEdit);
       setInitDispFlg(true);
     }).catch(() => {
         Router.push('/');
