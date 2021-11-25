@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {Button, Form as FormBootstrap, Row} from 'react-bootstrap';
 import styles from 'styles/ZeroSecondThinkingForm.module.css';
 import { ZeroSecondThinkingWriting } from 'components/type/ZeroSecondThinkingWriting';
@@ -13,8 +13,12 @@ import {getApiClient} from 'components/util/AuthenticationUtil';
 const Form: React.FC = () => {
   const [theme, setTheme] = useState<string>("");
   const [content, setContent] = useState<ZeroSecondThinkingWriting[]>([new ZeroSecondThinkingWriting("", [])]);
-  const [isFinished,] = useRecoilState(isFinishedState);
+  const [isFinished, setIsFinished] = useRecoilState(isFinishedState);
   const [isRunning,] = useRecoilState(isRunningState);
+
+  useEffect(() => {
+    setIsFinished(false);
+  }, []);
 
   // cookieを使用するaxios生成
   let client = getApiClient();
@@ -52,8 +56,7 @@ const Form: React.FC = () => {
 
     client.post(Util.env(process.env.NEXT_PUBLIC_API_ZERO_SECOND_THINKING), jsonParams
     ).then( () => {
-      setContent([new ZeroSecondThinkingWriting("", [])]);
-      setTheme("");
+      Router.push('/ZeroSecondThinkingList');
     }).catch(() => {
       Router.push('/');
     })
