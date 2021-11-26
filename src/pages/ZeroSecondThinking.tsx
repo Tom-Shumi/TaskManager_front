@@ -11,7 +11,7 @@ const ZeroSecondThinking: React.FC = () => {
       <Link href="/ZeroSecondThinkingList">
         <Button key="ZeroSecondThinkingList" variant="success" className="buttonLg">過去の0秒思考一覧</Button>
       </Link>
-      <Timer timerSecond={5}/>
+      <Timer timerSecond={60}/>
       <Form />
     </Layout>
   )
