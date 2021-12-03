@@ -17,7 +17,7 @@ interface DailyTaskItemProps {
 }
 
 const DailyTaskItem: React.FC<DailyTaskItemProps> = (props) => {
-    const [inputDoneTime, setInputDoneTime] = useState<string>("");
+    const [inputDoneTime, setInputDoneTime] = useState<string>(props.dailyTask.quota.toString());
 
     const quota = NumberUtil.convertHourMinute(props.dailyTask.quota);
     const done = NumberUtil.convertHourMinute(props.dailyTask.doneTime);
