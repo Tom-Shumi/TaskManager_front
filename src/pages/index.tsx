@@ -6,6 +6,7 @@ import Axios from "axios";
 import getConfig from "next/config";
 const { publicRuntimeConfig }= getConfig();
 import * as Util from 'components/util/Util';
+import Head from 'next/head';
 
 const index: React.FC = () => {
 
@@ -73,6 +74,12 @@ const index: React.FC = () => {
 
     return (
         <div className="formFrame">
+            <Head>
+                <title>Task Manager</title>
+                <meta charSet='utf-8' />
+                <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+                <link rel="shortcut icon" href="/favicon.ico" />
+            </Head>
             <Container>
                 <Form>
                     <p className={styles.loginStr}>Task Manager</p>

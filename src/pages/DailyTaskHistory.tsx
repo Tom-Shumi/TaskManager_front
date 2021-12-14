@@ -35,7 +35,7 @@ const DailyTaskHistory: React.FC = () => {
   }
 
   return (
-      <Layout title="Daily Task History.">
+      <Layout title="Daily Task History">
         <Link href="/DailyTask">
           <Button key="dailyTaskBoard" variant="success" className="buttonLg">＜ Daily Task Board</Button>
         </Link>

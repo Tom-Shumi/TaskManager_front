@@ -46,7 +46,7 @@ const DailyTask: React.FC = () => {
     }
 
     return (
-        <Layout title={DatePickerUtil.curentDateStrYYYYMMDD() + "."}>
+        <Layout title={DatePickerUtil.curentDateStrYYYYMMDD()}>
           <Button key="create" variant="primary" className="buttonMd marginSide10" onClick={ () => showDailyTaskEditModal(null)}>Create Task</Button>
           {isOnlyPcScreen && (
             <Link href="/DailyTaskChangeOrder">

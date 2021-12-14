@@ -14,21 +14,21 @@ const parseUnixDate = (dateStr: string): number => {
   }
 }
 
-const parseRequestString = (unixDate: number): String => {
+const parseRequestString = (unixDate: number): string => {
   let date = new Date(unixDate);
   return dateStrDelimiterYYYYMMDD(date);
 }
 
-const curentDateStrYYYYMMDD = (): String => {
+const curentDateStrYYYYMMDD = (): string => {
   let today = new Date();
   return today.getFullYear() + "-" + String((today.getMonth() + 1)).padStart(2, '0') + "-" + String(today.getDate()).padStart(2, '0');
 }
 
-const dateStrDelimiterYYYYMMDD = (date: Date): String => {
+const dateStrDelimiterYYYYMMDD = (date: Date): string => {
   return date.getFullYear() + "-" + String((date.getMonth() + 1)).padStart(2, '0') + "-" + String(date.getDate()).padStart(2, '0');
 }
 
-const dateStrYYYYMMDD = (date: Date): String => {
+const dateStrYYYYMMDD = (date: Date): string => {
   return String(date.getFullYear()) + String((date.getMonth() + 1)).padStart(2, '0') + String(date.getDate()).padStart(2, '0');
 }
 
