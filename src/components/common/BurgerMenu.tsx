@@ -22,15 +22,15 @@ const BurgerMenu: React.FC<MenuProps> = (props) => {
             }
 
             <Link href="/DailyTask">
-                <a className="burgerMenuLink">Daily Task page</a>
+                <a className="burgerMenuLink">Daily task page</a>
             </Link>
 
             <Link href="/ZeroSecondThinkingList">
                 <a className="burgerMenuLink">0秒思考</a>
             </Link>
 
-            <Link href="/ZeroSecondThinkingList">
-                <a className="burgerMenuLink">今日学んだこと(WIP)</a>
+            <Link href="/LearnedThing">
+                <a className="burgerMenuLink">Learned thing(WIP)</a>
             </Link>
 
             <Link href="/ZeroSecondThinkingList">

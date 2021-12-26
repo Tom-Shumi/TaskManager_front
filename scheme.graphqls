@@ -1,0 +1,29 @@
+type LearningInfo {
+    id: ID
+    username: String
+    categoryId: Int
+    categoryName: String
+    content: String
+    referenceUrl: String
+    createDate: String
+}
+
+type LearningCategory {
+    id: ID
+    username: String
+    name: String
+}
+
+type Query {
+    listLearningInfo(search:String = null, categoryId: Int = null, nextKey: Int = null): [LearningInfo]
+    listLearningCategory: [LearningCategory]
+}
+
+type Mutation {
+    registerLearning(content: String, categoryId: Int, referenceUrl: String = null): LearningInfo
+    registerLearningCategory(name: String): LearningCategory
+    updateLearning(id: Int, content: String, categoryId: Int, referenceUrl: String = null): LearningInfo
+    updateLearningCategory(id: Int, name: String): LearningCategory
+    deleteLearning(id: Int): Int
+    deleteLearningCategory(id: Int): Int
+}

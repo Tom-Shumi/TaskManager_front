@@ -1,0 +1,15 @@
+overwrite: true
+schema: 'scheme.graphqls'
+documents: ./src/graphql/**/*.graphql
+generates:
+  # generatorで作成したいファイル名
+  ./src/generated/graphql.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      # hooksを生成するための設定
+      withHOC: false
+      withComponent: false
+      withHooks: true
