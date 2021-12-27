@@ -1,12 +1,17 @@
 import Layout from 'components/common/Layout';
 import {Button} from 'react-bootstrap';
+import * as graphql from 'components/generated/graphql';
 
 const LearnedThing: React.FC = () => {
 
+  const result = graphql.useGetListLearningInfoQuery();
+
+  console.log(result)
+
   return (
     <Layout title="Learned thing">
-      <Button key="LearnedThingRegister" variant="success" className="buttonMd marginSide10">登録</Button>
-      <Button key="LearnedThingRegister" variant="info" className="buttonLg marginSide10">カテゴリー編集</Button>
+      <Button key="Register" variant="success" className="buttonMd marginSide10">登録</Button>
+      <Button key="EditCategory" variant="info" className="buttonLg marginSide10">カテゴリー編集</Button>
       <input type="text" className="searchText marginSide10" placeholder="任意の文字列で検索できます。"/>
       <select>
         <option key="category1" value="1">ALL</option>

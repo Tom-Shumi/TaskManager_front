@@ -3,7 +3,7 @@ schema: 'scheme.graphqls'
 documents: ./src/graphql/**/*.graphql
 generates:
   # generatorで作成したいファイル名
-  ./src/generated/graphql.ts:
+  ./src/components/generated/graphql.ts:
     plugins:
       - typescript
       - typescript-operations

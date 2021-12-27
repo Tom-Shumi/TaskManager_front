@@ -1,0 +1,11 @@
+query getListLearningInfo($search: String, $categoryId: Int, $nextKey: Int) {
+  listLearningInfo(search: $search, categoryId: $categoryId, nextKey: $nextKey) {
+    id
+    username
+    categoryId
+    categoryName
+    content
+    referenceUrl
+    createDate
+  }
+}
