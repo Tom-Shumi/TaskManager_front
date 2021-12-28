@@ -3,10 +3,14 @@ import {Button} from 'react-bootstrap';
 import * as graphql from 'components/generated/graphql';
 
 const LearnedThing: React.FC = () => {
+  const { called: learningCalled, loading: learningloading, data: learningData } = graphql.useGetListLearningInfoQuery();
+  const { called: categoryCalled, loading: categoryLoading, data: categoryData } = graphql.useGetListLearningCategoryQuery();
 
-  const result = graphql.useGetListLearningInfoQuery();
+  if (learningCalled && learningloading && categoryCalled && categoryLoading) return <p>Loading ...</p>
 
-  console.log(result)
+  // console.log(learningCategoryData.data?.listLearningCategory);
+  // TODO
+
 
   return (
     <Layout title="Learned thing">

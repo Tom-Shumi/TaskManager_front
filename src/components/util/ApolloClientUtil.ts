@@ -5,6 +5,7 @@ import { createHttpLink } from '@apollo/client';
 
 const httpLink = createHttpLink({
   uri: "http://localhost:8080/graphql", // TODO config化
+  credentials: 'include'
 });
 
 export const apolloClient = new ApolloClient({

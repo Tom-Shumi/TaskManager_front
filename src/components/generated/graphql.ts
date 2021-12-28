@@ -92,6 +92,11 @@ export type QueryListLearningInfoArgs = {
   search?: InputMaybe<Scalars['String']>;
 };
 
+export type GetListLearningCategoryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetListLearningCategoryQuery = { __typename?: 'Query', listLearningCategory?: Array<{ __typename?: 'LearningCategory', id?: string | null | undefined, username?: string | null | undefined, name?: string | null | undefined } | null | undefined> | null | undefined };
+
 export type GetListLearningInfoQueryVariables = Exact<{
   search?: InputMaybe<Scalars['String']>;
   categoryId?: InputMaybe<Scalars['Int']>;
@@ -102,6 +107,42 @@ export type GetListLearningInfoQueryVariables = Exact<{
 export type GetListLearningInfoQuery = { __typename?: 'Query', listLearningInfo?: Array<{ __typename?: 'LearningInfo', id?: string | null | undefined, username?: string | null | undefined, categoryId?: number | null | undefined, categoryName?: string | null | undefined, content?: string | null | undefined, referenceUrl?: string | null | undefined, createDate?: string | null | undefined } | null | undefined> | null | undefined };
 
 
+export const GetListLearningCategoryDocument = gql`
+    query getListLearningCategory {
+  listLearningCategory {
+    id
+    username
+    name
+  }
+}
+    `;
+
+/**
+ * __useGetListLearningCategoryQuery__
+ *
+ * To run a query within a React component, call `useGetListLearningCategoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetListLearningCategoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetListLearningCategoryQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetListLearningCategoryQuery(baseOptions?: Apollo.QueryHookOptions<GetListLearningCategoryQuery, GetListLearningCategoryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetListLearningCategoryQuery, GetListLearningCategoryQueryVariables>(GetListLearningCategoryDocument, options);
+      }
+export function useGetListLearningCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetListLearningCategoryQuery, GetListLearningCategoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetListLearningCategoryQuery, GetListLearningCategoryQueryVariables>(GetListLearningCategoryDocument, options);
+        }
+export type GetListLearningCategoryQueryHookResult = ReturnType<typeof useGetListLearningCategoryQuery>;
+export type GetListLearningCategoryLazyQueryHookResult = ReturnType<typeof useGetListLearningCategoryLazyQuery>;
+export type GetListLearningCategoryQueryResult = Apollo.QueryResult<GetListLearningCategoryQuery, GetListLearningCategoryQueryVariables>;
 export const GetListLearningInfoDocument = gql`
     query getListLearningInfo($search: String, $categoryId: Int, $nextKey: Int) {
   listLearningInfo(search: $search, categoryId: $categoryId, nextKey: $nextKey) {
