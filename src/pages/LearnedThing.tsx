@@ -5,8 +5,8 @@ import List from 'components/LearnedThing/List';
 import Router from 'next/router';
 
 const LearnedThing: React.FC = () => {
-  const { called: learningCalled, loading: learningloading, data: learningData, error: learningError } = graphql.useGetListLearningInfoQuery();
-  const { called: categoryCalled, loading: categoryLoading, data: categoryData, error: categoryError } = graphql.useGetListLearningCategoryQuery();
+  const { called: learningCalled, loading: learningloading, data: learningData, error: learningError } = graphql.useListLearningInfoQuery();
+  const { called: categoryCalled, loading: categoryLoading, data: categoryData, error: categoryError } = graphql.useListLearningCategoryQuery();
 
   if (learningError || categoryError) Router.push('/');
   if (learningCalled && learningloading && categoryCalled && categoryLoading) return <p>Loading ...</p>
@@ -32,7 +32,7 @@ const LearnedThing: React.FC = () => {
         ))}
       </select>
       <Button key="ZeroSecondThinking" variant="primary" className="buttonMd marginSide10">検索</Button>
-      <List />
+      <List key="list" learningList={learningList} />
     </Layout>
   )
 }

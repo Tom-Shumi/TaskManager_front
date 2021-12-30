@@ -1,4 +1,4 @@
-query getListLearningCategory {
+query listLearningCategory {
   listLearningCategory {
     id
     username

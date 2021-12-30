@@ -1,0 +1,3 @@
+mutation deleteLearning($id: Int) {
+  deleteLearning(id: $id)
+}

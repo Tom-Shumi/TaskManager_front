@@ -1,13 +1,21 @@
+import { LearningInfo } from 'components/generated/graphql';
 import Item from 'components/LearnedThing/Item'
 
 interface ListProps {
+  learningList: LearningInfo[]
 }
 
 const List: React.FC<ListProps> = (props) => {
 
+  console.log(props.learningList)
+
   return (
     <>
-      <Item />
+      {
+        props.learningList.map((learningInfo) => (
+          <Item learningInfo={learningInfo} key={"learningInfo" + learningInfo.id}/>
+        ))
+      }
     </>
   )
 }

@@ -92,23 +92,61 @@ export type QueryListLearningInfoArgs = {
   search?: InputMaybe<Scalars['String']>;
 };
 
-export type GetListLearningCategoryQueryVariables = Exact<{ [key: string]: never; }>;
+export type DeleteLearningMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['Int']>;
+}>;
 
 
-export type GetListLearningCategoryQuery = { __typename?: 'Query', listLearningCategory?: Array<{ __typename?: 'LearningCategory', id?: string | null | undefined, username?: string | null | undefined, name?: string | null | undefined } | null | undefined> | null | undefined };
+export type DeleteLearningMutation = { __typename?: 'Mutation', deleteLearning?: number | null | undefined };
 
-export type GetListLearningInfoQueryVariables = Exact<{
+export type ListLearningCategoryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ListLearningCategoryQuery = { __typename?: 'Query', listLearningCategory?: Array<{ __typename?: 'LearningCategory', id?: string | null | undefined, username?: string | null | undefined, name?: string | null | undefined } | null | undefined> | null | undefined };
+
+export type ListLearningInfoQueryVariables = Exact<{
   search?: InputMaybe<Scalars['String']>;
   categoryId?: InputMaybe<Scalars['Int']>;
   nextKey?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type GetListLearningInfoQuery = { __typename?: 'Query', listLearningInfo?: Array<{ __typename?: 'LearningInfo', id?: string | null | undefined, username?: string | null | undefined, categoryId?: number | null | undefined, categoryName?: string | null | undefined, content?: string | null | undefined, referenceUrl?: string | null | undefined, createDate?: string | null | undefined } | null | undefined> | null | undefined };
+export type ListLearningInfoQuery = { __typename?: 'Query', listLearningInfo?: Array<{ __typename?: 'LearningInfo', id?: string | null | undefined, username?: string | null | undefined, categoryId?: number | null | undefined, categoryName?: string | null | undefined, content?: string | null | undefined, referenceUrl?: string | null | undefined, createDate?: string | null | undefined } | null | undefined> | null | undefined };
 
 
-export const GetListLearningCategoryDocument = gql`
-    query getListLearningCategory {
+export const DeleteLearningDocument = gql`
+    mutation deleteLearning($id: Int) {
+  deleteLearning(id: $id)
+}
+    `;
+export type DeleteLearningMutationFn = Apollo.MutationFunction<DeleteLearningMutation, DeleteLearningMutationVariables>;
+
+/**
+ * __useDeleteLearningMutation__
+ *
+ * To run a mutation, you first call `useDeleteLearningMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteLearningMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteLearningMutation, { data, loading, error }] = useDeleteLearningMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteLearningMutation(baseOptions?: Apollo.MutationHookOptions<DeleteLearningMutation, DeleteLearningMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteLearningMutation, DeleteLearningMutationVariables>(DeleteLearningDocument, options);
+      }
+export type DeleteLearningMutationHookResult = ReturnType<typeof useDeleteLearningMutation>;
+export type DeleteLearningMutationResult = Apollo.MutationResult<DeleteLearningMutation>;
+export type DeleteLearningMutationOptions = Apollo.BaseMutationOptions<DeleteLearningMutation, DeleteLearningMutationVariables>;
+export const ListLearningCategoryDocument = gql`
+    query listLearningCategory {
   listLearningCategory {
     id
     username
@@ -118,33 +156,33 @@ export const GetListLearningCategoryDocument = gql`
     `;
 
 /**
- * __useGetListLearningCategoryQuery__
+ * __useListLearningCategoryQuery__
  *
- * To run a query within a React component, call `useGetListLearningCategoryQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetListLearningCategoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useListLearningCategoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListLearningCategoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetListLearningCategoryQuery({
+ * const { data, loading, error } = useListLearningCategoryQuery({
  *   variables: {
  *   },
  * });
  */
-export function useGetListLearningCategoryQuery(baseOptions?: Apollo.QueryHookOptions<GetListLearningCategoryQuery, GetListLearningCategoryQueryVariables>) {
+export function useListLearningCategoryQuery(baseOptions?: Apollo.QueryHookOptions<ListLearningCategoryQuery, ListLearningCategoryQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetListLearningCategoryQuery, GetListLearningCategoryQueryVariables>(GetListLearningCategoryDocument, options);
+        return Apollo.useQuery<ListLearningCategoryQuery, ListLearningCategoryQueryVariables>(ListLearningCategoryDocument, options);
       }
-export function useGetListLearningCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetListLearningCategoryQuery, GetListLearningCategoryQueryVariables>) {
+export function useListLearningCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListLearningCategoryQuery, ListLearningCategoryQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetListLearningCategoryQuery, GetListLearningCategoryQueryVariables>(GetListLearningCategoryDocument, options);
+          return Apollo.useLazyQuery<ListLearningCategoryQuery, ListLearningCategoryQueryVariables>(ListLearningCategoryDocument, options);
         }
-export type GetListLearningCategoryQueryHookResult = ReturnType<typeof useGetListLearningCategoryQuery>;
-export type GetListLearningCategoryLazyQueryHookResult = ReturnType<typeof useGetListLearningCategoryLazyQuery>;
-export type GetListLearningCategoryQueryResult = Apollo.QueryResult<GetListLearningCategoryQuery, GetListLearningCategoryQueryVariables>;
-export const GetListLearningInfoDocument = gql`
-    query getListLearningInfo($search: String, $categoryId: Int, $nextKey: Int) {
+export type ListLearningCategoryQueryHookResult = ReturnType<typeof useListLearningCategoryQuery>;
+export type ListLearningCategoryLazyQueryHookResult = ReturnType<typeof useListLearningCategoryLazyQuery>;
+export type ListLearningCategoryQueryResult = Apollo.QueryResult<ListLearningCategoryQuery, ListLearningCategoryQueryVariables>;
+export const ListLearningInfoDocument = gql`
+    query listLearningInfo($search: String, $categoryId: Int, $nextKey: Int) {
   listLearningInfo(search: $search, categoryId: $categoryId, nextKey: $nextKey) {
     id
     username
@@ -158,16 +196,16 @@ export const GetListLearningInfoDocument = gql`
     `;
 
 /**
- * __useGetListLearningInfoQuery__
+ * __useListLearningInfoQuery__
  *
- * To run a query within a React component, call `useGetListLearningInfoQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetListLearningInfoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useListLearningInfoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListLearningInfoQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetListLearningInfoQuery({
+ * const { data, loading, error } = useListLearningInfoQuery({
  *   variables: {
  *      search: // value for 'search'
  *      categoryId: // value for 'categoryId'
@@ -175,14 +213,14 @@ export const GetListLearningInfoDocument = gql`
  *   },
  * });
  */
-export function useGetListLearningInfoQuery(baseOptions?: Apollo.QueryHookOptions<GetListLearningInfoQuery, GetListLearningInfoQueryVariables>) {
+export function useListLearningInfoQuery(baseOptions?: Apollo.QueryHookOptions<ListLearningInfoQuery, ListLearningInfoQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetListLearningInfoQuery, GetListLearningInfoQueryVariables>(GetListLearningInfoDocument, options);
+        return Apollo.useQuery<ListLearningInfoQuery, ListLearningInfoQueryVariables>(ListLearningInfoDocument, options);
       }
-export function useGetListLearningInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetListLearningInfoQuery, GetListLearningInfoQueryVariables>) {
+export function useListLearningInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListLearningInfoQuery, ListLearningInfoQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetListLearningInfoQuery, GetListLearningInfoQueryVariables>(GetListLearningInfoDocument, options);
+          return Apollo.useLazyQuery<ListLearningInfoQuery, ListLearningInfoQueryVariables>(ListLearningInfoDocument, options);
         }
-export type GetListLearningInfoQueryHookResult = ReturnType<typeof useGetListLearningInfoQuery>;
-export type GetListLearningInfoLazyQueryHookResult = ReturnType<typeof useGetListLearningInfoLazyQuery>;
-export type GetListLearningInfoQueryResult = Apollo.QueryResult<GetListLearningInfoQuery, GetListLearningInfoQueryVariables>;
+export type ListLearningInfoQueryHookResult = ReturnType<typeof useListLearningInfoQuery>;
+export type ListLearningInfoLazyQueryHookResult = ReturnType<typeof useListLearningInfoLazyQuery>;
+export type ListLearningInfoQueryResult = Apollo.QueryResult<ListLearningInfoQuery, ListLearningInfoQueryVariables>;
