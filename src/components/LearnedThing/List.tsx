@@ -7,8 +7,6 @@ interface ListProps {
 
 const List: React.FC<ListProps> = (props) => {
 
-  console.log(props.learningList)
-
   return (
     <>
       {

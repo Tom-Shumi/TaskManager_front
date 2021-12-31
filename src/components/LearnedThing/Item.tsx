@@ -2,6 +2,8 @@ import { LearningInfo } from 'components/generated/graphql';
 import styles from 'styles/LearnedThing.module.css';
 import Router from 'next/router';
 import * as graphql from 'components/generated/graphql';
+import { initDispFlgState } from 'components/LearnedThing/Atom';
+import { useRecoilState } from 'recoil';
 
 interface ItemProps {
   learningInfo: LearningInfo
@@ -9,10 +11,14 @@ interface ItemProps {
 
 const Item: React.FC<ItemProps> = (props) => {
 
-  const deleteLearningInfo = (e: any) => {
+  const [_, setInitDispFlg] = useRecoilState(initDispFlgState);
+  const  [deleteLearning, { error: deleteLearningError }] = graphql.useDeleteLearningMutation();
+  if (deleteLearningError) Router.push('/');
+
+  const deleteLearningInfo = () => {
     if(confirm("Do you want to delete it?")){
-      const { error } = graphql.useDeleteLearningMutation({ variables: { id: Number(props.learningInfo.id) } });
-      if (error) Router.push('/');
+      deleteLearning({ variables: { id: Number(props.learningInfo.id) } })
+      setInitDispFlg(true)
     }
   }
 
