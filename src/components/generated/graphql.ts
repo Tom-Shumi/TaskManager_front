@@ -214,7 +214,11 @@ export const ListLearningInfoDocument = gql`
  * });
  */
 export function useListLearningInfoQuery(baseOptions?: Apollo.QueryHookOptions<ListLearningInfoQuery, ListLearningInfoQueryVariables>) {
+        console.log("useListLearningInfoQuery")
         const options = {...defaultOptions, ...baseOptions}
+
+        console.log(options)
+
         return Apollo.useQuery<ListLearningInfoQuery, ListLearningInfoQueryVariables>(ListLearningInfoDocument, options);
       }
 export function useListLearningInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListLearningInfoQuery, ListLearningInfoQueryVariables>) {

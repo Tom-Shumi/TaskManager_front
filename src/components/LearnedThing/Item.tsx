@@ -17,7 +17,8 @@ const Item: React.FC<ItemProps> = (props) => {
 
   const deleteLearningInfo = () => {
     if(confirm("Do you want to delete it?")){
-      deleteLearning({ variables: { id: Number(props.learningInfo.id) } })
+      console.log("delete");
+      deleteLearning({ variables: { id: Number(props.learningInfo.id) }, refetchQueries: ['listLearningCategory'] })
       setInitDispFlg(true)
     }
   }

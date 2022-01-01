@@ -17,16 +17,17 @@ const LearnedThing: React.FC = () => {
     setUpdata(update ? false : true)
   }, [initDispFlg]);
 
-  const { called: learningCalled, loading: learningloading, data: learningData, error: learningError } = graphql.useListLearningInfoQuery();
-  const { called: categoryCalled, loading: categoryLoading, data: categoryData, error: categoryError } = graphql.useListLearningCategoryQuery();
+  const { called: learningCalled, loading: learningloading, data: learningData, error: learningError } = graphql.useListLearningInfoQuery({fetchPolicy: 'cache-first', nextFetchPolicy: 'cache-first'});
+  const { called: categoryCalled, loading: categoryLoading, data: categoryData, error: categoryError } = graphql.useListLearningCategoryQuery({fetchPolicy: 'cache-first', nextFetchPolicy: 'cache-first'});
 
-  console.log("useQuery")
+  console.log(learningData)
   if (learningError || categoryError) Router.push('/');
   if (learningCalled && learningloading && categoryCalled && categoryLoading) return <p>Loading ...</p>
 
   let learningList: any[] = []
   if (learningData != null && learningData.listLearningInfo != null) {
     learningList = learningData.listLearningInfo;
+    console.log("test")
   }
 
   let categoryList: any[] = []
