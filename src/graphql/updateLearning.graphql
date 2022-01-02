@@ -1,0 +1,11 @@
+mutation updateLearning($id: Int, $content: String, $categoryId: Int, $referenceUrl: String) {
+  updateLearning(id: $id, content: $content, categoryId: $categoryId, referenceUrl: $referenceUrl) {
+    id
+    username
+    categoryId
+    categoryName
+    content
+    referenceUrl
+    createDate
+  }
+}

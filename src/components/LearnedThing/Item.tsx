@@ -19,7 +19,8 @@ const Item: React.FC<ItemProps> = (props) => {
                                       category: props.learningInfo.categoryId || ''});
   const [categoryList, _] = useRecoilState(categoryListState);
   const  [deleteLearning, { error: deleteLearningError }] = graphql.useDeleteLearningMutation();
-  if (deleteLearningError) Router.push('/');
+  const  [updateLearning, { error: updateLearningError }] = graphql.useUpdateLearningMutation();
+  if (deleteLearningError || updateLearningError) Router.push('/');
 
   const editContent = (e: any) => {
     setIsEditContent((isEditContent) => !isEditContent);
@@ -41,9 +42,14 @@ const Item: React.FC<ItemProps> = (props) => {
   };
 
   const updateLearningInfo = (updateName: string) => {
-    let params = {
-      // TODO
+    const learningInfo = {
+      id: props.learningInfo.id,
+      content: props.learningInfo.content,
+      categoryId: props.learningInfo.categoryId,
+      referenceUrl: props.learningInfo.referenceUrl
     }
+
+
     let jsonParams = JSON.stringify(params);
     setIsEditContent((isEditContent) => !isEditContent);
     setIsEditReferenceUrl((isEditReferenceUrl) => !isEditReferenceUrl);

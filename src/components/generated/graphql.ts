@@ -113,6 +113,16 @@ export type ListLearningInfoQueryVariables = Exact<{
 
 export type ListLearningInfoQuery = { __typename?: 'Query', listLearningInfo?: Array<{ __typename?: 'LearningInfo', id?: string | null | undefined, username?: string | null | undefined, categoryId?: number | null | undefined, categoryName?: string | null | undefined, content?: string | null | undefined, referenceUrl?: string | null | undefined, createDate?: string | null | undefined } | null | undefined> | null | undefined };
 
+export type UpdateLearningMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['Int']>;
+  content?: InputMaybe<Scalars['String']>;
+  categoryId?: InputMaybe<Scalars['Int']>;
+  referenceUrl?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type UpdateLearningMutation = { __typename?: 'Mutation', updateLearning?: { __typename?: 'LearningInfo', id?: string | null | undefined, username?: string | null | undefined, categoryId?: number | null | undefined, categoryName?: string | null | undefined, content?: string | null | undefined, referenceUrl?: string | null | undefined, createDate?: string | null | undefined } | null | undefined };
+
 
 export const DeleteLearningDocument = gql`
     mutation deleteLearning($id: Int) {
@@ -224,3 +234,50 @@ export function useListLearningInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type ListLearningInfoQueryHookResult = ReturnType<typeof useListLearningInfoQuery>;
 export type ListLearningInfoLazyQueryHookResult = ReturnType<typeof useListLearningInfoLazyQuery>;
 export type ListLearningInfoQueryResult = Apollo.QueryResult<ListLearningInfoQuery, ListLearningInfoQueryVariables>;
+export const UpdateLearningDocument = gql`
+    mutation updateLearning($id: Int, $content: String, $categoryId: Int, $referenceUrl: String) {
+  updateLearning(
+    id: $id
+    content: $content
+    categoryId: $categoryId
+    referenceUrl: $referenceUrl
+  ) {
+    id
+    username
+    categoryId
+    categoryName
+    content
+    referenceUrl
+    createDate
+  }
+}
+    `;
+export type UpdateLearningMutationFn = Apollo.MutationFunction<UpdateLearningMutation, UpdateLearningMutationVariables>;
+
+/**
+ * __useUpdateLearningMutation__
+ *
+ * To run a mutation, you first call `useUpdateLearningMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateLearningMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateLearningMutation, { data, loading, error }] = useUpdateLearningMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      content: // value for 'content'
+ *      categoryId: // value for 'categoryId'
+ *      referenceUrl: // value for 'referenceUrl'
+ *   },
+ * });
+ */
+export function useUpdateLearningMutation(baseOptions?: Apollo.MutationHookOptions<UpdateLearningMutation, UpdateLearningMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateLearningMutation, UpdateLearningMutationVariables>(UpdateLearningDocument, options);
+      }
+export type UpdateLearningMutationHookResult = ReturnType<typeof useUpdateLearningMutation>;
+export type UpdateLearningMutationResult = Apollo.MutationResult<UpdateLearningMutation>;
+export type UpdateLearningMutationOptions = Apollo.BaseMutationOptions<UpdateLearningMutation, UpdateLearningMutationVariables>;
