@@ -33,4 +33,6 @@
   display: inline;
   text-align: left;
   cursor : pointer;
+  float: right;
+  margin: 10px;
 }

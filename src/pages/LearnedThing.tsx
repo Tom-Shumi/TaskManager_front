@@ -3,36 +3,27 @@ import {Button} from 'react-bootstrap';
 import * as graphql from 'components/generated/graphql';
 import List from 'components/LearnedThing/List';
 import Router from 'next/router';
-import { initDispFlgState } from 'components/LearnedThing/Atom';
+import { categoryListState } from 'components/LearnedThing/Atom';
 import { useRecoilState } from 'recoil';
-import { useEffect, useState } from 'react';
 
 const LearnedThing: React.FC = () => {
-  const [update, setUpdata]=useState<boolean>(false)
-  const [initDispFlg, setInitDispFlg] = useRecoilState(initDispFlgState);
-  // 初期表示用
-  useEffect(() => {
-    console.log("useEffect")
-    setInitDispFlg(false);
-    setUpdata(update ? false : true)
-  }, [initDispFlg]);
 
+  const [_, setCategoryList] = useRecoilState(categoryListState);
   const { called: learningCalled, loading: learningloading, data: learningData, error: learningError } = graphql.useListLearningInfoQuery();
   const { called: categoryCalled, loading: categoryLoading, data: categoryData, error: categoryError } = graphql.useListLearningCategoryQuery();
 
-  console.log(learningData)
   if (learningError || categoryError) Router.push('/');
   if (learningCalled && learningloading && categoryCalled && categoryLoading) return <p>Loading ...</p>
 
   let learningList: any[] = []
   if (learningData != null && learningData.listLearningInfo != null) {
     learningList = learningData.listLearningInfo;
-    console.log("test")
   }
 
   let categoryList: any[] = []
   if (categoryData != null && categoryData.listLearningCategory != null) {
     categoryList = categoryData.listLearningCategory;
+    setCategoryList(categoryList);
   }
 
   return (
