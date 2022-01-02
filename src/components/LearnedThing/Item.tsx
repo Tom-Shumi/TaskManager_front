@@ -41,7 +41,7 @@ const Item: React.FC<ItemProps> = (props) => {
     setInput({...input, [inputName] : e.target.value});
   };
 
-  const updateLearningInfo = (updateName: string) => {
+  const updateLearningInfo = (updateName: string, updateValue: string) => {
     const learningInfo = {
       id: props.learningInfo.id,
       content: props.learningInfo.content,
@@ -51,8 +51,10 @@ const Item: React.FC<ItemProps> = (props) => {
 
     const params = {
       ...learningInfo,
-      [updateName] :input[updateName]
+      [updateName] :updateValue
     }
+
+    console.log(params)
 
     let jsonParams = JSON.stringify(params);
     setIsEditContent((isEditContent) => !isEditContent);
@@ -77,7 +79,7 @@ const Item: React.FC<ItemProps> = (props) => {
                 <option key={`category${category.id}`} value={category.id || ""}>{category.name}</option>
               ))}
             </select>
-            　<i className="fa fa-edit faa-wrench animated-hover cursorPointer" />
+            　<i onClick={() => updateLearningInfo('category', String(input.category))} className="fa fa-edit faa-wrench animated-hover cursorPointer" />
             　<i onClick={editCategory} className="fa fa-times faa-wrench animated-hover cursorPointer" />
           </>
         }
@@ -90,7 +92,7 @@ const Item: React.FC<ItemProps> = (props) => {
         <div className={styles.icon}><i  onClick={deleteLearningInfo} className="fa fa-trash faa-wrench animated-hover" /></div>
         <div className={styles.content} >
           {isEditContent && <><input type="text" value={input.content} onChange={handleChange('content')} className={styles.contentText} />
-                    　<i className="fa fa-edit faa-wrench animated-hover cursorPointer" />
+                    　<i onClick={() => updateLearningInfo('content', input.content)} className="fa fa-edit faa-wrench animated-hover cursorPointer" />
                     　<i onClick={editContent} className="fa fa-times faa-wrench animated-hover cursorPointer" /></>}
           {isEditContent ||
             <>
