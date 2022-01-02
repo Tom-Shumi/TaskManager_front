@@ -16,7 +16,7 @@ const Item: React.FC<ItemProps> = (props) => {
   const [isEditCategory, setIsEditCategory] = useState<Boolean>(false);
   const [input, setInput] = useState({content: props.learningInfo.content || '',
                                       referenceUrl: props.learningInfo.referenceUrl || '',
-                                      category: props.learningInfo.categoryId || ''});
+                                      categoryId: props.learningInfo.categoryId || ''});
   const [categoryList, _] = useRecoilState(categoryListState);
   const  [deleteLearning, { error: deleteLearningError }] = graphql.useDeleteLearningMutation();
   const  [updateLearning, { error: updateLearningError }] = graphql.useUpdateLearningMutation();
@@ -54,12 +54,12 @@ const Item: React.FC<ItemProps> = (props) => {
       [updateName] :updateValue
     }
 
-    console.log(params)
+    // TODO
 
     let jsonParams = JSON.stringify(params);
-    setIsEditContent((isEditContent) => !isEditContent);
-    setIsEditReferenceUrl((isEditReferenceUrl) => !isEditReferenceUrl);
-    setIsEditCategory((isEditCategory) => !isEditCategory);
+    setIsEditContent(false);
+    setIsEditReferenceUrl(false);
+    setIsEditCategory(false);
   }
 
   const deleteLearningInfo = () => {
@@ -74,12 +74,12 @@ const Item: React.FC<ItemProps> = (props) => {
         <div className={styles.header}>[{props.learningInfo.createDate}]　
         {isEditCategory &&
           <>
-            <select value={input.category} onChange={handleChange('category')}>
+            <select value={input.categoryId} onChange={handleChange('categoryId')}>
               {categoryList.map(category => (
                 <option key={`category${category.id}`} value={category.id || ""}>{category.name}</option>
               ))}
             </select>
-            　<i onClick={() => updateLearningInfo('category', String(input.category))} className="fa fa-edit faa-wrench animated-hover cursorPointer" />
+            　<i onClick={() => updateLearningInfo('categoryId', String(input.categoryId))} className="fa fa-edit faa-wrench animated-hover cursorPointer" />
             　<i onClick={editCategory} className="fa fa-times faa-wrench animated-hover cursorPointer" />
           </>
         }

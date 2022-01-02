@@ -5,6 +5,7 @@ import List from 'components/LearnedThing/List';
 import Router from 'next/router';
 import { categoryListState } from 'components/LearnedThing/Atom';
 import { useRecoilState } from 'recoil';
+import { useEffect } from 'react';
 
 const LearnedThing: React.FC = () => {
 
@@ -12,18 +13,21 @@ const LearnedThing: React.FC = () => {
   const { called: learningCalled, loading: learningloading, data: learningData, error: learningError } = graphql.useListLearningInfoQuery();
   const { called: categoryCalled, loading: categoryLoading, data: categoryData, error: categoryError } = graphql.useListLearningCategoryQuery();
 
+  let learningList: any[] = []
+  let categoryList: any[] = []
+  useEffect(() => {
+    setCategoryList(categoryList)
+  }, [categoryData]);
+
   if (learningError || categoryError) Router.push('/');
   if (learningCalled && learningloading && categoryCalled && categoryLoading) return <p>Loading ...</p>
 
-  let learningList: any[] = []
   if (learningData != null && learningData.listLearningInfo != null) {
     learningList = learningData.listLearningInfo;
   }
 
-  let categoryList: any[] = []
   if (categoryData != null && categoryData.listLearningCategory != null) {
     categoryList = categoryData.listLearningCategory;
-    setCategoryList(categoryList);
   }
 
   return (
