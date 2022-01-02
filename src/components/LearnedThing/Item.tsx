@@ -49,6 +49,10 @@ const Item: React.FC<ItemProps> = (props) => {
       referenceUrl: props.learningInfo.referenceUrl
     }
 
+    const params = {
+      ...learningInfo,
+      [updateName] :input[updateName]
+    }
 
     let jsonParams = JSON.stringify(params);
     setIsEditContent((isEditContent) => !isEditContent);
