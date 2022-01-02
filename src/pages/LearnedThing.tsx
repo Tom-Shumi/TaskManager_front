@@ -17,8 +17,8 @@ const LearnedThing: React.FC = () => {
     setUpdata(update ? false : true)
   }, [initDispFlg]);
 
-  const { called: learningCalled, loading: learningloading, data: learningData, error: learningError } = graphql.useListLearningInfoQuery({fetchPolicy: 'cache-first', nextFetchPolicy: 'cache-first'});
-  const { called: categoryCalled, loading: categoryLoading, data: categoryData, error: categoryError } = graphql.useListLearningCategoryQuery({fetchPolicy: 'cache-first', nextFetchPolicy: 'cache-first'});
+  const { called: learningCalled, loading: learningloading, data: learningData, error: learningError } = graphql.useListLearningInfoQuery();
+  const { called: categoryCalled, loading: categoryLoading, data: categoryData, error: categoryError } = graphql.useListLearningCategoryQuery();
 
   console.log(learningData)
   if (learningError || categoryError) Router.push('/');
