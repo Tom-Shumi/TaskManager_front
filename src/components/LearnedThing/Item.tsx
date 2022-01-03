@@ -99,17 +99,16 @@ const Item: React.FC<ItemProps> = (props) => {
             </>
           }
           </div>
-          {(props.learningInfo.referenceUrl == null) ||
-            isEditReferenceUrl && <div className={styles.referenceUrl} >
+          { isEditReferenceUrl && <div className={styles.referenceUrl} >
               URL: <input type="text" value={input.referenceUrl} onChange={handleChange('referenceUrl')} className={styles.referenceUrlText} />
               　<i onClick={() => updateLearningInfo('referenceUrl', input.referenceUrl)} className="fa fa-edit faa-wrench animated-hover cursorPointer" />
               　<i onClick={editReferenceUrl} className="fa fa-times faa-wrench animated-hover cursorPointer" />
               </div>
           }
-          {(props.learningInfo.referenceUrl == null) ||
-            isEditReferenceUrl || <div className={styles.referenceUrl} >
-              URL: <a href={props.learningInfo.referenceUrl || ""} target="_blank" rel="noopener noreferrer">{props.learningInfo.referenceUrl}</a>
-              　<i onClick={editReferenceUrl} className="fa fa-edit faa-wrench animated-hover cursorPointer" />
+          { isEditReferenceUrl || <div className={styles.referenceUrl} >
+              URL: { props.learningInfo.referenceUrl == "" || <a href={props.learningInfo.referenceUrl || ""} target="_blank" rel="noopener noreferrer">{props.learningInfo.referenceUrl}</a> }
+              { props.learningInfo.referenceUrl == "" && <>未登録</>}
+              　<i onClick={editReferenceUrl } className="fa fa-edit faa-wrench animated-hover cursorPointer" />
               </div>
           }
       </div>

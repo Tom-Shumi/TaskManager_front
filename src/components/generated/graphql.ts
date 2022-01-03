@@ -113,6 +113,15 @@ export type ListLearningInfoQueryVariables = Exact<{
 
 export type ListLearningInfoQuery = { __typename?: 'Query', listLearningInfo?: Array<{ __typename?: 'LearningInfo', id?: string | null | undefined, username?: string | null | undefined, categoryId?: number | null | undefined, categoryName?: string | null | undefined, content?: string | null | undefined, referenceUrl?: string | null | undefined, createDate?: string | null | undefined } | null | undefined> | null | undefined };
 
+export type RegisterLearningMutationVariables = Exact<{
+  content?: InputMaybe<Scalars['String']>;
+  categoryId?: InputMaybe<Scalars['Int']>;
+  referenceUrl?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type RegisterLearningMutation = { __typename?: 'Mutation', registerLearning?: { __typename?: 'LearningInfo', id?: string | null | undefined, username?: string | null | undefined, categoryId?: number | null | undefined, categoryName?: string | null | undefined, content?: string | null | undefined, referenceUrl?: string | null | undefined, createDate?: string | null | undefined } | null | undefined };
+
 export type UpdateLearningMutationVariables = Exact<{
   id?: InputMaybe<Scalars['Int']>;
   content?: InputMaybe<Scalars['String']>;
@@ -234,6 +243,51 @@ export function useListLearningInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type ListLearningInfoQueryHookResult = ReturnType<typeof useListLearningInfoQuery>;
 export type ListLearningInfoLazyQueryHookResult = ReturnType<typeof useListLearningInfoLazyQuery>;
 export type ListLearningInfoQueryResult = Apollo.QueryResult<ListLearningInfoQuery, ListLearningInfoQueryVariables>;
+export const RegisterLearningDocument = gql`
+    mutation registerLearning($content: String, $categoryId: Int, $referenceUrl: String) {
+  registerLearning(
+    content: $content
+    categoryId: $categoryId
+    referenceUrl: $referenceUrl
+  ) {
+    id
+    username
+    categoryId
+    categoryName
+    content
+    referenceUrl
+    createDate
+  }
+}
+    `;
+export type RegisterLearningMutationFn = Apollo.MutationFunction<RegisterLearningMutation, RegisterLearningMutationVariables>;
+
+/**
+ * __useRegisterLearningMutation__
+ *
+ * To run a mutation, you first call `useRegisterLearningMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRegisterLearningMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [registerLearningMutation, { data, loading, error }] = useRegisterLearningMutation({
+ *   variables: {
+ *      content: // value for 'content'
+ *      categoryId: // value for 'categoryId'
+ *      referenceUrl: // value for 'referenceUrl'
+ *   },
+ * });
+ */
+export function useRegisterLearningMutation(baseOptions?: Apollo.MutationHookOptions<RegisterLearningMutation, RegisterLearningMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RegisterLearningMutation, RegisterLearningMutationVariables>(RegisterLearningDocument, options);
+      }
+export type RegisterLearningMutationHookResult = ReturnType<typeof useRegisterLearningMutation>;
+export type RegisterLearningMutationResult = Apollo.MutationResult<RegisterLearningMutation>;
+export type RegisterLearningMutationOptions = Apollo.BaseMutationOptions<RegisterLearningMutation, RegisterLearningMutationVariables>;
 export const UpdateLearningDocument = gql`
     mutation updateLearning($id: Int, $content: String, $categoryId: Int, $referenceUrl: String) {
   updateLearning(

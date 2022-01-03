@@ -1,0 +1,11 @@
+mutation registerLearning($content: String, $categoryId: Int, $referenceUrl: String) {
+  registerLearning(content: $content, categoryId: $categoryId, referenceUrl: $referenceUrl) {
+    id
+    username
+    categoryId
+    categoryName
+    content
+    referenceUrl
+    createDate
+  }
+}

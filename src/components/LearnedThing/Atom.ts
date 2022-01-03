@@ -1,8 +1,8 @@
 import { atom } from "recoil";
 
-export const initDispFlgState = atom<boolean>({
-    key: "initDispFlg",
-    default: true
+export const registerModalDispFlgState = atom<boolean>({
+    key: "registerModalDispFlg",
+    default: false
 });
 
 export const categoryListState = atom<any[]>({
