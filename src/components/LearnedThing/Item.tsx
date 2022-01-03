@@ -43,20 +43,18 @@ const Item: React.FC<ItemProps> = (props) => {
 
   const updateLearningInfo = (updateName: string, updateValue: string) => {
     const learningInfo = {
-      id: props.learningInfo.id,
+      id: Number(props.learningInfo.id),
       content: props.learningInfo.content,
       categoryId: props.learningInfo.categoryId,
       referenceUrl: props.learningInfo.referenceUrl
     }
-
     const params = {
       ...learningInfo,
       [updateName] :updateValue
     }
 
-    // TODO
+    updateLearning({ variables:  {...params} , refetchQueries: ['listLearningInfo'] })
 
-    let jsonParams = JSON.stringify(params);
     setIsEditContent(false);
     setIsEditReferenceUrl(false);
     setIsEditCategory(false);
@@ -104,7 +102,7 @@ const Item: React.FC<ItemProps> = (props) => {
           {(props.learningInfo.referenceUrl == null) ||
             isEditReferenceUrl && <div className={styles.referenceUrl} >
               URL: <input type="text" value={input.referenceUrl} onChange={handleChange('referenceUrl')} className={styles.referenceUrlText} />
-              　<i className="fa fa-edit faa-wrench animated-hover cursorPointer" />
+              　<i onClick={() => updateLearningInfo('referenceUrl', input.referenceUrl)} className="fa fa-edit faa-wrench animated-hover cursorPointer" />
               　<i onClick={editReferenceUrl} className="fa fa-times faa-wrench animated-hover cursorPointer" />
               </div>
           }
