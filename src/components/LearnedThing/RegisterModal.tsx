@@ -6,11 +6,7 @@ import { registerModalDispFlgState, categoryListState } from './Atom';
 import * as graphql from 'components/generated/graphql';
 import Router from 'next/router';
 
-interface RegisterModalProps {
-
-}
-
-const RegisterModal: React.FC<RegisterModalProps> = (props) => {
+const RegisterModal: React.FC = () => {
 
   const [registerModalDispFlg, setRegisterModalDispFlgState] = useRecoilState(registerModalDispFlgState);
   const [categoryList, _] = useRecoilState(categoryListState);
