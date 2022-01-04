@@ -80,6 +80,10 @@ h1 {
     width: 80px;
 }
 
+.buttonDelete {
+    width: 40px;
+}
+
 .modalLabel{
     font-size: 20px;
     padding-top: 1%;

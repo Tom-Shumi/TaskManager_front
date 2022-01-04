@@ -5,6 +5,11 @@ export const registerModalDispFlgState = atom<boolean>({
     default: false
 });
 
+export const categoryModalDispFlgState = atom<boolean>({
+    key: "categoryModalDispFlg",
+    default: false
+});
+
 export const categoryListState = atom<any[]>({
     key: "categoryList",
     default: []
