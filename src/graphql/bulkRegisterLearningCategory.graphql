@@ -1,0 +1,3 @@
+mutation bulkRegisterLearningCategory($learningCategoryList: [LearningCategoryInput]) {
+  bulkRegisterLearningCategory(learningCategoryList: $learningCategoryList)
+}

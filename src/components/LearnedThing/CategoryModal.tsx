@@ -12,6 +12,7 @@ const CategoryModal: React.FC = () => {
   const [categoryModalDispFlg, setCategoryModalDispFlgState] = useRecoilState(categoryModalDispFlgState);
   const [categoryList, _] = useRecoilState(categoryListState);
   const [tempCategoryList, setTempCategoryList] = useState(categoryList)
+  const  [bulkRegisterCategory, { error: bulkRegisterCategoryError }] = graphql.useBulkRegisterLearningCategoryMutation();
 
   const openCategoryModal = () => {
     setCategoryModalDispFlgState(false);
@@ -39,7 +40,16 @@ const CategoryModal: React.FC = () => {
   }
 
   const registerCategory = () => {
+    const params = tempCategoryList.map(
+      (c) => convertCategoryInput(c)
+    );
+
+    bulkRegisterCategory({ variables: {learningCategoryList: params} , refetchQueries: ['listLearningCategory'] });
     setCategoryModalDispFlgState(false);
+  }
+
+  const convertCategoryInput = (category: any): graphql.LearningCategoryInput => {
+    return {id: category.id, name: category.name}
   }
 
   useEffect(() => {

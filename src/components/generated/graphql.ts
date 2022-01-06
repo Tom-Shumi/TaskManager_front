@@ -22,6 +22,11 @@ export type LearningCategory = {
   username?: Maybe<Scalars['String']>;
 };
 
+export type LearningCategoryInput = {
+  id?: InputMaybe<Scalars['ID']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
 export type LearningInfo = {
   __typename?: 'LearningInfo';
   categoryId?: Maybe<Scalars['Int']>;
@@ -35,12 +40,18 @@ export type LearningInfo = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  bulkRegisterLearningCategory?: Maybe<Scalars['Int']>;
   deleteLearning?: Maybe<Scalars['Int']>;
   deleteLearningCategory?: Maybe<Scalars['Int']>;
   registerLearning?: Maybe<LearningInfo>;
   registerLearningCategory?: Maybe<LearningCategory>;
   updateLearning?: Maybe<LearningInfo>;
   updateLearningCategory?: Maybe<LearningCategory>;
+};
+
+
+export type MutationBulkRegisterLearningCategoryArgs = {
+  learningCategoryList?: InputMaybe<Array<InputMaybe<LearningCategoryInput>>>;
 };
 
 
@@ -92,6 +103,13 @@ export type QueryListLearningInfoArgs = {
   search?: InputMaybe<Scalars['String']>;
 };
 
+export type BulkRegisterLearningCategoryMutationVariables = Exact<{
+  learningCategoryList?: InputMaybe<Array<InputMaybe<LearningCategoryInput>> | InputMaybe<LearningCategoryInput>>;
+}>;
+
+
+export type BulkRegisterLearningCategoryMutation = { __typename?: 'Mutation', bulkRegisterLearningCategory?: number | null | undefined };
+
 export type DeleteLearningMutationVariables = Exact<{
   id?: InputMaybe<Scalars['Int']>;
 }>;
@@ -133,6 +151,37 @@ export type UpdateLearningMutationVariables = Exact<{
 export type UpdateLearningMutation = { __typename?: 'Mutation', updateLearning?: { __typename?: 'LearningInfo', id?: string | null | undefined, username?: string | null | undefined, categoryId?: number | null | undefined, categoryName?: string | null | undefined, content?: string | null | undefined, referenceUrl?: string | null | undefined, createDate?: string | null | undefined } | null | undefined };
 
 
+export const BulkRegisterLearningCategoryDocument = gql`
+    mutation bulkRegisterLearningCategory($learningCategoryList: [LearningCategoryInput]) {
+  bulkRegisterLearningCategory(learningCategoryList: $learningCategoryList)
+}
+    `;
+export type BulkRegisterLearningCategoryMutationFn = Apollo.MutationFunction<BulkRegisterLearningCategoryMutation, BulkRegisterLearningCategoryMutationVariables>;
+
+/**
+ * __useBulkRegisterLearningCategoryMutation__
+ *
+ * To run a mutation, you first call `useBulkRegisterLearningCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useBulkRegisterLearningCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [bulkRegisterLearningCategoryMutation, { data, loading, error }] = useBulkRegisterLearningCategoryMutation({
+ *   variables: {
+ *      learningCategoryList: // value for 'learningCategoryList'
+ *   },
+ * });
+ */
+export function useBulkRegisterLearningCategoryMutation(baseOptions?: Apollo.MutationHookOptions<BulkRegisterLearningCategoryMutation, BulkRegisterLearningCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<BulkRegisterLearningCategoryMutation, BulkRegisterLearningCategoryMutationVariables>(BulkRegisterLearningCategoryDocument, options);
+      }
+export type BulkRegisterLearningCategoryMutationHookResult = ReturnType<typeof useBulkRegisterLearningCategoryMutation>;
+export type BulkRegisterLearningCategoryMutationResult = Apollo.MutationResult<BulkRegisterLearningCategoryMutation>;
+export type BulkRegisterLearningCategoryMutationOptions = Apollo.BaseMutationOptions<BulkRegisterLearningCategoryMutation, BulkRegisterLearningCategoryMutationVariables>;
 export const DeleteLearningDocument = gql`
     mutation deleteLearning($id: Int) {
   deleteLearning(id: $id)
