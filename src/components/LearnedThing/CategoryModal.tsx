@@ -12,7 +12,7 @@ const CategoryModal: React.FC = () => {
   const [categoryModalDispFlg, setCategoryModalDispFlgState] = useRecoilState(categoryModalDispFlgState);
   const [categoryList, _] = useRecoilState(categoryListState);
   const [tempCategoryList, setTempCategoryList] = useState(categoryList)
-  const  [bulkRegisterCategory, { error: bulkRegisterCategoryError }] = graphql.useBulkRegisterLearningCategoryMutation();
+  const  [bulkRegisterCategory] = graphql.useBulkRegisterLearningCategoryMutation();
   const [errorMessageShow, setErrorMessageShow] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 

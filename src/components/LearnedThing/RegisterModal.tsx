@@ -24,8 +24,9 @@ const RegisterModal: React.FC = () => {
 
   const registerLearningInfo = () => {
     if (input.content == '') return;
+    const categoryId = input.categoryId || categoryList[0].id;
     registerLearning({ variables:  {content: input.content,
-                                    categoryId: Number(input.categoryId),
+                                    categoryId: Number(categoryId),
                                     referenceUrl: input.referenceUrl} ,
                       refetchQueries: ['listLearningInfo'] })
     setRegisterModalDispFlgState(false);
