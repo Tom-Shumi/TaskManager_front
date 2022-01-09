@@ -14,3 +14,8 @@ export const categoryListState = atom<any[]>({
     key: "categoryList",
     default: []
 });
+
+export const learningListState = atom<any[]>({
+    key: "learningList",
+    default: []
+});

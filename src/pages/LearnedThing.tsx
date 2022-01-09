@@ -3,7 +3,7 @@ import {Button} from 'react-bootstrap';
 import * as graphql from 'components/generated/graphql';
 import List from 'components/LearnedThing/List';
 import Router from 'next/router';
-import { categoryListState, registerModalDispFlgState, categoryModalDispFlgState } from 'components/LearnedThing/Atom';
+import { categoryListState, registerModalDispFlgState, categoryModalDispFlgState, learningListState } from 'components/LearnedThing/Atom';
 import { useRecoilState } from 'recoil';
 import { useEffect, useState } from 'react';
 import RegisterModal from 'components/LearnedThing/RegisterModal';
@@ -15,9 +15,9 @@ const LearnedThing: React.FC = () => {
   const [, setRegisterModalDispFlgState] = useRecoilState(registerModalDispFlgState);
   const [, setCategoryModalDispFlgState] = useRecoilState(categoryModalDispFlgState);
   const { called: learningCalled, loading: learningLoading, data: learningData, error: learningError } = graphql.useListLearningInfoQuery();
-  const [listLearningInfoLazyQuery] = graphql.useListLearningInfoLazyQuery({fetchPolicy: "network-only"});
+  const [listLearningInfoLazyQuery, {data: learningLazyData}] = graphql.useListLearningInfoLazyQuery({fetchPolicy: "network-only"});
   const { called: categoryCalled, loading: categoryLoading, data: categoryData, error: categoryError } = graphql.useListLearningCategoryQuery();
-  const [learningList, setLearningList] = useState<any[]>([]);
+  const [learningList, setLearningList] = useRecoilState(learningListState);
 
   let categoryList: any[] = []
   useEffect(() => {
@@ -25,8 +25,18 @@ const LearnedThing: React.FC = () => {
   }, [categoryData]);
 
   useEffect(() => {
-    setLearningList(learningData?.listLearningInfo?? []);
+    if (learningList.length == 0) {
+      setLearningList(learningData?.listLearningInfo?? []);
+    }
   }, [learningData]);
+
+  useEffect(() => {
+    if (learningLazyData?.listLearningInfo != null
+      && learningLazyData?.listLearningInfo.length != 0
+      && checkDepulicate(learningList, learningLazyData?.listLearningInfo)) {
+      setLearningList(learningList.concat(learningLazyData?.listLearningInfo));
+    }
+  }, [learningLazyData]);
 
   if (learningError || categoryError) Router.push('/');
   if (learningCalled && learningLoading && categoryCalled && categoryLoading) return <p>Loading ...</p>
@@ -48,21 +58,18 @@ const LearnedThing: React.FC = () => {
       return;
     }
     let maxId = learningList[learningList.length - 1].id
-    listLearningInfoLazyQuery({ variables: {nextKey: maxId} } ).then(res => {
-      if (checkDepulicate(learningList, res.data?.listLearningInfo?? [])) return;
-      setLearningList(learningList.concat(res.data?.listLearningInfo));
-    });
+    listLearningInfoLazyQuery({ variables: {nextKey: maxId} } )
   }
 
   const checkDepulicate = (originalList: any[], addList: any[]): boolean => {
     if (addList.length == 0) return false;
     const target = addList[0];
     const index = originalList.length - 1;
-    let result = false;
+    let result = true;
 
-    Array.from(Array(5).keys()).forEach(count => {
+    Array.from(Array(2).keys()).forEach(count => {
       if (target.id == originalList[index - count].id) {
-        result = true;
+        result = false;
       }
     })
 

@@ -3,7 +3,7 @@ import { LearningInfo } from 'components/generated/graphql';
 import styles from 'styles/LearnedThing.module.css';
 import Router from 'next/router';
 import * as graphql from 'components/generated/graphql';
-import { categoryListState } from 'components/LearnedThing/Atom';
+import { categoryListState, learningListState } from 'components/LearnedThing/Atom';
 import { useRecoilState } from 'recoil';
 
 interface ItemProps {
@@ -18,6 +18,7 @@ const Item: React.FC<ItemProps> = (props) => {
                                       referenceUrl: props.learningInfo.referenceUrl || '',
                                       categoryId: props.learningInfo.categoryId || ''});
   const [categoryList, _] = useRecoilState(categoryListState);
+  const [learningList, setLearningList] = useRecoilState(learningListState);
   const  [deleteLearning, { error: deleteLearningError }] = graphql.useDeleteLearningMutation();
   const  [updateLearning, { error: updateLearningError }] = graphql.useUpdateLearningMutation();
   if (deleteLearningError || updateLearningError) Router.push('/');
@@ -53,7 +54,15 @@ const Item: React.FC<ItemProps> = (props) => {
       [updateName] :updateValue
     }
 
-    updateLearning({ variables:  {...params} , refetchQueries: ['listLearningInfo'] })
+    updateLearning({ variables:  {...params}})
+
+    const category = categoryList.find(c => c.id == params.categoryId);
+    const learning = {...params, categoryName: category.name}
+    const updateList = learningList.map((obj) => Object.assign({},obj));
+    const index = updateList.findIndex(l => l.id == learning.id);
+    updateList[index] = learning;
+
+    setLearningList(updateList)
 
     setIsEditContent(false);
     setIsEditReferenceUrl(false);
