@@ -57,9 +57,9 @@ const Item: React.FC<ItemProps> = (props) => {
     updateLearning({ variables:  {...params}})
 
     const category = categoryList.find(c => c.id == params.categoryId);
-    const learning = {...params, categoryName: category.name}
     const updateList = learningList.map((obj) => Object.assign({},obj));
-    const index = updateList.findIndex(l => l.id == learning.id);
+    const index = updateList.findIndex(l => l.id == params.id);
+    const learning = {...params, categoryName: category.name, createDate: updateList[index].createDate}
     updateList[index] = learning;
 
     setLearningList(updateList)
@@ -71,7 +71,11 @@ const Item: React.FC<ItemProps> = (props) => {
 
   const deleteLearningInfo = () => {
     if(confirm("Do you want to delete it?")){
-      deleteLearning({ variables: { id: Number(props.learningInfo.id) }, refetchQueries: ['listLearningInfo'] })
+      deleteLearning({ variables: { id: Number(props.learningInfo.id) } })
+      const deleteList = learningList.map((obj) => Object.assign({},obj));
+      const index = deleteList.findIndex(l => l.id == props.learningInfo.id);
+      deleteList.splice(index, 1);
+      setLearningList(deleteList)
     }
   }
 

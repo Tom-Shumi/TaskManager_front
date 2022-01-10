@@ -2,16 +2,18 @@ import { useState } from 'react';
 import {Button, Col, Form, Modal, Row} from 'react-bootstrap';
 import "react-datepicker/dist/react-datepicker.css";
 import { useRecoilState } from 'recoil';
-import { registerModalDispFlgState, categoryListState } from './Atom';
+import { registerModalDispFlgState, categoryListState, learningListState } from './Atom';
 import * as graphql from 'components/generated/graphql';
 import Router from 'next/router';
+import * as DatePickerUtil from 'components/util/DatePickerUtil';
 
 const RegisterModal: React.FC = () => {
 
   const [registerModalDispFlg, setRegisterModalDispFlgState] = useRecoilState(registerModalDispFlgState);
   const [categoryList, _] = useRecoilState(categoryListState);
+  const [learningList, setLearningList] = useRecoilState(learningListState);
   const [input, setInput] = useState({content: '', referenceUrl: '', categoryId: ''});
-  const  [registerLearning, { error: registerLearningError }] = graphql.useRegisterLearningMutation();
+  const [registerLearning, { data: registerData, error: registerLearningError }] = graphql.useRegisterLearningMutation();
   if (registerLearningError) Router.push('/');
 
   const handleChange = (inputName: string) => (e: { target: { value: any; }; }) => {
@@ -27,8 +29,19 @@ const RegisterModal: React.FC = () => {
     const categoryId = input.categoryId || categoryList[0].id;
     registerLearning({ variables:  {content: input.content,
                                     categoryId: Number(categoryId),
-                                    referenceUrl: input.referenceUrl} ,
-                      refetchQueries: ['listLearningInfo'] })
+                                    referenceUrl: input.referenceUrl}})
+                      .then( (res) => {
+                        const category = categoryList.find(c => c.id == categoryId);
+                        const createDate = DatePickerUtil.curentDateStrYYYYMMDD();
+
+                        const learningInfo = {createDate: createDate, categoryId: categoryId, categoryName: category.name,
+                                              content: input.content, referenceUrl: input.referenceUrl, id: res.data?.registerLearning?.id}
+                        const createList = learningList.map((obj) => Object.assign({},obj));
+                        createList.unshift(learningInfo);
+                        setLearningList(createList);
+                      }).catch(() => {
+                        Router.push('/');
+                      });
     setRegisterModalDispFlgState(false);
     setInput({content: '', referenceUrl: '', categoryId: ''})
   }
