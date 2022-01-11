@@ -13,7 +13,7 @@ const RegisterModal: React.FC = () => {
   const [categoryList, _] = useRecoilState(categoryListState);
   const [learningList, setLearningList] = useRecoilState(learningListState);
   const [input, setInput] = useState({content: '', referenceUrl: '', categoryId: ''});
-  const [registerLearning, { data: registerData, error: registerLearningError }] = graphql.useRegisterLearningMutation();
+  const [registerLearning, { error: registerLearningError }] = graphql.useRegisterLearningMutation();
   if (registerLearningError) Router.push('/');
 
   const handleChange = (inputName: string) => (e: { target: { value: any; }; }) => {

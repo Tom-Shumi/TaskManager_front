@@ -30,7 +30,7 @@ const BurgerMenu: React.FC<MenuProps> = (props) => {
             </Link>
 
             <Link href="/LearnedThing">
-                <a className="burgerMenuLink">Learned thing(WIP)</a>
+                <a className="burgerMenuLink">Learned thing</a>
             </Link>
 
             <Link href="/ZeroSecondThinkingList">
