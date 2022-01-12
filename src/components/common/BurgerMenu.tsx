@@ -33,10 +33,6 @@ const BurgerMenu: React.FC<MenuProps> = (props) => {
                 <a className="burgerMenuLink">Learned thing</a>
             </Link>
 
-            <Link href="/ZeroSecondThinkingList">
-                <a className="burgerMenuLink">情報収集(WIP)</a>
-            </Link>
-
             <a className="burgerMenuLinkLogout" onClick={logout} href="#">Logout</a>
         </Menu>
     )
