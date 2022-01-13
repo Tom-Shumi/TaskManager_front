@@ -6,6 +6,7 @@ import { categoryModalDispFlgState, categoryListState } from './Atom';
 import * as graphql from 'components/generated/graphql';
 import Router from 'next/router';
 import React from 'react';
+import { ApolloError } from 'apollo-boost';
 
 const CategoryModal: React.FC = () => {
 
@@ -47,7 +48,7 @@ const CategoryModal: React.FC = () => {
     );
 
     bulkRegisterCategory({ variables: {learningCategoryList: params} , refetchQueries: ['listLearningCategory'] ,
-      onError: (err) => {
+      onError: (err: ApolloError) => {
         if (err.message == "Unexpected end of JSON input") {
           Router.push('/');
         }
