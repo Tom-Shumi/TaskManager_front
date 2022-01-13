@@ -30,7 +30,7 @@ const RegisterModal: React.FC = () => {
     registerLearning({ variables:  {content: input.content,
                                     categoryId: Number(categoryId),
                                     referenceUrl: input.referenceUrl}})
-                      .then( (res) => {
+                      .then( (res: any) => {
                         const category = categoryList.find(c => c.id == categoryId);
                         const createDate = DatePickerUtil.curentDateStrYYYYMMDD();
 
