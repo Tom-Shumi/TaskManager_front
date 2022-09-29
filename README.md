@@ -1,5 +1,10 @@
 # TaskManager_front
-TaskManagerのフロントエンド  
-TypeScript/React/Next.js  
+Task Manager（タスク管理 & 0秒思考ができるサイト）のフロントエンド  
 
-詳細：https://github.com/Tom-Shumi/TaskManager
+# Environment
+- Typescript
+- React.js
+- Next.js
+
+
+
